@@ -6,7 +6,7 @@ public class _notice {
 //	main -> 배포용, 최대한 덜 사용
 //	master -> 모든 브랜치 합병용
 //	goho -> 구예은
-//	gohu -> 이제민
+//	gohu -> 이재민
 //	gohi -> 이강호
 	
 }
