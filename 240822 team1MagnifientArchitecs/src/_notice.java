@@ -2,6 +2,10 @@
 public class _notice {
 	// 8월 22일 팀 1 team1 Magnifient Architecs 가상 주식 투자 프로그램
 //	브랜치
+	
+	/*
+	 *  !중요! 자바 프로젝트에 mysql-connector-java-8.0.20 추가해서 사용해야 한다. 
+	 */
 
 //	release -> 배포용, 최대한 덜 사용
 //	master -> 모든 브랜치 합병용
