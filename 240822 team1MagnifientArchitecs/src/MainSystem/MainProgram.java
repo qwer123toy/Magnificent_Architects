@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+import tables.AllCompany;
+import tables.AllCompanyBackdata;
+import tables.CompanyInfo;
+import tables.UserInfo;
+import tables.UserInfoDays;
+import tables.UserMoneyHistory;
+
 public class MainProgram {
 	Scanner scanner = new Scanner(System.in);
 	List<UserInfo> userList = new ArrayList<>();
@@ -17,12 +24,12 @@ public class MainProgram {
 	List<AllCompany> allCompanyList = new ArrayList<>();
 	
 	public MainProgram() {
-		companyInfoList.add(new CompanyInfo("A회사", "A 회사 정보", "통신", "스마트폰"));
-		companyInfoList.add(new CompanyInfo("B회사", "B 회사 정보", "건설", "아파트"));
-		companyInfoList.add(new CompanyInfo("C회사", "C 회사 정보", "운송", "항공사"));
-		companyInfoList.add(new CompanyInfo("D회사", "D 회사 정보", "철강", "철강"));
-		companyInfoList.add(new CompanyInfo("E회사", "E 회사 정보", "화학", "화학제품"));
-		companyInfoList.add(new CompanyInfo("F회사", "F 회사 정보", "반도체", "기계장비"));
+		companyInfoList.add(new CompanyInfo("A회사", "A 회사 정보", 100, "통신", "스마트폰"));
+		companyInfoList.add(new CompanyInfo("B회사", "B 회사 정보", 120, "건설", "아파트"));
+		companyInfoList.add(new CompanyInfo("C회사", "C 회사 정보", 130, "운송", "항공사"));
+		companyInfoList.add(new CompanyInfo("D회사", "D 회사 정보", 90, "철강", "철강"));
+		companyInfoList.add(new CompanyInfo("E회사", "E 회사 정보", 80, "화학", "화학제품"));
+		companyInfoList.add(new CompanyInfo("F회사", "F 회사 정보", 50, "반도체", "기계장비"));
 
 	}
 
@@ -51,12 +58,12 @@ public class MainProgram {
 			// 일단 savedata는 1
 			userList.add(new UserInfo(userName, 1, password, 100000, 0, 1, new UserInfoDays(userName, 1)));
 			userMoneyHistoryList.add(new ArrayList<UserMoneyHistory>());
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 0, 1));
 			
 			allCompanyBackdataList.add(new AllCompanyBackdata("A 회사", 100, 200, userName, 1, 1));
 			allCompanyBackdataList.add(new AllCompanyBackdata("B 회사", 150, 300, userName, 1, 1));

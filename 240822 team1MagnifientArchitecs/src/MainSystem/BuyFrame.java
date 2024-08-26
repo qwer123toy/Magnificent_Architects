@@ -3,6 +3,9 @@ package MainSystem;
 import java.util.List;
 import java.util.Scanner;
 
+import tables.AllCompanyBackdata;
+import tables.UserInfo;
+
 public class BuyFrame {
 
 	public BuyFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName) {

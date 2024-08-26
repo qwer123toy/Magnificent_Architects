@@ -5,6 +5,11 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import tables.AllCompany;
+import tables.AllCompanyBackdata;
+import tables.UserInfo;
+import tables.UserMoneyHistory;
+
 public class StockFrame {
 	public StockFrame(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
 			List<AllCompany> allCompanyList,

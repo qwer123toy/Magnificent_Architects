@@ -1,4 +1,6 @@
-package MainSystem;
+package tables;
+
+import java.util.Objects;
 
 public class News {
 	private int info_num;
@@ -54,6 +56,31 @@ public class News {
 
 	public void setInfo_Expect(String info_Expect) {
 		this.info_Expect = info_Expect;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(info_Expect, info_News, info_NewsDown, info_NewsUp, info_num);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof News)) {
+			return false;
+		}
+		News other = (News) obj;
+		return Objects.equals(info_Expect, other.info_Expect) && Objects.equals(info_News, other.info_News)
+				&& Objects.equals(info_NewsDown, other.info_NewsDown) && Objects.equals(info_NewsUp, other.info_NewsUp)
+				&& info_num == other.info_num;
+	}
+
+	@Override
+	public String toString() {
+		return "News [info_num=" + info_num + ", info_News=" + info_News + ", info_NewsUp=" + info_NewsUp
+				+ ", info_NewsDown=" + info_NewsDown + ", info_Expect=" + info_Expect + "]";
 	}
 
 }

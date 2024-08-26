@@ -4,6 +4,9 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import tables.UserInfo;
+import tables.UserMoneyHistory;
+
 public class UserFrame {
 
 	public UserFrame(UserInfo userInfo, List<UserMoneyHistory> userMoneyHistory) {
@@ -40,7 +43,7 @@ public class UserFrame {
 					userMoneyHistory.get(0).getBuyPrice(),
 					userMoneyHistory.get(0).getMy_Stock_Money() * userMoneyHistory.get(0).getStock_Count(),
 					userMoneyHistory.get(0).getStock_Price_now(), userMoneyHistory.get(0).getMy_Stock_Money(),
-					userMoneyHistory.get(0).getMy_Money_Rate());
+					userMoneyHistory.get(0).getMy_Profit_Rate());
 			
 			if (userMoneyHistory.get(1).getStock_Count() > 0) {
 				System.out.printf("%s, 보유주식 : %d 주, 구매 금액  %d원, 보유 금액 %d원, 현재가 %d원,  현재 수익 %d원, 현재 수익률 %f\n",
@@ -48,7 +51,7 @@ public class UserFrame {
 						userMoneyHistory.get(1).getBuyPrice(),
 						userMoneyHistory.get(1).getMy_Stock_Money() * userMoneyHistory.get(1).getStock_Count(),
 						userMoneyHistory.get(1).getStock_Price_now(), userMoneyHistory.get(1).getMy_Stock_Money(),
-						userMoneyHistory.get(1).getMy_Money_Rate());
+						userMoneyHistory.get(1).getMy_Profit_Rate());
 			}
 
 			System.out.println("\n=======================");

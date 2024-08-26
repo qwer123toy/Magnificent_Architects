@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import tables.AllCompany;
+import tables.AllCompanyBackdata;
+import tables.UserInfo;
+
 public class CompanyFrame {
 	public CompanyFrame(UserInfo userInfo, List<AllCompany> allCompanyList,
 			List<AllCompanyBackdata> allCompanyBackdataList, String companyName) {

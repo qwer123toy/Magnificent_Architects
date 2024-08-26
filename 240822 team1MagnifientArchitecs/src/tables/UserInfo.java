@@ -1,4 +1,6 @@
-package MainSystem;
+package tables;
+
+import java.util.Objects;
 
 public class UserInfo {
 	private String user_ID;
@@ -77,6 +79,33 @@ public class UserInfo {
 
 	public void setUserInfoDays(UserInfoDays userInfoDays) {
 		this.userInfoDays = userInfoDays;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(userInfoDays, user_Date, user_ID, user_Money, user_PW, user_SaveData, user_Stock);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof UserInfo)) {
+			return false;
+		}
+		UserInfo other = (UserInfo) obj;
+		return Objects.equals(userInfoDays, other.userInfoDays) && user_Date == other.user_Date
+				&& Objects.equals(user_ID, other.user_ID) && user_Money == other.user_Money
+				&& Objects.equals(user_PW, other.user_PW) && user_SaveData == other.user_SaveData
+				&& user_Stock == other.user_Stock;
+	}
+
+	@Override
+	public String toString() {
+		return "UserInfo [user_ID=" + user_ID + ", user_SaveData=" + user_SaveData + ", user_PW=" + user_PW
+				+ ", user_Money=" + user_Money + ", user_Stock=" + user_Stock + ", user_Date=" + user_Date
+				+ ", userInfoDays=" + userInfoDays + "]";
 	}
 
 }
