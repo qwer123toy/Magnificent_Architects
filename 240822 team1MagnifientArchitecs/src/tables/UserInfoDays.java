@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class UserInfoDays {
 	private String userId;
-	private int UserSaveData;
+	private int userSaveData;
 
 	public UserInfoDays(String userId, int userSaveData) {
 		super();
 		this.userId = userId;
-		this.UserSaveData = userSaveData;
+		this.userSaveData = userSaveData;
 	}
 
 	public String getUserId() {
@@ -21,16 +21,16 @@ public class UserInfoDays {
 	}
 
 	public int getUserSaveData() {
-		return UserSaveData;
+		return userSaveData;
 	}
 
 	public void setUserSaveData(int userSaveData) {
-		UserSaveData = userSaveData;
+		this.userSaveData = userSaveData;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(UserSaveData, userId);
+		return Objects.hash(userId, userSaveData);
 	}
 
 	@Override
@@ -42,12 +42,12 @@ public class UserInfoDays {
 			return false;
 		}
 		UserInfoDays other = (UserInfoDays) obj;
-		return UserSaveData == other.UserSaveData && Objects.equals(userId, other.userId);
+		return Objects.equals(userId, other.userId) && userSaveData == other.userSaveData;
 	}
 
 	@Override
 	public String toString() {
-		return "UserInfoDays [userId=" + userId + ", UserSaveData=" + UserSaveData + "]";
+		return "UserInfoDays [userId=" + userId + ", userSaveData=" + userSaveData + "]";
 	}
 
 }

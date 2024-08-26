@@ -16,7 +16,7 @@ public class AllCompanyMapper implements IResultMapper<AllCompany>{
 		String simulation_ID = rs.getString("simulation_ID");
 		int simulation_ID_SaveData = rs.getInt("simulation_ID_SaveData");
 		int date = rs.getInt("date");
-		// companyInfo 매퍼는 수정 필요함
+		// TODO companyInfo 매퍼는 수정 필요함
 //		CompanyInfo companyInfo = rs.
 //		CompanyInfo companyInfo = new CompanyInfo(companyName, companyInfo, lastYearSales, companyCategory, companyProducts);
 		CompanyInfo companyInfo = new CompanyInfo("임시회사이름", "임시회사정보", 100, "임시회사카테고리", "임시회사제품");

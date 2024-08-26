@@ -16,8 +16,12 @@ public class CompanyInfoMapper implements IResultMapper<CompanyInfo>{
 	public CompanyInfo resultMapping(ResultSet rs) {
 		try {
 			String companyName = rs.getString("companyName");
+			String companyInfo = rs.getString("companyInfo");
+			int lastYearSales = rs.getInt("lastYearSales");
+			String companyCategory = rs.getString("companyCategory");
+			String companyProducts = rs.getString("companyProducts");
 			
-			return null;
+			return new CompanyInfo(companyName, companyInfo, lastYearSales, companyCategory, companyProducts);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("CompanyInfo 매핑 중 예외 발생", e);

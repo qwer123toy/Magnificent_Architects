@@ -6,7 +6,7 @@ public class StockChangeHistory {
 	private String user_ID;
 	private int user_SaveData;
 	private int user_Money;
-	private String CompanyName;
+	private String companyName;
 	private int sellStockPrice;
 	private int sellStockCount;
 	private int buyStockPrice;
@@ -19,7 +19,7 @@ public class StockChangeHistory {
 		this.user_ID = user_ID;
 		this.user_SaveData = user_SaveData;
 		this.user_Money = user_Money;
-		CompanyName = companyName;
+		this.companyName = companyName;
 		this.sellStockPrice = sellStockPrice;
 		this.sellStockCount = sellStockCount;
 		this.buyStockPrice = buyStockPrice;
@@ -52,11 +52,11 @@ public class StockChangeHistory {
 	}
 
 	public String getCompanyName() {
-		return CompanyName;
+		return companyName;
 	}
 
 	public void setCompanyName(String companyName) {
-		CompanyName = companyName;
+		this.companyName = companyName;
 	}
 
 	public int getSellStockPrice() {
@@ -101,7 +101,7 @@ public class StockChangeHistory {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(CompanyName, buyStockCount, buyStockPrice, date, sellStockCount, sellStockPrice, user_ID,
+		return Objects.hash(buyStockCount, buyStockPrice, companyName, date, sellStockCount, sellStockPrice, user_ID,
 				user_Money, user_SaveData);
 	}
 
@@ -114,16 +114,17 @@ public class StockChangeHistory {
 			return false;
 		}
 		StockChangeHistory other = (StockChangeHistory) obj;
-		return Objects.equals(CompanyName, other.CompanyName) && buyStockCount == other.buyStockCount
-				&& buyStockPrice == other.buyStockPrice && date == other.date && sellStockCount == other.sellStockCount
-				&& sellStockPrice == other.sellStockPrice && Objects.equals(user_ID, other.user_ID)
-				&& user_Money == other.user_Money && user_SaveData == other.user_SaveData;
+		return buyStockCount == other.buyStockCount && buyStockPrice == other.buyStockPrice
+				&& Objects.equals(companyName, other.companyName) && date == other.date
+				&& sellStockCount == other.sellStockCount && sellStockPrice == other.sellStockPrice
+				&& Objects.equals(user_ID, other.user_ID) && user_Money == other.user_Money
+				&& user_SaveData == other.user_SaveData;
 	}
 
 	@Override
 	public String toString() {
 		return "StockChangeHistory [user_ID=" + user_ID + ", user_SaveData=" + user_SaveData + ", user_Money="
-				+ user_Money + ", CompanyName=" + CompanyName + ", sellStockPrice=" + sellStockPrice
+				+ user_Money + ", companyName=" + companyName + ", sellStockPrice=" + sellStockPrice
 				+ ", sellStockCount=" + sellStockCount + ", buyStockPrice=" + buyStockPrice + ", buyStockCount="
 				+ buyStockCount + ", date=" + date + "]";
 	}
