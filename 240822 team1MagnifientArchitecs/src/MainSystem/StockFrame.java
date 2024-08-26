@@ -22,7 +22,9 @@ public class StockFrame {
 
 			System.out.printf("현재 원금은 %d원입니다.\n",
 					userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
-							+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count());
+							+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count()
+			// + userMoneyHistory.get(2).getBuyPrice() * userMoneyHistory.get(2)).getStock_Count()
+			);
 
 			System.out.printf("현재 수익은 %d원입니다.\n",
 					userMoneyHistory.get(0).getMy_Stock_Money() + userMoneyHistory.get(1).getMy_Stock_Money());
@@ -42,10 +44,11 @@ public class StockFrame {
 
 			List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 			List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
-			
+
+			System.out.println("\n==================");
 			findACompanyBackdata = findCompany(userInfo, allCompanyBackdataList, "A 회사");
 			findBCompanyBackdata = findCompany(userInfo, allCompanyBackdataList, "B 회사");
-			
+
 //			extracted(userInfo, allCompanyBackdataList,"C 회사");
 //			extracted(userInfo, allCompanyBackdataList,"D 회사");
 //			extracted(userInfo, allCompanyBackdataList,"E 회사");
@@ -60,7 +63,7 @@ public class StockFrame {
 			System.out.println("3. 내정보 보기");
 			System.out.println("4. 오늘의 뉴스 보기");
 			System.out.println("5. 장 마감하기");
-			System.out.println("0. 종료하기");
+			System.out.println("0. 뒤로가기");
 			System.out.print("입력 : ");
 
 			try {
@@ -69,11 +72,11 @@ public class StockFrame {
 				switch (choose) {
 				case 1:
 					CompanyFrame companyFrameA = new CompanyFrame(userInfo, allCompanyList, allCompanyBackdataList,
-							findACompanyBackdata, "A 회사", 0);
+							findACompanyBackdata, userMoneyHistory, "A 회사", 0);
 					break;
 				case 2:
 					CompanyFrame companyFrameB = new CompanyFrame(userInfo, allCompanyList, allCompanyBackdataList,
-							findBCompanyBackdata, "B 회사", 1);
+							findBCompanyBackdata, userMoneyHistory, "B 회사", 1);
 					break;
 				case 3:
 					System.out.println("내 정보 보기를 선택하셨습니다.");
@@ -82,6 +85,21 @@ public class StockFrame {
 				case 4:
 					break;
 				case 5:
+					System.out.println("장 마감하기를 선택하셨습니다.");
+					System.out.printf("%d일차로 이동됩니다.\n", userInfo.getUser_Date() + 1);
+					userInfo.setUser_Date(userInfo.getUser_Date() + 1);
+
+					for (AllCompany a : allCompanyList) {
+						if (a.getSimulation_ID().equals(userInfo.getUser_ID()) 
+								&& a.getCompanyName().equals("A 회사")) {
+							a.setCompanyStockPrice(a.getCompanyStockPrice() - 10);
+						}
+						if (a.getSimulation_ID().equals(userInfo.getUser_ID()) 
+								&& a.getCompanyName().equals("B 회사")) {
+							a.setCompanyStockPrice(a.getCompanyStockPrice() + 15);
+						}
+					}
+
 					break;
 				case 0:
 					return;
@@ -101,13 +119,12 @@ public class StockFrame {
 	}
 
 	// 회사 별 데이터를 불러와서 보여줌
-	private void showCompanyData(UserInfo userInfo, List<AllCompany> allCompanyList, List<AllCompanyBackdata> findCompanyBackdata,
-			int companyIndex) {
+	private void showCompanyData(UserInfo userInfo, List<AllCompany> allCompanyList,
+			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStockPrice());
-		System.out.printf("현재 주가 수량 : %d 주 \n",
-				allCompanyList.get(companyIndex).getCompanyStockCount());
-		
+		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
+
 		if (allCompanyList.get(userInfo.getUser_Date() - 1).getDate() == 1) {
 			System.out.printf("전일 대비  0원  \n");
 			System.out.printf("전일 대비  0%%  \n");

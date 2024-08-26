@@ -6,10 +6,13 @@ import java.util.Scanner;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
+import tables.UserMoneyHistory;
 
 public class SellFrame {
 	public SellFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName,
-			List<AllCompany> allCompanyList, List<AllCompanyBackdata> allCompanyBackdataList) {
+			List<AllCompany> allCompanyList, List<AllCompanyBackdata> allCompanyBackdataList
+			,List<UserMoneyHistory> userMoneyHistory
+			) {
 		
 		//해당 주식을 보유하고 있어야되며, 들고있는 수량만큼만 매도 가능
 		
