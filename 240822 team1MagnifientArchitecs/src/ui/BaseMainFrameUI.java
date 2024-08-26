@@ -100,7 +100,10 @@ public class BaseMainFrameUI extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 		
+		// 데이터 베이스 연결 안됬을 때 용 테스트 패널
+//		JPanel pnlCompanyInfo = new JPanel();
 		CompanyInfoPnl pnlCompanyInfo = new CompanyInfoPnl("A 회사");
+		
 		// 회사 바뀔 땐 어떻게 해야 하지?
 //		pnlCompanyInfo.setTargetCompnay("B 회사");
 		JPanel pnlSecond = new JPanel();
