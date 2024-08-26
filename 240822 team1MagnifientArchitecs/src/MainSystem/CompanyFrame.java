@@ -21,7 +21,7 @@ public class CompanyFrame {
 //				findCompanyBackdata.add(acbd);
 //			}
 //		}
-
+		while (true) {
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStock());
 		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
@@ -36,7 +36,7 @@ public class CompanyFrame {
 					/ (findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStock()) - 1) * 100);
 		}
 
-		while (true) {
+		
 			System.out.println("\n==============");
 			System.out.println("어떤 작업을 수행하시겠습니까?");
 			System.out.println("1. 매수하기");
@@ -53,6 +53,8 @@ public class CompanyFrame {
 				break;
 			case 2:
 				System.out.println("매도하기를 선택하셨습니다.");
+				SellFrame sellFrame = new SellFrame(userInfo, findCompanyBackdata, companyName,
+						allCompanyList,allCompanyBackdataList);
 				break;
 			case 3:
 				System.out.println("뒤로가기를 선택하셨습니다.");

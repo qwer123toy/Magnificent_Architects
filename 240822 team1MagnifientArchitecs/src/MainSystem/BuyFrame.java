@@ -12,7 +12,9 @@ public class BuyFrame {
 
 	public BuyFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName,
 			List<AllCompany> allCompanyList, List<AllCompanyBackdata> allCompanyBackdataList) {
-
+		
+		// 수량*주가 만큼의 돈이 있어야됨 조건문 추가
+		
 		System.out.println("\n==========================");
 		System.out.printf("회사 이름 : %s\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock());
