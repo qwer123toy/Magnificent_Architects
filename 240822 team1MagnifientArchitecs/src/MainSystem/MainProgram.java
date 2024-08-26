@@ -1,13 +1,30 @@
 package MainSystem;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class MainProgram {
 	Scanner scanner = new Scanner(System.in);
 	List<UserInfo> userList = new ArrayList<>();
+	List<List<UserMoneyHistory>> userMoneyHistoryList = new ArrayList<>();
+	List<CompanyInfo> companyInfoList = new ArrayList<>();
+	List<AllCompanyBackdata> allCompanyBackdataList = new ArrayList<>();
+	List<AllCompany> allCompanyList = new ArrayList<>();
+	
+	public MainProgram() {
+		companyInfoList.add(new CompanyInfo("A회사", "A 회사 정보", "통신", "스마트폰"));
+		companyInfoList.add(new CompanyInfo("B회사", "B 회사 정보", "건설", "아파트"));
+		companyInfoList.add(new CompanyInfo("C회사", "C 회사 정보", "운송", "항공사"));
+		companyInfoList.add(new CompanyInfo("D회사", "D 회사 정보", "철강", "철강"));
+		companyInfoList.add(new CompanyInfo("E회사", "E 회사 정보", "화학", "화학제품"));
+		companyInfoList.add(new CompanyInfo("F회사", "F 회사 정보", "반도체", "기계장비"));
+
+	}
 
 	public void makeUser() {
 
@@ -31,14 +48,88 @@ public class MainProgram {
 			System.out.println("비밀번호를 입력하세요");
 			System.out.print("입력 : ");
 			String password = scanner.nextLine();
-			userList.add(new UserInfo(userName, password, 100000, 0, 1));
+			// 일단 savedata는 1
+			userList.add(new UserInfo(userName, 1, password, 100000, 0, 1, new UserInfoDays(userName, 1)));
+			userMoneyHistoryList.add(new ArrayList<UserMoneyHistory>());
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 1));
+			
+			allCompanyBackdataList.add(new AllCompanyBackdata("A 회사", 100, 200, userName, 1, 1));
+			allCompanyBackdataList.add(new AllCompanyBackdata("B 회사", 150, 300, userName, 1, 1));
+			
+			
+			allCompanyList.add(new AllCompany("A 회사", 100, 200, userName, 1, 1, companyInfoList.get(0)));
+			allCompanyList.add(new AllCompany("B 회사", 150, 300, userName, 1, 1, companyInfoList.get(1)));
+			
 		}
 
 	}
 
-	public void FirstFrame(int money) {
+	public void loginUser() {
+		System.out.print("아이디 : ");
+		String id = scanner.next();
+		scanner.nextLine();
+		System.out.print("비밀번호 : ");
+		String password = scanner.next();
 
-		System.out.printf("보유하신 금액은 현재 %d원입니다.\n", money);
+		int userFindCount = 0;
+		for (UserInfo u : userList) {
+			if (u.getUser_ID().equals(id) && u.getUser_PW().equals(password)) {
+				System.out.println("\n======================");
+				System.out.println("저장 데이터를 선택하세요.");
+				System.out.printf("저장 데이터 1 : %s\n", (u.getUser_SaveData() == 1) ? u.getUser_SaveData() : "없음");
+				System.out.printf("저장 데이터 2 : %s\n", (u.getUser_SaveData() == 2) ? u.getUser_SaveData() : "없음");
+				System.out.printf("저장 데이터 3 : %s\n", (u.getUser_SaveData() == 3) ? u.getUser_SaveData() : "없음");
+				System.out.print("입력 : ");
+
+				try {
+					int chooseData = scanner.nextInt();
+					if (chooseData < 1 && chooseData > 3)
+						System.out.println("올바른 입력을 하세요");
+					else if(chooseData ==1){
+						StockFrame stockFrame1 = new StockFrame(u, u.getUser_SaveData(), userMoneyHistoryList.get(userFindCount),
+								 allCompanyList, allCompanyBackdataList);
+						userFindCount = -1;
+						return;
+					}
+					else if(chooseData ==2){
+						StockFrame stockFrame2 = new StockFrame(u, u.getUser_SaveData(),userMoneyHistoryList.get(userFindCount),
+								 allCompanyList, allCompanyBackdataList);
+						userFindCount = -1;
+						return;
+					}
+					else if(chooseData ==3){
+						StockFrame stockFrame3 = new StockFrame(u, u.getUser_SaveData(), userMoneyHistoryList.get(userFindCount),
+								 allCompanyList, allCompanyBackdataList);
+						userFindCount = -1;
+						return;
+					}
+
+				} catch (InputMismatchException e) {
+					System.out.println("숫자만 입력하세요");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			} else if (u.getUser_ID().equals(id) && !u.getUser_PW().equals(password)) {
+				System.out.println("비밀번호가 틀렸습니다.");
+				return;
+			}
+			userFindCount++;
+		}
+		if (userFindCount != -1) {
+			System.out.println("해당하는 아이디가 없습니다.");
+		}
+	}
+
+	public void FirstFrame() {
+
+//		System.out.printf("보유하신 금액은 현재 %d원입니다.\n", money);
+		System.out.println("\n======================");
 		System.out.println("하고싶은 작업을 선택하세요.");
 		System.out.println("======================");
 		System.out.println("1. 회원가입하기");
@@ -55,6 +146,7 @@ public class MainProgram {
 				break;
 			case 2:
 				System.out.println("로그인을 실행합니다.");
+				loginUser();
 				break;
 			case 3:
 				System.out.println("랭킹보기를 실행합니다.");
@@ -78,7 +170,7 @@ public class MainProgram {
 		MainProgram main = new MainProgram();
 		System.out.println("가상 주식 프로그램을 시작합니다.");
 		while (true) {
-			main.FirstFrame(100000);
+			main.FirstFrame();
 		}
 	}
 }
