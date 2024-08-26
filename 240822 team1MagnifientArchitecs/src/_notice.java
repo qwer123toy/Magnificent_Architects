@@ -11,6 +11,6 @@ public class _notice {
 	
 	// 8월 26일
 //	좋은 아침입니다.
-//	dbUtil 패키지에 DBUtil.class와 go_db.propertis 파일을 추가했으니 db 접속 가능합니다.
+//	dbUtil 패키지에 DBUtil.java와 go_db.propertis 파일을 추가했으니 db 접속 가능합니다.
 	
 }
