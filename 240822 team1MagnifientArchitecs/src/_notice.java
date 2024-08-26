@@ -9,4 +9,8 @@ public class _notice {
 //	gohu -> 이재민
 //	gohi -> 이강호
 	
+	// 8월 26일
+//	좋은 아침입니다.
+//	dbUtil 패키지에 DBUtil.class와 go_db.propertis 파일을 추가했으니 db 접속 가능합니다.
+	
 }
