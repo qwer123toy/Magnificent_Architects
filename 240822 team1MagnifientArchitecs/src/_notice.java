@@ -13,6 +13,6 @@ public class _notice {
 //	좋은 아침입니다.
 //	dbUtil 패키지에 DBUtil.java와 go_db.propertis 파일을 추가했으니 db 접속 가능합니다.
 	
-//	main 브랜치 삭제하고 배포용 release 브랜치 생성. 
+//	main 브랜치 삭제하고 배포용 release 브랜치 생성. master브랜치를 default 브랜치로 변경
 	
 }
