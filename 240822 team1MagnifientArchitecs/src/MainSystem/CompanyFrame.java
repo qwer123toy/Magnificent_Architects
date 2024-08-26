@@ -5,29 +5,31 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CompanyFrame {
-	public CompanyFrame(UserInfo userInfo, List<AllCompany> allCompanyList,
-			List<AllCompanyBackdata> allCompanyBackdataList, String companyName) {
+	public CompanyFrame(UserInfo userInfo, List<AllCompany> allCompanyList, List<AllCompanyBackdata> allCompanyBackdataList,
+			List<AllCompanyBackdata> findCompanyBackdata, String companyName, int companyIndex) {
 
-		List<AllCompanyBackdata> findCompanyBackdata = new ArrayList<>();
+//		List<AllCompanyBackdata> findCompanyBackdata = new ArrayList<>();
+//
+//		for (AllCompanyBackdata acbd : allCompanyBackdataList) {
+//			if (acbd.getSimulation_ID().equals(userInfo.getUser_ID())
+//					&& acbd.getSimulation_ID_SaveData() == userInfo.getUser_SaveData()
+//					&& acbd.getCompanyName().equals(companyName)) {
+//				findCompanyBackdata.add(acbd);
+//			}
+//		}
 
-		for (AllCompanyBackdata acbd : allCompanyBackdataList) {
-			if (acbd.getSimulation_ID().equals(userInfo.getUser_ID())
-					&& acbd.getSimulation_ID_SaveData() == userInfo.getUser_SaveData()
-					&& acbd.getCompanyName().equals(companyName)) {
-				findCompanyBackdata.add(acbd);
-			}
-		}
-
-		System.out.printf("회사 이름 : %s\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyName());
-		System.out.printf("현재 주가 : %d원\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock());
-		System.out.printf("현재 주가 수량 : %d 주 \n",
-				findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockCount());
+		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
+		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStock());
+		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
+		
 		if (findCompanyBackdata.get(userInfo.getUser_Date() - 1).getDate() == 1) {
 			System.out.printf("전일 대비  0원  \n");
+			System.out.printf("전일 대비  0%% \n");
 		} else {
 			System.out.printf("전일 대비  %d원  \n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock()
 					- findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStock());
-
+			System.out.printf("전일 대비 %.2f%%\n", ((findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock())
+					/ (findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStock()) - 1) * 100);
 		}
 
 		while (true) {
@@ -42,7 +44,8 @@ public class CompanyFrame {
 			switch (choose) {
 			case 1:
 				System.out.println("매수하기를 선택하셨습니다.");
-				BuyFrame buyFrame = new BuyFrame(userInfo, findCompanyBackdata, companyName);
+				BuyFrame buyFrame = new BuyFrame(userInfo, findCompanyBackdata, companyName,
+									allCompanyList,allCompanyBackdataList);
 				break;
 			case 2:
 				System.out.println("매도하기를 선택하셨습니다.");

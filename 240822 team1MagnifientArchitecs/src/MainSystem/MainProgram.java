@@ -15,6 +15,7 @@ public class MainProgram {
 	List<CompanyInfo> companyInfoList = new ArrayList<>();
 	List<AllCompanyBackdata> allCompanyBackdataList = new ArrayList<>();
 	List<AllCompany> allCompanyList = new ArrayList<>();
+	int userCount = 0;
 	
 	public MainProgram() {
 		companyInfoList.add(new CompanyInfo("A회사", "A 회사 정보", "통신", "스마트폰"));
@@ -51,12 +52,12 @@ public class MainProgram {
 			// 일단 savedata는 1
 			userList.add(new UserInfo(userName, 1, password, 100000, 0, 1, new UserInfoDays(userName, 1)));
 			userMoneyHistoryList.add(new ArrayList<UserMoneyHistory>());
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryList.get(0).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(userCount).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(userCount).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(userCount).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(userCount).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(userCount).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 1));
+			userMoneyHistoryList.get(userCount).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 1));
 			
 			allCompanyBackdataList.add(new AllCompanyBackdata("A 회사", 100, 200, userName, 1, 1));
 			allCompanyBackdataList.add(new AllCompanyBackdata("B 회사", 150, 300, userName, 1, 1));
@@ -64,6 +65,7 @@ public class MainProgram {
 			
 			allCompanyList.add(new AllCompany("A 회사", 100, 200, userName, 1, 1, companyInfoList.get(0)));
 			allCompanyList.add(new AllCompany("B 회사", 150, 300, userName, 1, 1, companyInfoList.get(1)));
+			userCount++;
 			
 		}
 
@@ -135,7 +137,7 @@ public class MainProgram {
 		System.out.println("1. 회원가입하기");
 		System.out.println("2. 로그인하기");
 		System.out.println("3. 랭킹보기");
-		System.out.println("4. 종료");
+		System.out.println("0. 종료");
 		System.out.print("입력 : ");
 		try {
 			int choose = scanner.nextInt();
@@ -151,7 +153,7 @@ public class MainProgram {
 			case 3:
 				System.out.println("랭킹보기를 실행합니다.");
 				break;
-			case 4:
+			case 0:
 				System.exit(0);
 				break;
 			default:
