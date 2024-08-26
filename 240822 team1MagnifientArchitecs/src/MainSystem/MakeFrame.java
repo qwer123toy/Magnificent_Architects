@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -20,6 +23,16 @@ public class MakeFrame extends JFrame {
 
 		JButton btnNewButton = new JButton("새로 시작");
 		panel.add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				MakeFrame2 mk2 = new MakeFrame2();
+				mk2.setVisible(true);
+				dispose();
+			}
+		});
 
 		JButton btnNewButton_1 = new JButton("로그인하기");
 		panel.add(btnNewButton_1);
