@@ -15,11 +15,11 @@ public class AllCompany {
 
 	}
 
-	public AllCompany(String companyName, int companyStock, int companyStockCount, String simulation_ID,
+	public AllCompany(String companyName, int companyStockPrice, int companyStockCount, String simulation_ID,
 			int simulation_ID_SaveData, int date, CompanyInfo companyInfo) {
 		super();
 		this.companyName = companyName;
-		this.companyStockPrice = companyStock;
+		this.companyStockPrice = companyStockPrice;
 		this.companyStockCount = companyStockCount;
 		this.simulation_ID = simulation_ID;
 		this.simulation_ID_SaveData = simulation_ID_SaveData;
@@ -35,12 +35,12 @@ public class AllCompany {
 		this.companyName = companyName;
 	}
 
-	public int getCompanyStock() {
+	public int getCompanyStockPrice() {
 		return companyStockPrice;
 	}
 
-	public void setCompanyStock(int companyStock) {
-		this.companyStockPrice = companyStock;
+	public void setCompanyStockPrice(int companyStockPrice) {
+		this.companyStockPrice = companyStockPrice;
 	}
 
 	public int getCompanyStockCount() {

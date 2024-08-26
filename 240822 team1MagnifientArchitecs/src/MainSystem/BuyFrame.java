@@ -15,14 +15,14 @@ public class BuyFrame {
 
 		System.out.println("\n==========================");
 		System.out.printf("회사 이름 : %s\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyName());
-		System.out.printf("현재 주가 : %d원\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock());
+		System.out.printf("현재 주가 : %d원\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockPrice());
 		System.out.printf("현재 주가 수량 : %d 주 \n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockCount());
 		if (findCompanyBackdata.get(userInfo.getUser_Date() - 1).getDate() == 1) {
 			System.out.printf("전일 대비  0원  \n");
 		} else {
 
-			System.out.printf("전일 대비  %d원  \n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock()
-					- findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStock());
+			System.out.printf("전일 대비  %d원  \n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockPrice()
+					- findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStockPrice());
 		}
 		System.out.println("==========================");
 		System.out.println("구매하실 수량을 입력하세요.");
@@ -36,7 +36,7 @@ public class BuyFrame {
 			for (AllCompany a : allCompanyList) {
 				if (a.getCompanyName().equals(companyName)) {
 					a.setCompanyStockCount(a.getCompanyStockCount() - buyStock);
-					allCompanyBackdataList.add(new AllCompanyBackdata(companyName, a.getCompanyStock(), a.getCompanyStockCount(),
+					allCompanyBackdataList.add(new AllCompanyBackdata(companyName, a.getCompanyStockPrice(), a.getCompanyStockCount(),
 							userInfo.getUser_ID(), userInfo.getUser_SaveData(), userInfo.getUser_Date()));
 
 				}
