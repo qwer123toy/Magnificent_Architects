@@ -1,8 +1,11 @@
 package mapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import dbUtil.DBUtil;
 import tables.AllCompany;
 import tables.CompanyInfo;
 
@@ -29,4 +32,34 @@ public class AllCompanyMapper implements IResultMapper<AllCompany>{
 			throw new RuntimeException("AllCompany 매핑 중 예외 발생", e);
 		}
 	}
+	
+	public AllCompany selectRow() {
+		String sql = "SELECT * FROM AllCompany;";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			// TODO 일단 row 1줄만 가져오는 걸로
+			if (rs.next()) {
+				AllCompany allCompany = resultMapping(rs);
+				return allCompany;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return null;
+	}
+	
+//	public static void main(String[] args) {
+//		AllCompanyMapper allCompanyMapper = new AllCompanyMapper();
+//		AllCompany allCompany = allCompanyMapper.selectRow();
+//		System.out.println(allCompany);
+//	}
 }

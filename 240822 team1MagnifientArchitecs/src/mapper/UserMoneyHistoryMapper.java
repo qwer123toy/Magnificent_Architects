@@ -1,8 +1,13 @@
 package mapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import dbUtil.DBUtil;
 import tables.UserMoneyHistory;
 
 public class UserMoneyHistoryMapper implements IResultMapper<UserMoneyHistory> {
@@ -37,4 +42,36 @@ public class UserMoneyHistoryMapper implements IResultMapper<UserMoneyHistory> {
 			throw new RuntimeException("UserMoneyHistory 매핑 중 예외 발생", e);
 		}
 	}
+	
+	public List<UserMoneyHistory> selectAllRow() {
+		String sql = "SELECT * FROM `UserMoneyHistory`;";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		List<UserMoneyHistory> list = new ArrayList<>();
+
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				UserMoneyHistory userMoneyHistory = resultMapping(rs);
+				list.add(userMoneyHistory);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return null;
+	}
+
+//	public static void main(String[] args) {
+//		UserMoneyHistoryMapper mapper = new UserMoneyHistoryMapper();
+//		List<UserMoneyHistory> list = mapper.selectAllRow();
+//		System.out.println(list.toString());
+//	}
 }

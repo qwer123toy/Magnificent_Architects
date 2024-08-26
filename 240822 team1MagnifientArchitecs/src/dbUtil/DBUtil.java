@@ -42,7 +42,7 @@ public class DBUtil {
 		}
 	}
 
-	public Connection getConnection(String go_db) throws SQLException {
+	public static Connection getConnection(String go_db) throws SQLException {
 		return DriverManager.getConnection(url + go_db + "?serverTimezone=UTC", id, password);
 	}
 

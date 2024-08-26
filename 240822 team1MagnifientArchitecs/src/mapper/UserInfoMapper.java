@@ -1,8 +1,13 @@
 package mapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import dbUtil.DBUtil;
 import tables.UserInfo;
 import tables.UserInfoDays;
 
@@ -33,5 +38,36 @@ public class UserInfoMapper implements IResultMapper<UserInfo>{
 			throw new RuntimeException("UserInfo 매핑 중 예외 발생", e);
 		}
 	}
+	
+	public List<UserInfo> selectAllRow() {
+		String sql = "SELECT * FROM `UserInfo`;";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
 
+		List<UserInfo> list = new ArrayList<>();
+
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				UserInfo userInfo = resultMapping(rs);
+				list.add(userInfo);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return null;
+	}
+
+//	public static void main(String[] args) {
+//		UserInfoMapper mapper = new UserInfoMapper();
+//		List<UserInfo> list = mapper.selectAllRow();
+//		System.out.println(list.toString());
+//	}
 }
