@@ -6,18 +6,21 @@ import java.util.Scanner;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 
+import tables.AllCompany;
+
 public class BuyFrame {
 
-	public BuyFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName) {
+	public BuyFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName,
+			List<AllCompany> allCompanyList, List<AllCompanyBackdata> allCompanyBackdataList) {
 
 		System.out.println("\n==========================");
 		System.out.printf("회사 이름 : %s\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock());
-		System.out.printf("현재 주가 수량 : %d 주 \n",
-				findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockCount());
+		System.out.printf("현재 주가 수량 : %d 주 \n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockCount());
 		if (findCompanyBackdata.get(userInfo.getUser_Date() - 1).getDate() == 1) {
 			System.out.printf("전일 대비  0원  \n");
 		} else {
+
 			System.out.printf("전일 대비  %d원  \n", findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStock()
 					- findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStock());
 		}
@@ -29,9 +32,17 @@ public class BuyFrame {
 		int buyStock = sc.nextInt();
 		if (buyStock < 0) {
 			return;
-		}
-		else{
-			
+		} else {
+			for (AllCompany a : allCompanyList) {
+				if (a.getCompanyName().equals(companyName)) {
+					a.setCompanyStockCount(a.getCompanyStockCount() - buyStock);
+					allCompanyBackdataList.add(new AllCompanyBackdata(companyName, a.getCompanyStock(), a.getCompanyStockCount(),
+							userInfo.getUser_ID(), userInfo.getUser_SaveData(), userInfo.getUser_Date()));
+
+				}
+
+			}
+
 		}
 
 	}
