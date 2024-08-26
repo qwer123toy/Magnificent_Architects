@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbUtil.DBUtil;
+import dbUtil.IResultMapper;
 import tables.Rank;
 
 public class RankMapper implements IResultMapper<Rank> {

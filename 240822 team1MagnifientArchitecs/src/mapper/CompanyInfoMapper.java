@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbUtil.DBUtil;
+import dbUtil.IResultMapper;
 import tables.CompanyInfo;
 
 public class CompanyInfoMapper implements IResultMapper<CompanyInfo>{

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dbUtil.DBUtil;
+import dbUtil.IResultMapper;
 import tables.AllCompanyBackdata;
 
 public class AllCompanyBackdataMapper implements IResultMapper<AllCompanyBackdata> {

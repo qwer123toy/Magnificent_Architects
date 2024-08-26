@@ -15,4 +15,5 @@ public class _notice {
 	
 //	main 브랜치 삭제하고 배포용 release 브랜치 생성. master브랜치를 default 브랜치로 변경
 	
+//	테이블 컬럼 이름이 많이 바껴서 만들어 둔 sql 쿼리문 모두 수정 필요
 }

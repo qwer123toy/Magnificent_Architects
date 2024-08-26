@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dbUtil.DBUtil;
+import dbUtil.IResultMapper;
 import tables.AllCompany;
 import tables.CompanyInfo;
 
