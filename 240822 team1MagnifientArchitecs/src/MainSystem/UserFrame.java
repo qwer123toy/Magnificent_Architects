@@ -59,7 +59,7 @@ public class UserFrame {
 			System.out.println("1. 메인화면 보기");
 			System.out.println("2. 거래 내역 보기");
 			System.out.println("3. 오늘의 뉴스 보기");
-			System.out.println("0. 종료");
+			System.out.println("0. 뒤로가기");
 			System.out.print("입력 : ");
 			
 			try {

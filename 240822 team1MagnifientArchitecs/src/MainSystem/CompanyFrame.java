@@ -7,10 +7,13 @@ import java.util.Scanner;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
+import tables.UserMoneyHistory;
 
 public class CompanyFrame {
 	public CompanyFrame(UserInfo userInfo, List<AllCompany> allCompanyList, List<AllCompanyBackdata> allCompanyBackdataList,
-			List<AllCompanyBackdata> findCompanyBackdata, String companyName, int companyIndex) {
+			List<AllCompanyBackdata> findCompanyBackdata,
+			List<UserMoneyHistory> userMoneyHistory,
+			String companyName, int companyIndex) {
 
 //		List<AllCompanyBackdata> findCompanyBackdata = new ArrayList<>();
 //
@@ -22,6 +25,7 @@ public class CompanyFrame {
 //			}
 //		}
 		while (true) {
+			System.out.println("\n=======================");
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStockPrice());
 		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
@@ -42,6 +46,7 @@ public class CompanyFrame {
 			System.out.println("1. 매수하기");
 			System.out.println("2. 매도하기");
 			System.out.println("3. 뒤로가기");
+			System.out.print("입력 : ");
 			Scanner sc = new Scanner(System.in);
 			int choose = sc.nextInt();
 
@@ -49,12 +54,14 @@ public class CompanyFrame {
 			case 1:
 				System.out.println("매수하기를 선택하셨습니다.");
 				BuyFrame buyFrame = new BuyFrame(userInfo, findCompanyBackdata, companyName,
-									allCompanyList,allCompanyBackdataList);
+									allCompanyList,allCompanyBackdataList
+									,userMoneyHistory);
 				break;
 			case 2:
 				System.out.println("매도하기를 선택하셨습니다.");
 				SellFrame sellFrame = new SellFrame(userInfo, findCompanyBackdata, companyName,
-						allCompanyList,allCompanyBackdataList);
+						allCompanyList,allCompanyBackdataList
+						,userMoneyHistory);
 				break;
 			case 3:
 				System.out.println("뒤로가기를 선택하셨습니다.");
