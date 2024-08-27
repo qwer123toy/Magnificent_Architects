@@ -84,7 +84,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlSouth.add(btnSouth3);
 
 		// 기초 프레임
-		setSize(500, 700);
+		setSize(500, 650);
 		add(contentPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -96,7 +96,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 
-		// 회사 정보 쪽으로 옮겨야 한다.
+		// 회사 정보버튼 누르면 나오는 패널 쪽으로 옮겨야 한다.
 //		String selectedCompanyName = "A 회사";
 //		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
 //		CompanyInfoPnl pnlCompanyInfo = new CompanyInfoPnl(companyInfo);
