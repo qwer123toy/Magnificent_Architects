@@ -53,12 +53,11 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlNorth.add(btnNorth4);
 		pnlNorth.setBackground(Color.BLACK);
 
-		pnlCenter = new JPanel();
-		contentPane.add(pnlCenter, "Center");
-		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+		
 
 		// 센터에 설정할 pnl들
 		setCardLayout();
+		contentPane.add(pnlCenter, "Center");
 
 		// 남쪽 패널
 		JPanel pnlSouth = new JPanel();
@@ -85,27 +84,33 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlSouth.add(btnSouth3);
 
 		// 기초 프레임
-		setSize(500, 500);
+		setSize(500, 700);
 		add(contentPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
 	private void setCardLayout() {
+		pnlCenter = new JPanel();
+		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+		
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 
-		String selectedCompanyName = "A 회사";
-		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
-		CompanyInfoPnl pnlCompanyInfo = new CompanyInfoPnl(companyInfo);
+		// 회사 정보 쪽으로 옮겨야 한다.
+//		String selectedCompanyName = "A 회사";
+//		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
+//		CompanyInfoPnl pnlCompanyInfo = new CompanyInfoPnl(companyInfo);
 
-		JPanel pnlSecond = new JPanel();
-		pnlSecond.setBackground(Color.CYAN);
-		JPanel pnlThird = new JPanel();
-		pnlThird.setBackground(Color.YELLOW);
+		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl();
+		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl();
+		SeeMyTradingHistoryPnl seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
+		NewsPnl newsPnl = new NewsPnl();
 
-		pnlCenter.add(pnlCompanyInfo, "First");
-		pnlCenter.add(pnlSecond, "Second");
-		pnlCenter.add(pnlThird, "Third");
+//		pnlCenter.add(pnlCompanyInfo, "First");
+		pnlCenter.add(companyStockBoardPnl, "First");
+		pnlCenter.add(clickMyInfoBtnPnl, "Second");
+		pnlCenter.add(seeMyTradingHistoryPnl, "Third");
+		pnlCenter.add(newsPnl, "Forth");
 	}
 
 	@Override
