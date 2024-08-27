@@ -14,7 +14,7 @@ import jdk.nashorn.internal.ir.CatchNode;
 import mapper.UserInfoMapper;
 import tables.UserInfo;
 
-public class UserDAO {
+public class UserInfoDAO {
 	public static final IResultMapper<UserInfo> UserInfoMapper = new UserInfoMapper();
 
 	public UserInfo findByID(String user_ID) {

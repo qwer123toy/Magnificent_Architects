@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
-import DAO.UserDAO;
+import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
@@ -16,7 +16,7 @@ import tables.AllCompany;
 public class BuyFrame {
 	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 	private AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
-	private UserDAO userDAO = new UserDAO();
+	private UserInfoDAO UserInfoDAO = new UserInfoDAO();
 	private UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
 
 	public BuyFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName,
@@ -25,8 +25,8 @@ public class BuyFrame {
 		
 		AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		UserDAO userDAO = new UserDAO();
-		UserInfo realUserInfo = userDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		UserInfoDAO UserInfoDAO = new UserInfoDAO();
+		UserInfo realUserInfo = UserInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		
 		// 수량*주가 만큼의 돈이 있어야됨 조건문 추가
 
@@ -87,7 +87,7 @@ public class BuyFrame {
 				
 				int user_Money = realUserInfo.getUser_Money() - (buyStockPrice * buyStock);
 				
-				userDAO.update(user_Money,userInfo.getUser_ID(), userInfo.getUser_SaveData());
+				UserInfoDAO.update(user_Money,userInfo.getUser_ID(), userInfo.getUser_SaveData());
 				
 				allCompanyBackdataDAO.insert(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
 						userInfo.getUser_SaveData(), userInfo.getUser_Date());

@@ -3,6 +3,13 @@ package tables;
 import java.util.Objects;
 
 public class UserMoneyHistory {
+	// 유저의 주식 보유현황을 확인할 수 있음
+	// 모든 회사의 주식을 일단 0주로 들고있다는 가정하로 시작
+	// 해당 회사의 주식을 사면 그때 유저 정보에서 확인 가능
+	// user_date에 맞게 현재가가 변경될 예정이고
+	// 평가금액, 평가 손익, 수익률 등을 계산해서
+	// 넣어줄 예정
+	
 	private String user_ID;
 	private int userSaveData;
 	private String user_Stock; // 보유주식

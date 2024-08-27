@@ -18,6 +18,7 @@ public class AllCompanyDAO {
 	CompanyInfoDAO companyInfoDAO = new CompanyInfoDAO();
 //	new AllCompany("A 회사", 100, 200, userName, 1, 1, companyInfoList.get(0));
 	
+	// 아이디와 저장 데이터로 AllCompany 내용 전체 확인
 	public List<AllCompany> findAllByID(String userId, int saveData) {
 		String sql = "SELECT * FROM AllCompany WHERE "
 				+ "simulation_ID = ? and simulation_ID_SaveData = ?";
@@ -45,6 +46,7 @@ public class AllCompanyDAO {
 		return null;
 	}
 	
+	//특정 회사의 정보 확인
 	public AllCompany findCompByID(String companyName, String userId, int saveData) {
 		String sql = "SELECT * FROM AllCompany WHERE "
 				+ "companyName = ? and simulation_ID = ? and simulation_ID_SaveData = ?";
@@ -105,7 +107,8 @@ public class AllCompanyDAO {
 
 	}
 	
-	
+	// ALLcompany 테이블의 정보를 수정
+	// AllCompany는 항상 가장 최신의 정보를 들고 있어야 함
 	public void update(String companyName, int companyStockPrice,
 			int companyStockCount, String simulation_ID, 
 			int simulation_ID_SaveData, int date) throws SQLException {

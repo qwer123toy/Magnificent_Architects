@@ -3,6 +3,10 @@ package tables;
 import java.util.Objects;
 
 public class UserInfo {
+	
+	//유저의 정보를 갖고 있음
+	//ID는 중복 불가
+	
 	private String user_ID;
 	private int user_SaveData;
 

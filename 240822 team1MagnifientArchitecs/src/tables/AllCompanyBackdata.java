@@ -3,6 +3,10 @@ package tables;
 import java.util.Objects;
 
 public class AllCompanyBackdata {
+	
+	// 회사별로 발생한 모든 주식 수량 변동 및 주가 변동을 저장함
+	// 이때 아이디와 saveData로 값을 찾을 수 있음
+	
 	private String companyName;
 	private int companyStockPrice;
 	private int companyStockCount;
