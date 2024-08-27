@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 public class TestGUI extends JFrame {
 	public TestGUI() {
-		MainPanel1 pnl = new MainPanel1();
+		CompanyStockBoardPnl pnl = new CompanyStockBoardPnl();
 		add(pnl);
 		
 		

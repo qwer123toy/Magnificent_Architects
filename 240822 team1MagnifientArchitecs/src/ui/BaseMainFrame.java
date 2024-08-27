@@ -13,11 +13,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class BaseMainFrameUI extends JFrame implements ActionListener {
+public class BaseMainFrame extends JFrame implements ActionListener {
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
 
-	public BaseMainFrameUI() {
+	public BaseMainFrame() {
 		// 가장 큰 패널
 		JPanel contentPane = new JPanel();
 		
@@ -117,7 +117,7 @@ public class BaseMainFrameUI extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new BaseMainFrameUI().setVisible(true);
+		new BaseMainFrame().setVisible(true);
 	}
 
 	@Override

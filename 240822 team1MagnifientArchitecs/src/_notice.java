@@ -9,9 +9,9 @@ public class _notice {
 
 //	release -> 배포용, 최대한 덜 사용
 //	master -> 모든 브랜치 합병용
-//	goho -> 구예은
+//	gosu -> 구예은
 //	gohu -> 이재민
-//	gohi -> 이강호
+//	gokang -> 이강호
 	
 	// 8월 26일
 //	좋은 아침입니다.
@@ -20,4 +20,9 @@ public class _notice {
 //	main 브랜치 삭제하고 배포용 release 브랜치 생성. master브랜치를 default 브랜치로 변경
 	
 //	테이블 컬럼 이름이 많이 바껴서 만들어 둔 sql 쿼리문 모두 수정 필요
+	
+	// 8월 27일
+//	로그인 화면 완료(gosu)
+//	gosu와 gokang이 UI나눠서 작업
+//	gohu는 db연결해서 기능 구현 중
 }
