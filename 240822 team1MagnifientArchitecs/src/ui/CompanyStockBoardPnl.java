@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 public class CompanyStockBoardPnl extends JPanel {
 	public CompanyStockBoardPnl() {
@@ -54,13 +53,13 @@ public class CompanyStockBoardPnl extends JPanel {
 		pnl2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
 		JLabel lbl1 = new JLabel("회사명");
-		lbl1.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl1.setHorizontalAlignment(JLabel.CENTER);
 		JLabel lbl2 = new JLabel("현재가");
-		lbl2.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl2.setHorizontalAlignment(JLabel.CENTER);
 		JLabel lbl3 = new JLabel("전일대비");
-		lbl3.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl3.setHorizontalAlignment(JLabel.CENTER);
 		JLabel lbl4 = new JLabel("잔여수량");
-		lbl4.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl4.setHorizontalAlignment(JLabel.CENTER);
 
 		pnl2.add(lbl1);
 		pnl2.add(lbl2);
