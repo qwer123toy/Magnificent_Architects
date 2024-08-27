@@ -1,30 +1,24 @@
 package priceGUI;
 
-import java.awt.Color;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.SystemColor;
 
-public class BuyPriceGUI extends JFrame {
-	private JTextField tfBuyPrice;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class BuyPriceGUI extends JPanel {
 
 	public BuyPriceGUI() {
+		setLayout(new BorderLayout(0, 0));
 		setSize(420, 510);
 
-		getContentPane().setLayout(new BorderLayout(0, 0));
-
 		JPanel pnlCenter = new JPanel();
-
 		pnlCenter.setLayout(new GridLayout(0, 1, 0, 0));
+		add(pnlCenter, BorderLayout.CENTER);
 
 		JPanel pnlInformation = new JPanel();
 		pnlInformation.setBackground(SystemColor.window);
@@ -43,7 +37,7 @@ public class BuyPriceGUI extends JFrame {
 		lblBuyPrice2.setBounds(130, 110, 155, 15);
 		pnlInformation.add(lblBuyPrice2);
 
-		tfBuyPrice = new JTextField();
+		JTextField tfBuyPrice = new JTextField();
 		tfBuyPrice.setBounds(130, 134, 116, 21);
 		pnlInformation.add(tfBuyPrice);
 		tfBuyPrice.setColumns(10);
@@ -67,19 +61,17 @@ public class BuyPriceGUI extends JFrame {
 		lblMoney.setBackground(SystemColor.window);
 		pnlMyMoney.add(lblMoney, BorderLayout.CENTER);
 
-		JLabel lblNewLabel = new JLabel("100원");
-		lblNewLabel.setBounds(46, 34, 57, 15);
-		pnlInformation.add(lblNewLabel);
+		JLabel lblPrice = new JLabel("100원");
+		lblPrice.setBounds(46, 34, 57, 15);
+		pnlInformation.add(lblPrice);
 
-		JLabel lblNewLabel_1 = new JLabel("전월대비 0원(0%)");
-		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 11));
-		lblNewLabel_1.setBounds(46, 54, 116, 15);
-		pnlInformation.add(lblNewLabel_1);
+		JLabel lblBuyData = new JLabel("전월대비 0원(0%)");
+		lblBuyData.setFont(new Font("굴림", Font.PLAIN, 11));
+		lblBuyData.setBounds(46, 54, 116, 15);
+		pnlInformation.add(lblBuyData);
 
 		String btnName[] = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "지우기", "00", "0", "<-", "입력" };
 		JButton btnNum[] = new JButton[btnName.length];
-
-		getContentPane().add(pnlCenter);
 
 		JPanel pnlBtn = new JPanel();
 		pnlCenter.add(pnlBtn);
@@ -87,15 +79,14 @@ public class BuyPriceGUI extends JFrame {
 
 		JPanel pnlNumber = new JPanel();
 		pnlNumber.setBackground(SystemColor.window);
-		pnlBtn.add(pnlNumber);
+		pnlBtn.add(pnlNumber, BorderLayout.CENTER);
 		pnlNumber.setLayout(new GridLayout(0, 4, 5, 5));
 
 		for (int i = 0; i < btnName.length; i++) {
 			btnNum[i] = new JButton(btnName[i]);
 			btnNum[i].setBackground(SystemColor.window);
-			btnNum[i].setFocusable(false); // 버튼 선택시 가운데 상자 제거
+			btnNum[i].setFocusable(false);
 			pnlNumber.add(btnNum[i]);
-			
 		}
 
 		JPanel pnlBtnSet = new JPanel();
@@ -109,45 +100,5 @@ public class BuyPriceGUI extends JFrame {
 		JButton btnBack = new JButton("뒤로가기");
 		btnBack.setBackground(SystemColor.window);
 		pnlBtnSet.add(btnBack);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(SystemColor.window);
-		pnlBtn.add(panel_1, BorderLayout.NORTH);
-
-		JPanel pnlMainNorth = new JPanel();
-		pnlMainNorth.setBackground(SystemColor.activeCaption);
-		getContentPane().add(pnlMainNorth, BorderLayout.NORTH);
-
-		JButton btnMain = new JButton("메인화면");
-		btnMain.setBackground(SystemColor.window);
-		pnlMainNorth.add(btnMain);
-
-		JLabel lblDay = new JLabel("13일차");
-		pnlMainNorth.add(lblDay);
-
-		JButton btnDataEnd = new JButton("장 마감");
-		btnDataEnd.setBackground(SystemColor.window);
-		pnlMainNorth.add(btnDataEnd);
-
-		JPanel pnlMainSouth = new JPanel();
-		pnlMainSouth.setBackground(SystemColor.activeCaption);
-		getContentPane().add(pnlMainSouth, BorderLayout.SOUTH);
-
-		JButton btnMy = new JButton("내 정보");
-		btnMy.setBackground(SystemColor.window);
-		pnlMainSouth.add(btnMy);
-
-		JButton btnNews = new JButton("오늘의 뉴스");
-		btnNews.setBackground(SystemColor.window);
-		pnlMainSouth.add(btnNews);
-
-		JButton btnEnd = new JButton("종료");
-		btnEnd.setBackground(SystemColor.window);
-		pnlMainSouth.add(btnEnd);
-
-	}
-
-	public static void main(String[] args) {
-		new BuyPriceGUI().setVisible(true);
 	}
 }
