@@ -5,16 +5,22 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import DAO.AllCompanyDAO;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
 public class StockFrame {
-	public StockFrame(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory, List<AllCompany> allCompanyList,
+	public StockFrame(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
 			List<AllCompanyBackdata> allCompanyBackdataList) {
+		
+		
+		
 		System.out.println("로그인 되었습니다.");
 		while (true) {
+			AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+			List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 			System.out.println("\n====================");
 			System.out.printf("%d일차 진행 중\n", userInfo.getUser_Date());
 			System.out.printf("반갑습니다. %s 회원님\n", userInfo.getUser_ID());
@@ -46,8 +52,8 @@ public class StockFrame {
 			List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
 
 			System.out.println("\n==================");
-			findACompanyBackdata = findCompany(userInfo, allCompanyBackdataList, "A 회사");
-			findBCompanyBackdata = findCompany(userInfo, allCompanyBackdataList, "B 회사");
+//			findACompanyBackdata = findCompany(userInfo, allCompanyBackdataList, "A 회사");
+//			findBCompanyBackdata = findCompany(userInfo, allCompanyBackdataList, "B 회사");
 
 //			extracted(userInfo, allCompanyBackdataList,"C 회사");
 //			extracted(userInfo, allCompanyBackdataList,"D 회사");
@@ -71,16 +77,16 @@ public class StockFrame {
 				int choose = sc.nextInt();
 				switch (choose) {
 				case 1:
-					CompanyFrame companyFrameA = new CompanyFrame(userInfo, allCompanyList, allCompanyBackdataList,
+					CompanyFrame companyFrameA = new CompanyFrame(userInfo, allCompanyBackdataList,
 							findACompanyBackdata, userMoneyHistory, "A 회사", 0);
 					break;
 				case 2:
-					CompanyFrame companyFrameB = new CompanyFrame(userInfo, allCompanyList, allCompanyBackdataList,
+					CompanyFrame companyFrameB = new CompanyFrame(userInfo,  allCompanyBackdataList,
 							findBCompanyBackdata, userMoneyHistory, "B 회사", 1);
 					break;
 				case 3:
 					System.out.println("내 정보 보기를 선택하셨습니다.");
-					UserFrame userFrame = new UserFrame(userInfo, userMoneyHistory);
+					UserFrame userFrame = new UserFrame(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 					break;
 				case 4:
 					break;
@@ -121,6 +127,7 @@ public class StockFrame {
 	// 회사 별 데이터를 불러와서 보여줌
 	private void showCompanyData(UserInfo userInfo, List<AllCompany> allCompanyList,
 			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
+		
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStockPrice());
 		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
@@ -136,9 +143,11 @@ public class StockFrame {
 
 		}
 	}
+	
+	
 
 	// 회사 백데이터에서 특정 회사의 백데이터만 불러오기
-	private List<AllCompanyBackdata> findCompany(UserInfo userInfo, List<AllCompanyBackdata> allCompanyBackdataList,
+	private List<AllCompanyBackdata> findCompanyBackData(UserInfo userInfo, List<AllCompanyBackdata> allCompanyBackdataList,
 			String companyName) {
 		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 

@@ -16,6 +16,17 @@ public class AllCompany {
 	}
 
 	public AllCompany(String companyName, int companyStockPrice, int companyStockCount, String simulation_ID,
+			int simulation_ID_SaveData, int date) {
+		super();
+		this.companyName = companyName;
+		this.companyStockPrice = companyStockPrice;
+		this.companyStockCount = companyStockCount;
+		this.simulation_ID = simulation_ID;
+		this.simulation_ID_SaveData = simulation_ID_SaveData;
+		this.date = date;
+	}
+	
+	public AllCompany(String companyName, int companyStockPrice, int companyStockCount, String simulation_ID,
 			int simulation_ID_SaveData, int date, CompanyInfo companyInfo) {
 		super();
 		this.companyName = companyName;
