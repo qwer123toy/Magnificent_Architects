@@ -3,6 +3,10 @@ package tables;
 import java.util.Objects;
 
 public class AllCompany {
+	// 각 회사 별로 현재 주가, 주식 수량, 정보 등을 보여주기 위한 테이블
+	// 이때 아이디와 saveData를 들고 있어서 내가 로그인한 정보에 맞는
+	// 테이블을 보여줘야됨
+	
 	private String companyName;
 	private int companyStockPrice;
 	private int companyStockCount;

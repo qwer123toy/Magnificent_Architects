@@ -5,17 +5,17 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import DAO.UserDAO;
+import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
 public class UserFrame {
 	UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
-	UserDAO userDAO = new UserDAO();
+	UserInfoDAO UserInfoDAO = new UserInfoDAO();
 	public UserFrame(String user_ID, int user_SaveData) {
 		while (true) {
-			UserInfo userInfo = userDAO.findByIDAndData(user_ID,user_SaveData);
+			UserInfo userInfo = UserInfoDAO.findByIDAndData(user_ID,user_SaveData);
 			List<UserMoneyHistory> userMoneyHistory = userMoneyHistoryDAO.findByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 			
 			System.out.printf("반갑습니다. %s 회원님\n", userInfo.getUser_ID());

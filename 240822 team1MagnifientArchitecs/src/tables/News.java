@@ -3,6 +3,12 @@ package tables;
 import java.util.Objects;
 
 public class News {
+	
+	// 늬우스
+	// 추후에 해당 정보를 통해
+	// 주가가 상승할지 하락할지
+	// 판단할 예정
+	// 백퍼는 아님 ㅎ
 	private int info_num;
 	private String info_News;
 	private String info_NewsUp;

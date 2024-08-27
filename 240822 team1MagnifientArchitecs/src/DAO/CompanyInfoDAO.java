@@ -15,6 +15,7 @@ import tables.UserInfo;
 public class CompanyInfoDAO {
 	public static final IResultMapper<CompanyInfo> companyInfoMapper = new CompanyInfoMapper();
 	
+	//이름으로 회사 정보 찾기
 	public CompanyInfo findByCompanyName(String companyName) {
 		String sql = "SELECT * FROM companyInfo WHERE companyName = ?";
 		Connection conn = null;

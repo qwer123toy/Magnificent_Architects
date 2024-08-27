@@ -16,6 +16,7 @@ import tables.AllCompanyBackdata;
 public class AllCompanyBackdataDAO {
 	public static final IResultMapper<AllCompanyBackdata> allCompanyBackdataMapper = new AllCompanyBackdataMapper();
 	
+	// ID와 saveData를 통해 AllCompanyBackdata의 모든 값을 찾기
 	public List<AllCompanyBackdata> findAllByID(String userID, int saveData) {
 		String sql = "SELECT * FROM AllCompanyBackdata WHERE simulation_ID = ? and simulation_ID_SaveData = ?";
 		Connection conn = null;
@@ -42,6 +43,8 @@ public class AllCompanyBackdataDAO {
 		return null;
 	}
 	
+	
+	//allcompanybackdata에 데이터 삽입하기
 	public void insert(String companyName, int companyStockPrice,
 			int companyStockCount, String simulation_ID, 
 			int simulation_ID_SaveData, int date) throws SQLException {

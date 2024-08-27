@@ -3,6 +3,11 @@ package tables;
 import java.util.Objects;
 
 public class CompanyInfo {
+	
+	// 회사의 정보를 저장하고 있는 테이블
+	// 변동 없음
+	//추가만 해줄 예정
+	
 	private String companyName;
 	private String companyInfo;
 	private int lastYearSales;

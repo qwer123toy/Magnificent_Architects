@@ -3,6 +3,13 @@ package tables;
 import java.util.Objects;
 
 public class StockChangeHistory {
+	
+	//주식 거래 내역
+	// 해당 사용자의 정보에서 발생한 모든 
+	// 주식 거래 내역을 저장하고 있음
+	// 추후 사용자의 거래 내역 확인을 할 때
+	// 사용할 예정
+	
 	private String user_ID;
 	private int user_SaveData;
 	private int user_Money;

@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
-import DAO.UserDAO;
+import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
@@ -24,7 +24,7 @@ public class MainProgram {
 	List<CompanyInfo> companyInfoList = new ArrayList<>();
 	List<AllCompanyBackdata> allCompanyBackdataList = new ArrayList<>();
 	List<AllCompany> allCompanyList = new ArrayList<>();
-	UserDAO userDAO = new UserDAO();
+	UserInfoDAO UserInfoDAO = new UserInfoDAO();
 	UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
 	AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 	AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
@@ -38,7 +38,8 @@ public class MainProgram {
 		companyInfoList.add(new CompanyInfo("D회사", "D 회사 정보", 90, "철강", "철강"));
 		companyInfoList.add(new CompanyInfo("E회사", "E 회사 정보", 80, "화학", "화학제품"));
 		companyInfoList.add(new CompanyInfo("F회사", "F 회사 정보", 50, "반도체", "기계장비"));
-//		try {
+
+		//		try {
 //			Connection conn = DBUtil.getConnection("go_db");
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
@@ -56,7 +57,7 @@ public class MainProgram {
 			userName = scanner.next();
 			scanner.nextLine();
 			chkDupID = false;
-			UserInfo userInfo = userDAO.findByID(userName);
+			UserInfo userInfo = UserInfoDAO.findByID(userName);
 			if (userInfo != null) {
 				System.out.println("중복된 아이디가 있어요.");
 				chkDupID = true;
@@ -69,19 +70,21 @@ public class MainProgram {
 //				}
 //			}
 		}
+		
+
 		if (!chkDupID) {
 			System.out.println("비밀번호를 입력하세요");
 			System.out.print("입력 : ");
 			String password = scanner.nextLine();
 			// 일단 savedata는 1
 			try {
-//				List<UserInfo> loginUserInfoList = userDAO.checkExistIDAndPW(userName, password);
+//				List<UserInfo> loginUserInfoList = UserInfoDAO.checkExistIDAndPW(userName, password);
 //				if (loginUserInfoList.size() == 0)
-				userDAO.insert(userName, password, 1);
+				UserInfoDAO.insert(userName, password, 1);
 //				else if (loginUserInfoList.size() == 1)
-//					userDAO.insert(userName, password, 2);
+//					UserInfoDAO.insert(userName, password, 2);
 //				else if (loginUserInfoList.size() == 2)
-//					userDAO.insert(userName, password, 3);
+//					UserInfoDAO.insert(userName, password, 3);
 //				else {
 //					System.out.println("한 아이디에는 3개까지만 저장 가능합니다.");
 //				}
@@ -141,7 +144,7 @@ public class MainProgram {
 		String password = scanner.next();
 
 		try {
-			List<UserInfo> loginUserInfoList = userDAO.checkExistIDAndPW(id, password);
+			List<UserInfo> loginUserInfoList = UserInfoDAO.checkExistIDAndPW(id, password);
 			if (loginUserInfoList == null) {
 				System.out.println("아이디 혹은 비밀번호가 틀렸습니다.");
 			} else {
@@ -201,7 +204,7 @@ public class MainProgram {
 					userFindCount = -1;
 					return;
 				} else if (chooseData == 2 && chkSaveData2 == 0) {
-					userDAO.insert(id, password, 2);
+					UserInfoDAO.insert(id, password, 2);
 					insertInfoByID(id, 2);
 					List<UserMoneyHistory> umhList = userMoneyHistoryDAO.findByID(id, 2);
 					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 2);
@@ -222,7 +225,7 @@ public class MainProgram {
 				}
 				
 				else if (chooseData == 3 && chkSaveData3 == 0) {
-					userDAO.insert(id, password, 3);
+					UserInfoDAO.insert(id, password, 3);
 					insertInfoByID(id, 3);
 					List<UserMoneyHistory> umhList = userMoneyHistoryDAO.findByID(id, 3);
 					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 3);
