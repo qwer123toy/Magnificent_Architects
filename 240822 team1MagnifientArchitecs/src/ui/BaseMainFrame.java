@@ -102,12 +102,23 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 //		String selectedCompanyName = "A 회사";
 //		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
 //		CompanyInfoPnl pnlCompanyInfo = new CompanyInfoPnl(companyInfo);
-
+		
+		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
 		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl();
+		
+		// 하단의 내 정보를 누르면 나오는 패널
 		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl();
+		
+		// 주식 거래 상황을 보여주는 패널
 		SeeMyTradingHistoryPnl seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
+		
+		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
+		
+		// 매수 패널
 		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
+		
+		// 매도 패널
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
 //		pnlCenter.add(pnlCompanyInfo, "First");
