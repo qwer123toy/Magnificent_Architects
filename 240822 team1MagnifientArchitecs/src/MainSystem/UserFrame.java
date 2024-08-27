@@ -1,16 +1,23 @@
 package MainSystem;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import DAO.UserDAO;
+import DAO.UserMoneyHistoryDAO;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
 public class UserFrame {
-
-	public UserFrame(UserInfo userInfo, List<UserMoneyHistory> userMoneyHistory) {
+	UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
+	UserDAO userDAO = new UserDAO();
+	public UserFrame(String user_ID, int user_SaveData) {
 		while (true) {
+			UserInfo userInfo = userDAO.findByIDAndData(user_ID,user_SaveData);
+			List<UserMoneyHistory> userMoneyHistory = userMoneyHistoryDAO.findByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+			
 			System.out.printf("반갑습니다. %s 회원님\n", userInfo.getUser_ID());
 			System.out.printf("현재 잔고는 %d원입니다.\n", userInfo.getUser_Money());
 
@@ -38,13 +45,14 @@ public class UserFrame {
 			System.out.println("보유 주식 현황입니다.");
 
 			// 일단 0번째 인덱스로
+			if (userMoneyHistory.get(0).getStock_Count() > 0) {
 			System.out.printf("%s, 보유주식 : %d 주, 구매 금액  %d원, 보유 금액 %d원, 현재가 %d원,  현재 수익 %d원, 현재 수익률 %f\n",
 					userMoneyHistory.get(0).getUser_Stock(), userMoneyHistory.get(0).getStock_Count(),
 					userMoneyHistory.get(0).getBuyPrice(),
 					userMoneyHistory.get(0).getMy_Stock_Money() * userMoneyHistory.get(0).getStock_Count(),
 					userMoneyHistory.get(0).getStock_Price_now(), userMoneyHistory.get(0).getMy_Stock_Money(),
 					userMoneyHistory.get(0).getMy_Profit_Rate());
-			
+			}
 			if (userMoneyHistory.get(1).getStock_Count() > 0) {
 				System.out.printf("%s, 보유주식 : %d 주, 구매 금액  %d원, 보유 금액 %d원, 현재가 %d원,  현재 수익 %d원, 현재 수익률 %f\n",
 						userMoneyHistory.get(1).getUser_Stock(), userMoneyHistory.get(1).getStock_Count(),

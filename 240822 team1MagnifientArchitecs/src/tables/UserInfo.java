@@ -13,6 +13,9 @@ public class UserInfo {
 
 	private UserInfoDays userInfoDays;
 
+	public UserInfo() {
+		
+	}
 	public UserInfo(String user_ID, int user_SaveData, String user_PW, int user_Money, int user_Stock, int user_Date,
 			UserInfoDays userInfoDays) {
 		super();
