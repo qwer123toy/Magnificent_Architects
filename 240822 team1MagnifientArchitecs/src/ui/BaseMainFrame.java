@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import dbUtil.DBUtil;
 import dbUtil.IResultMapper;
 import mapper.CompanyInfoMapper;
+import priceGUI.BuyPriceGUI;
+import priceGUI.SellPriceGUI;
 import tables.CompanyInfo;
 
 public class BaseMainFrame extends JFrame implements ActionListener {
@@ -105,12 +107,16 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl();
 		SeeMyTradingHistoryPnl seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
 		NewsPnl newsPnl = new NewsPnl();
+		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
+		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
 //		pnlCenter.add(pnlCompanyInfo, "First");
 		pnlCenter.add(companyStockBoardPnl, "First");
 		pnlCenter.add(clickMyInfoBtnPnl, "Second");
 		pnlCenter.add(seeMyTradingHistoryPnl, "Third");
 		pnlCenter.add(newsPnl, "Forth");
+		pnlCenter.add(buyPriceGUI, "Fifth");
+		pnlCenter.add(sellPriceGUI, "sixth");
 	}
 
 	@Override
