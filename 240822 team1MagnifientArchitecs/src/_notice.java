@@ -25,4 +25,7 @@ public class _notice {
 //	로그인 화면 완료(gosu)
 //	gosu와 gokang이 UI나눠서 작업
 //	gohu는 db연결해서 기능 구현 중
+	
+	// 8월 29일
+//	어제 1차 배포했는데 피드백 없는듯?
 }
