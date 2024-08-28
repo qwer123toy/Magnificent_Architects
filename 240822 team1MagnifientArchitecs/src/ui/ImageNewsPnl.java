@@ -28,8 +28,15 @@ public class ImageNewsPnl extends JPanel {
 		
 		URL resource = ImageNewsPnl.class.getResource("/resource/nonTextNewsImage.jpg");
 		ImageIcon icon = new ImageIcon(resource);
+		
+		// import java.awt.Image;
+		// 아이콘의 이미지를 추출
 		Image image = icon.getImage();
-		Image scaledImage = image.getScaledInstance(newsImagelbl.getWidth(), newsImagelbl.getHeight(), Image.SCALE_SMOOTH);
+		// 추출한 이미지의 크기를 라벨의 크기와 같게 만든다.
+		Image scaledImage = image.getScaledInstance(newsImagelbl.getWidth(), newsImagelbl.getHeight()
+				// 크기 조정할 때 부드럽게
+				, Image.SCALE_SMOOTH);
+		// 크기를 바꾼 이미지를 다시 아이콘으로 바꾼다.
 		ImageIcon scaledIcon = new ImageIcon(scaledImage);
 		newsImagelbl.setIcon(scaledIcon);
 		
