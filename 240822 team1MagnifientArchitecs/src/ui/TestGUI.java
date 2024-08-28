@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JFrame;
 
 public class TestGUI extends JFrame {
+
 	public TestGUI() {
 //		CompanyStockBoardPnl pnl = new CompanyStockBoardPnl();
 //		ClickMyInfoBtnPnl pnl = new ClickMyInfoBtnPnl();
@@ -19,5 +20,6 @@ public class TestGUI extends JFrame {
 	
 	public static void main(String[] args) {
 		new TestGUI().setVisible(true);
+		
 	}
 }

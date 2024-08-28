@@ -105,7 +105,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl(userInfo);
 
 		// 하단의 내 정보를 누르면 나오는 패널
-		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl();
+		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo);
 
 		// 주식 거래 상황을 보여주는 패널
 		SeeMyTradingHistoryPnl seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
