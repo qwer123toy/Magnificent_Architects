@@ -16,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import DAO.UserInfoDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
 import tables.AllCompany;
@@ -33,6 +32,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private AllCompanyBackdata allCompanyBackdata;
 
 	private static ListAndDAO listAndDAO = new ListAndDAO();
+	private CompanyStockBoardPnl companyStockBoardPnl;
+	private ClickMyInfoBtnPnl clickMyInfoBtnPnl;
+	private SeeMyTradingHistoryPnl seeMyTradingHistoryPnl;
 
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -158,10 +160,10 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
 					JOptionPane.showMessageDialog(BaseMainFrame.this, "오늘 장이 마감되었습니다.");
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
+				companyStockBoardPnl.updatePnl1();
+				
 			}
 		});
 	}
@@ -173,14 +175,17 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 
+		// TODO companyStockBoardPnl, clickMyInfoBtnPnl, seeMyTradingHistoryPnl
+		// 3가지 업데이트 만들어야 한다.
+		
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
-		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl(userInfo);
+		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo);
 
 		// 하단의 내 정보를 누르면 나오는 패널
-		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo);
+		clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo);
 
 		// 주식 거래 상황을 보여주는 패널
-		SeeMyTradingHistoryPnl seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
+		seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
 
 		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
