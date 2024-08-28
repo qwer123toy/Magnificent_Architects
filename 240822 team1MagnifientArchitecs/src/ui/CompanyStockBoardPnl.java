@@ -11,32 +11,22 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
-import MainSystem.StockFrame;
+import DAO.UserInfoDAO;
+import DAO.UserMoneyHistoryDAO;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
 public class CompanyStockBoardPnl extends JPanel {
-	private StockFrame stockFrame;
 	private UserInfo userInfo;
-	private int SaveData;
-	private List<UserMoneyHistory> userMoneyHistory;
-	private List<AllCompanyBackdata> allCompanyBackdataList;
-	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 	private List<AllCompany> allCompanyList;
+	private AllCompanyDAO allCompanyDAO;
 
-	private static ListAndDAO listAndDAO = new ListAndDAO();
-	
-	
-	public CompanyStockBoardPnl(UserInfo parentUserInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
-			List<AllCompanyBackdata> allCompanyBackdataList) {
-		
-		userInfo = listAndDAO.userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
-		userMoneyHistory = listAndDAO.usermoneyHistoryDAO.findByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		allCompanyBackdataList = listAndDAO.allCompanyBackdataDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		allCompanyList = listAndDAO.allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+	public CompanyStockBoardPnl(UserInfo userInfo) {
+		this.userInfo = userInfo;
 
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
@@ -77,18 +67,17 @@ public class CompanyStockBoardPnl extends JPanel {
 		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
 
-
-		JPanel companyInfoPnl1 = companyInfoData(userInfo, allCompanyList, findACompanyBackdata, 0);
-		JPanel companyInfoPnl2 = companyInfoData(userInfo, allCompanyList, findBCompanyBackdata, 1);
-
-		add(companyInfoPnl1);
-		add(companyInfoPnl2);
+		int size = allCompanyDAO.getRowCount(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		JPanel[] companyInfoArray = new JPanel[size];
+		for (int i = 0; i < companyInfoArray.length; i++) {
+			JPanel companyInfoPnl = companyInfoData(userInfo, allCompanyList, findACompanyBackdata, i);
+			add(companyInfoPnl);
+		}
 	}
-	
+
 	private JPanel companyInfoData(UserInfo userInfo, List<AllCompany> allCompanyList,
 			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
-		
-		
+
 		String companyName = allCompanyList.get(companyIndex).getCompanyName();
 		int priceNow = allCompanyList.get(companyIndex).getCompanyStockPrice();
 		int stockCount = allCompanyList.get(companyIndex).getCompanyStockCount();
@@ -105,7 +94,18 @@ public class CompanyStockBoardPnl extends JPanel {
 	}
 
 	private void setPnl1() {
-//		stockFrame = new StockFrame(userInfo);
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
+		allCompanyDAO = new AllCompanyDAO();
+		UserMoneyHistoryDAO usermoneyHistoryDAO = new UserMoneyHistoryDAO();
+		AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
+
+		UserInfo userInfoStockFrame = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		List<UserMoneyHistory> umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
+				userInfoStockFrame.getUser_SaveData());
+		List<AllCompanyBackdata> allCompanyBackdataList = allCompanyBackdataDAO
+				.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+		allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(),
+				userInfoStockFrame.getUser_SaveData());
 
 		JPanel pnl1 = new JPanel();
 		pnl1.setLayout(new GridLayout(2, 2));
@@ -113,31 +113,30 @@ public class CompanyStockBoardPnl extends JPanel {
 		pnl1.setPreferredSize(new Dimension(480, 100));
 
 		JLabel pricipal = new JLabel(); // 원금
-		String pricipalText = "" + userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
-				+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count();
+		String pricipalText = "" + umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
+				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count();
 		pricipal.setText("총매수: " + pricipalText);
 		pricipal.setHorizontalAlignment(JLabel.CENTER);
 
 		JLabel allProfitMoney = new JLabel(); // 수익
-		String allProfitMoneyText = "" + userMoneyHistory.get(0).getMy_Stock_Money()
-				+ userMoneyHistory.get(1).getMy_Stock_Money();
+		String allProfitMoneyText = "" + umhStockFrame.get(0).getMy_Stock_Money()
+				+ umhStockFrame.get(1).getMy_Stock_Money();
 		allProfitMoney.setText("평가손익: " + allProfitMoneyText + "원");
 		allProfitMoney.setHorizontalAlignment(JLabel.CENTER);
 
 		JLabel profitRate = new JLabel(); // 수익률
 		double stockMoneyRate = 0;
-		if (userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count() != 0) {
-			stockMoneyRate = (userMoneyHistory.get(0).getMy_Stock_Money() + userMoneyHistory.get(1).getMy_Stock_Money())
-					/ (userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
-							+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count());
+		if (umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count() != 0) {
+			stockMoneyRate = (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money())
+					/ (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
+							+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
 		}
 		profitRate.setText("수익률: " + stockMoneyRate + "%");
 		profitRate.setHorizontalAlignment(JLabel.CENTER);
 
 		JLabel allProperty = new JLabel(); // 주식 + 현금 = 총 재산
-		String allPropertyText = ""
-				+ userMoneyHistory.get(0).getMy_Stock_Money() * userMoneyHistory.get(0).getStock_Count()
-				+ userMoneyHistory.get(1).getMy_Stock_Money() * userMoneyHistory.get(1).getStock_Count();
+		String allPropertyText = "" + umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
+				+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count();
 		allProperty.setText("총 평가: " + allPropertyText + "원");
 		allProperty.setHorizontalAlignment(JLabel.CENTER);
 

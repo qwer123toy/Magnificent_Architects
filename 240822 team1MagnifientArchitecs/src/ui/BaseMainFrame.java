@@ -7,45 +7,26 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import DAO.AllCompanyBackdataDAO;
-import DAO.AllCompanyDAO;
 import DAO.UserInfoDAO;
-import DAO.UserMoneyHistoryDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
-import tables.AllCompany;
-import tables.AllCompanyBackdata;
 import tables.UserInfo;
-import tables.UserMoneyHistory;
 
 public class BaseMainFrame extends JFrame implements ActionListener {
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
-
-	private static UserInfoDAO userInfoDAO = new UserInfoDAO();
-	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
-	private UserMoneyHistoryDAO usermoneyHistoryDAO = new UserMoneyHistoryDAO();
-	private AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 	private UserInfo userInfo;
-	private List<UserMoneyHistory> userMoneyHistory;
-	private List<AllCompanyBackdata> allCompanyBackdataList;
-	private List<AllCompany> allCompanyList;
+	
 
-	public BaseMainFrame(UserInfo parentUserInfo) {
-
-		userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
-		userMoneyHistory = usermoneyHistoryDAO.findByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfo.getUser_ID(),
-				userInfo.getUser_SaveData());
-		allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-
+	public BaseMainFrame(UserInfo userInfo) {
+		this.userInfo = userInfo;
+		
 		// 가장 큰 패널
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
@@ -121,8 +102,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlCenter.setLayout(cardLayout);
 
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
-		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl(userInfo,
-				userInfo.getUser_SaveData(), userMoneyHistory, allCompanyBackdataList);
+		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl(userInfo);
 
 		// 하단의 내 정보를 누르면 나오는 패널
 		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl();
@@ -166,9 +146,11 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		UserInfo ui = userInfoDAO.findByIDAndData("asd", 1);
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
+		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
 		
-		new BaseMainFrame(ui).setVisible(true);
+		new BaseMainFrame(id).setVisible(true);
+		
 	}
 
 }

@@ -9,9 +9,8 @@ import java.util.List;
 
 import dbUtil.DBUtil;
 import dbUtil.IResultMapper;
-import tables.AllCompany;
-import tables.UserInfo;
 import mapper.AllCompanyMapper;
+import tables.AllCompany;
 
 public class AllCompanyDAO {
 	public static final IResultMapper<AllCompany> allCompanyMapper = new AllCompanyMapper();
@@ -138,6 +137,32 @@ public class AllCompanyDAO {
 			DBUtil.closeAll(rs, stmt, conn);
 		}
 
+	}
+	
+	// allcopany 테이블의 row 숫자 반환
+	public int getRowCount(String userId, int saveData) {
+		String sql = "SELECT count(*) FROM AllCompany WHERE "
+				+ "simulation_ID = ? and simulation_ID_SaveData = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userId);
+			stmt.setInt(2, saveData);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				int size = rs.getInt(1);
+				return size;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return -1;
 	}
 
 }
