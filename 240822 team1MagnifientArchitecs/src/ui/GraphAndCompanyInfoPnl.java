@@ -50,7 +50,6 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 
 		// 차트보기, 회사 정보 패널
 		JPanel chartAndbtnpnl = new JPanel();
-//		chartAndbtnpnl.setLayout(new GridLayout(1, 4));
 
 		JButton graphbtn = new JButton("차트 보기");
 		graphbtn.addActionListener(this);

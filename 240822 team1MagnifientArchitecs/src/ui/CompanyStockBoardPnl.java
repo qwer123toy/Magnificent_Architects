@@ -4,50 +4,49 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import DAO.AllCompanyDAO;
+import MainSystem.StockFrame;
+import tables.AllCompany;
+import tables.AllCompanyBackdata;
+import tables.UserInfo;
+import tables.UserMoneyHistory;
+
 public class CompanyStockBoardPnl extends JPanel {
-	public CompanyStockBoardPnl() {
+	private StockFrame stockFrame;
+	private UserInfo userInfo;
+	private int SaveData;
+	private List<UserMoneyHistory> userMoneyHistory;
+	private List<AllCompanyBackdata> allCompanyBackdataList;
+	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+	private List<AllCompany> allCompanyList;
+
+	public CompanyStockBoardPnl(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
+			List<AllCompanyBackdata> allCompanyBackdataList) {
+		this.userInfo = userInfo;
+		this.SaveData = SaveData;
+		this.userMoneyHistory = userMoneyHistory;
+		this.allCompanyBackdataList = allCompanyBackdataList;
+
+		allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-		
-		
+
 		// 총 매수, 평가손익, 총 평가, 수익률 패널
-		JPanel pnl1 = new JPanel();
-		pnl1.setLayout(new GridLayout(2, 2));
-		pnl1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		pnl1.setPreferredSize(new Dimension(480, 100));
-
-		JLabel allBuyMoney = new JLabel(); // 총 매수
-		allBuyMoney.setText("총매수: 매수한 금액");
-		allBuyMoney.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel allProfitMoney = new JLabel(); // 평가손익
-		allProfitMoney.setText("평가손익: 111원");
-		allProfitMoney.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel allProperty = new JLabel(); // 주식 + 현금 = 총 재산
-		allProperty.setText("총 평가: 현재 금액");
-		allProperty.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel profitRate = new JLabel(); // 수익률
-		profitRate.setText("수익률: 12.34%");
-		profitRate.setHorizontalAlignment(JLabel.CENTER);
-
-		pnl1.add(allBuyMoney);
-		pnl1.add(allProfitMoney);
-		pnl1.add(allProperty);
-		pnl1.add(profitRate);
-		add(pnl1);
+		setPnl1();
 
 		// 회사명, 현재가, 전일대비, 잔여수량 패널
 		JPanel pnl2 = new JPanel();
 		pnl2.setLayout(new GridLayout(1, 4));
-		
+
 		pnl2.setBackground(Color.CYAN);
 		pnl2.setPreferredSize(new Dimension(480, 30));
 		pnl2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -68,22 +67,87 @@ public class CompanyStockBoardPnl extends JPanel {
 		add(pnl2);
 
 		// A B C D 회사 정보 표시 패널
-		JPanel companyInfoPnl1 = returnCompnayInfoPnl("A회사", 100, 0, 100);
-			JPanel companyInfoPnl2 = returnCompnayInfoPnl("B회사", 200, 0, 300);
-		JPanel companyInfoPnl3 = returnCompnayInfoPnl("C회사", 150, 0, 500);
-		JPanel companyInfoPnl4 = returnCompnayInfoPnl("D회사", 500, 0, 800);
+		setAllComapnyInfoPnl();
+
+	}
+
+	private void setAllComapnyInfoPnl() {
+		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
+		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
+
+
+		JPanel companyInfoPnl1 = companyInfoData(userInfo, allCompanyList, findACompanyBackdata, 0);
+		JPanel companyInfoPnl2 = companyInfoData(userInfo, allCompanyList, findBCompanyBackdata, 1);
 
 		add(companyInfoPnl1);
 		add(companyInfoPnl2);
-		add(companyInfoPnl3);
-		add(companyInfoPnl4);
+	}
+	
+	private JPanel companyInfoData(UserInfo userInfo, List<AllCompany> allCompanyList,
+			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
+		String companyName = allCompanyList.get(companyIndex).getCompanyName();
+		int priceNow = allCompanyList.get(companyIndex).getCompanyStockPrice();
+		int stockCount = allCompanyList.get(companyIndex).getCompanyStockCount();
+		int comparePrevDay;
 
+		if (allCompanyList.get(userInfo.getUser_Date() - 1).getDate() == 1) {
+			comparePrevDay = 0;
+		} else {
+			comparePrevDay = findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockPrice()
+					- findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStockPrice();
+		}
+		JPanel pnl = returnCompnayInfoPnl(companyName, priceNow, comparePrevDay, stockCount);
+		return pnl;
+	}
+
+	private void setPnl1() {
+		stockFrame = new StockFrame(userInfo, SaveData, userMoneyHistory, allCompanyBackdataList);
+
+		JPanel pnl1 = new JPanel();
+		pnl1.setLayout(new GridLayout(2, 2));
+		pnl1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		pnl1.setPreferredSize(new Dimension(480, 100));
+
+		JLabel pricipal = new JLabel(); // 원금
+		String pricipalText = "" + userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
+				+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count();
+		pricipal.setText("총매수: " + pricipalText);
+		pricipal.setHorizontalAlignment(JLabel.CENTER);
+
+		JLabel allProfitMoney = new JLabel(); // 수익
+		String allProfitMoneyText = "" + userMoneyHistory.get(0).getMy_Stock_Money()
+				+ userMoneyHistory.get(1).getMy_Stock_Money();
+		allProfitMoney.setText("평가손익: " + allProfitMoneyText + "원");
+		allProfitMoney.setHorizontalAlignment(JLabel.CENTER);
+
+		JLabel profitRate = new JLabel(); // 수익률
+		double stockMoneyRate = 0;
+		if (userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count() != 0) {
+			stockMoneyRate = (userMoneyHistory.get(0).getMy_Stock_Money() + userMoneyHistory.get(1).getMy_Stock_Money())
+					/ (userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
+							+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count());
+		}
+		profitRate.setText("수익률: " + stockMoneyRate + "%");
+		profitRate.setHorizontalAlignment(JLabel.CENTER);
+
+		JLabel allProperty = new JLabel(); // 주식 + 현금 = 총 재산
+		String allPropertyText = ""
+				+ userMoneyHistory.get(0).getMy_Stock_Money() * userMoneyHistory.get(0).getStock_Count()
+				+ userMoneyHistory.get(1).getMy_Stock_Money() * userMoneyHistory.get(1).getStock_Count();
+		allProperty.setText("총 평가: " + allPropertyText + "원");
+		allProperty.setHorizontalAlignment(JLabel.CENTER);
+
+		pnl1.add(pricipal);
+		pnl1.add(allProfitMoney);
+		pnl1.add(profitRate);
+		pnl1.add(allProperty);
+		add(pnl1);
 	}
 
 	private JPanel returnCompnayInfoPnl(String companyName, int priceNow, int comparePrevDay, int stockCount) {
 		JPanel pnl = new JPanel();
 		pnl.setLayout(new GridLayout(1, 4));
-		
+
 		pnl.setBackground(Color.WHITE);
 		pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		pnl.setPreferredSize(new Dimension(480, 60));
@@ -91,15 +155,15 @@ public class CompanyStockBoardPnl extends JPanel {
 		JLabel companyNameLbl = new JLabel();
 		companyNameLbl.setText(companyName);
 		companyNameLbl.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		JLabel priceNowLbl = new JLabel();
 		priceNowLbl.setText("" + priceNow);
 		priceNowLbl.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		JLabel comparePrevDayLbl = new JLabel();
-		comparePrevDayLbl.setText(comparePrevDay + "%");
+		comparePrevDayLbl.setText(comparePrevDay + "원");
 		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		JLabel stockCountLbl = new JLabel();
 		stockCountLbl.setText("" + stockCount);
 		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);

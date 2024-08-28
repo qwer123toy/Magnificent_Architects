@@ -7,61 +7,55 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import dbUtil.DBUtil;
-import dbUtil.IResultMapper;
-import mapper.CompanyInfoMapper;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
-import tables.CompanyInfo;
+import tables.AllCompanyBackdata;
+import tables.UserInfo;
+import tables.UserMoneyHistory;
 
 public class BaseMainFrame extends JFrame implements ActionListener {
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
+	private static UserInfo userInfo;
+	private static int SaveData;
+	private static List<UserMoneyHistory> userMoneyHistory;
+	private static List<AllCompanyBackdata> allCompanyBackdataList;
 
-	public BaseMainFrame() {
+	public BaseMainFrame(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
+			List<AllCompanyBackdata> allCompanyBackdataList) {
+		this.userInfo = userInfo;
+		this.SaveData = SaveData;
+		this.userMoneyHistory = userMoneyHistory;
+		this.allCompanyBackdataList = allCompanyBackdataList;
+
 		// 가장 큰 패널
 		JPanel contentPane = new JPanel();
-
 		contentPane.setLayout(new BorderLayout());
 
 		// 북쪽 패널
-		JPanel pnlNorth = new JPanel();
-		contentPane.add(pnlNorth, "North");
-		pnlNorth.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-
-		JButton btnNorth1 = new JButton();
-		btnNorth1.setText("메인화면");
-		JButton btnNorth2 = new JButton();
-		btnNorth2.setText("이전");
-		btnNorth2.addActionListener(this);
-		JButton btnNorth3 = new JButton();
-		btnNorth3.setText("다음");
-		btnNorth3.addActionListener(this);
-		JButton btnNorth4 = new JButton();
-		btnNorth4.setText("장 마감");
-		pnlNorth.add(btnNorth1);
-		pnlNorth.add(btnNorth2);
-		pnlNorth.add(btnNorth3);
-		pnlNorth.add(btnNorth4);
-		pnlNorth.setBackground(Color.BLACK);
-
-		
+		setPnlNorth(contentPane);
 
 		// 센터에 설정할 pnl들
-		setCardLayout();
+		setPnlCenter();
 		contentPane.add(pnlCenter, "Center");
 
 		// 남쪽 패널
+		setPnlSouth(contentPane);
+
+		// 가장 큰 패널(contentPane) 설정
+		setSize(500, 650);
+		add(contentPane);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+
+	private void setPnlSouth(JPanel contentPane) {
 		JPanel pnlSouth = new JPanel();
 		pnlSouth.setPreferredSize(new Dimension(500, 100));
 		contentPane.add(pnlSouth, "South");
@@ -84,38 +78,56 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlSouth.add(btnSouth1);
 		pnlSouth.add(btnSouth2);
 		pnlSouth.add(btnSouth3);
-
-		// 기초 프레임
-		setSize(500, 650);
-		add(contentPane);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	private void setCardLayout() {
+	private void setPnlNorth(JPanel contentPane) {
+		JPanel pnlNorth = new JPanel();
+		contentPane.add(pnlNorth, "North");
+		pnlNorth.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+		JButton btnNorth1 = new JButton();
+		btnNorth1.setText("메인화면");
+		JButton btnNorth2 = new JButton();
+		btnNorth2.setText("이전");
+		btnNorth2.addActionListener(this);
+		JButton btnNorth3 = new JButton();
+		btnNorth3.setText("다음");
+		btnNorth3.addActionListener(this);
+		JButton btnNorth4 = new JButton();
+		btnNorth4.setText("장 마감");
+		pnlNorth.add(btnNorth1);
+		pnlNorth.add(btnNorth2);
+		pnlNorth.add(btnNorth3);
+		pnlNorth.add(btnNorth4);
+		pnlNorth.setBackground(Color.BLACK);
+	}
+
+	private void setPnlCenter() {
 		pnlCenter = new JPanel();
 		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-		
+
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
-		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl();
-		
+		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, SaveData, userMoneyHistory,
+				allCompanyBackdataList);
+
 		// 하단의 내 정보를 누르면 나오는 패널
 		ClickMyInfoBtnPnl clickMyInfoBtnPnl = new ClickMyInfoBtnPnl();
-		
+
 		// 주식 거래 상황을 보여주는 패널
 		SeeMyTradingHistoryPnl seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
-		
+
 		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
-		
+
 		// 그래프랑 회사 정보 패널
 		GraphAndCompanyInfoPnl graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl();
-		
+
 		// 매수 패널
 		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
-		
+
 		// 매도 패널
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
@@ -142,8 +154,13 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		}
 	}
 
-	public static void main(String[] args) {
-		new BaseMainFrame().setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		UserInfo userInfo = ;
+//				int SaveData = ;
+//				List<UserMoneyHistory> userMoneyHistory = ;
+//		List<AllCompanyBackdata> allCompanyBackdataList = ;
+//		
+//		new BaseMainFrame(userInfo, SaveData, userMoneyHistory, allCompanyBackdataList).setVisible(true);
+//	}
 
 }
