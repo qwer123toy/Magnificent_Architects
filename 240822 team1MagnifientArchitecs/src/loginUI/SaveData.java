@@ -1,30 +1,92 @@
 package loginUI;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class SaveDataGUI extends JFrame {
-	public SaveDataGUI() {
+import DAO.AllCompanyBackdataDAO;
+import DAO.AllCompanyDAO;
+import DAO.UserInfoDAO;
+import DAO.UserMoneyHistoryDAO;
+import tables.AllCompany;
+import tables.AllCompanyBackdata;
+import tables.CompanyInfo;
+import tables.UserInfo;
+import tables.UserMoneyHistory;
+import ui.BaseMainFrame;
+
+public class SaveData extends JDialog {
+	
+	List<UserInfo> userList = new ArrayList<>();
+	List<List<UserMoneyHistory>> userMoneyHistoryListList = new ArrayList<>();
+	List<CompanyInfo> companyInfoList = new ArrayList<>();
+	List<AllCompanyBackdata> allCompanyBackdataList = new ArrayList<>();
+	List<AllCompany> allCompanyList = new ArrayList<>();
+	UserInfoDAO userInfoDAO = new UserInfoDAO();
+	UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
+	AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+	AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
+	List<UserInfo> userinfoList;
+	
+	private void insertInfoByID(String userName, int saveData) {
+		try {
+			userMoneyHistoryDAO.insert(userName, saveData, "A 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "B 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "C 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "D 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "E 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "F 회사", 0, 0, 0, 0, 0, 0, 1);
+			allCompanyDAO.insert("A 회사", 100, 200, userName, saveData, 1);
+			allCompanyDAO.insert("B 회사", 150, 300, userName, saveData, 1);
+			allCompanyBackdataDAO.insert("A 회사", 100, 200, userName, saveData, 1);
+			allCompanyBackdataDAO.insert("B 회사", 150, 300, userName, saveData, 1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	public SaveData(UserInfo userInfo) {
 		// 전체 배경색 조정
 		getContentPane().setBackground(Color.WHITE);
 		setBounds(100, 100, 450, 460);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setResizable(false); // 앱솔루트 만든 후, 크기수정불가
-
+		
+		userinfoList = new ArrayList<>();
+		try {
+			userinfoList = userInfoDAO.checkExistIDAndPW(userInfo.getUser_ID(), userInfo.getUser_PW());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String example = "3일차, 현재 보유금액 23400원";
 
 		// 첫 번째 패널, 버튼
-		JButton btnSave = btnSetting("저장 데이터1", "없음", 10);
+		JButton btnSave1 = btnSetting("저장 데이터 1", userinfoList.get(0).getUser_Money() +"원, " +
+				userinfoList.get(0).getUser_Date() + "일차", 10);
 		// 두 번째 패널, 버튼
-		JButton btnSave2 = btnSetting("저장 데이터2", "", 118);
+		JButton btnSave2 = btnSetting("저장 데이터2", userinfoList.size()>=2 ? 
+				userinfoList.get(1).getUser_Money() +"원, " +
+				userinfoList.get(1).getUser_Date() + "일차"
+				:"없음" , 118);
 		// 세 번째 패널, 버튼
-		JButton btnSave3 = btnSetting("저장 데이터3", example, 228);
+		JButton btnSave3 = btnSetting("저장 데이터3", userinfoList.size()>=3 ? 
+				userinfoList.get(2).getUser_Money() +"원, " +
+				userinfoList.get(2).getUser_Date() + "일차"
+				:"없음" , 228);
 		// 뒤로가기 버튼
 		JButton btnBack = new JButton("뒤로가기");
 		// (x좌표, y좌표, 가로길이, 세로길이)
@@ -32,9 +94,10 @@ class SaveDataGUI extends JFrame {
 		add(btnBack);
 
 		// 버튼1을 누르면 버튼2에 텍스트가 삽입
-		btnSave.addActionListener(new ActionListener() {
+		btnSave1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				btnSave2.setText(example);
+				BaseMainFrame baseMainFrame = new BaseMainFrame(userinfoList.get(0));
+				baseMainFrame.setVisible(true);
 			}
 		});
 	}
@@ -56,12 +119,5 @@ class SaveDataGUI extends JFrame {
 		pnl.add(btn);
 
 		return btn; // 버튼을 반환
-	}
-}
-
-public class SaveData {
-	public static void main(String[] args) {
-		SaveDataGUI init = new SaveDataGUI();
-		init.setVisible(true);
 	}
 }

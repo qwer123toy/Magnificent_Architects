@@ -41,6 +41,32 @@ public class UserInfoDAO {
 		return null;
 	}
 	
+	public UserInfo findByIDAndPW(String user_ID, String user_PW) {
+		String sql = "SELECT * FROM UserInfo WHERE user_ID = ? and user_PW = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user_ID);
+			stmt.setString(2, user_PW);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				UserInfo userInfo = UserInfoMapper.resultMapping(rs);
+				return userInfo;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return null;
+	}
+	
+	
 	public UserInfo findByIDAndData(String user_ID, int user_SaveData) {
 		String sql = "SELECT * FROM UserInfo WHERE user_ID = ? and user_SaveData = ?";
 		Connection conn = null;
@@ -93,7 +119,7 @@ public class UserInfoDAO {
 	}
 	
 	public List<UserInfo> checkExistIDAndPW(String user_ID, String user_PW) throws SQLException {
-		String sql = "SELECT * FROM userInfo WHERE user_id = ? and user_PW = ?";
+		String sql = "SELECT * FROM userInfo WHERE user_id = ? and user_PW = ? order by user_SaveData";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;

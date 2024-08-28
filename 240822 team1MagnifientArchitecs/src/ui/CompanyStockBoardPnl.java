@@ -27,14 +27,16 @@ public class CompanyStockBoardPnl extends JPanel {
 	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 	private List<AllCompany> allCompanyList;
 
-	public CompanyStockBoardPnl(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
+	private static ListAndDAO listAndDAO = new ListAndDAO();
+	
+	
+	public CompanyStockBoardPnl(UserInfo parentUserInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
 			List<AllCompanyBackdata> allCompanyBackdataList) {
-		this.userInfo = userInfo;
-		this.SaveData = SaveData;
-		this.userMoneyHistory = userMoneyHistory;
-		this.allCompanyBackdataList = allCompanyBackdataList;
-
-		allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		
+		userInfo = listAndDAO.userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
+		userMoneyHistory = listAndDAO.usermoneyHistoryDAO.findByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		allCompanyBackdataList = listAndDAO.allCompanyBackdataDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		allCompanyList = listAndDAO.allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
@@ -85,6 +87,8 @@ public class CompanyStockBoardPnl extends JPanel {
 	
 	private JPanel companyInfoData(UserInfo userInfo, List<AllCompany> allCompanyList,
 			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
+		
+		
 		String companyName = allCompanyList.get(companyIndex).getCompanyName();
 		int priceNow = allCompanyList.get(companyIndex).getCompanyStockPrice();
 		int stockCount = allCompanyList.get(companyIndex).getCompanyStockCount();
@@ -101,7 +105,7 @@ public class CompanyStockBoardPnl extends JPanel {
 	}
 
 	private void setPnl1() {
-		stockFrame = new StockFrame(userInfo, SaveData, userMoneyHistory, allCompanyBackdataList);
+//		stockFrame = new StockFrame(userInfo);
 
 		JPanel pnl1 = new JPanel();
 		pnl1.setLayout(new GridLayout(2, 2));

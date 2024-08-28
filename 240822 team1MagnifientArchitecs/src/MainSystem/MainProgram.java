@@ -32,12 +32,12 @@ public class MainProgram {
 //	Connection conn = null;
 
 	public MainProgram() {
-		companyInfoList.add(new CompanyInfo("A회사", "A 회사 정보", 100, "통신", "스마트폰"));
-		companyInfoList.add(new CompanyInfo("B회사", "B 회사 정보", 120, "건설", "아파트"));
-		companyInfoList.add(new CompanyInfo("C회사", "C 회사 정보", 130, "운송", "항공사"));
-		companyInfoList.add(new CompanyInfo("D회사", "D 회사 정보", 90, "철강", "철강"));
-		companyInfoList.add(new CompanyInfo("E회사", "E 회사 정보", 80, "화학", "화학제품"));
-		companyInfoList.add(new CompanyInfo("F회사", "F 회사 정보", 50, "반도체", "기계장비"));
+//		companyInfoList.add(new CompanyInfo("A회사", "A 회사 정보", 100, "통신", "스마트폰"));
+//		companyInfoList.add(new CompanyInfo("B회사", "B 회사 정보", 120, "건설", "아파트"));
+//		companyInfoList.add(new CompanyInfo("C회사", "C 회사 정보", 130, "운송", "항공사"));
+//		companyInfoList.add(new CompanyInfo("D회사", "D 회사 정보", 90, "철강", "철강"));
+//		companyInfoList.add(new CompanyInfo("E회사", "E 회사 정보", 80, "화학", "화학제품"));
+//		companyInfoList.add(new CompanyInfo("F회사", "F 회사 정보", 50, "반도체", "기계장비"));
 
 		//		try {
 //			Connection conn = DBUtil.getConnection("go_db");
