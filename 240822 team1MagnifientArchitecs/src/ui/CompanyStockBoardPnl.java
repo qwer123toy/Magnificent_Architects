@@ -32,7 +32,7 @@ public class CompanyStockBoardPnl extends JPanel {
 		setSize(500, 500);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
-		// 총 매수, 평가손익, 총 평가, 수익률 패널
+		// 현재 원금, 현재 수익, 현재 수익률, 현재 보유 금액
 		setPnl1();
 
 		// 회사명, 현재가, 전일대비, 잔여수량 패널
@@ -112,32 +112,36 @@ public class CompanyStockBoardPnl extends JPanel {
 		pnl1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		pnl1.setPreferredSize(new Dimension(480, 100));
 
-		JLabel pricipal = new JLabel(); // 원금
+		// 현재 원금
+		JLabel pricipal = new JLabel();
 		String pricipalText = "" + umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
 				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count();
-		pricipal.setText("총매수: " + pricipalText);
+		pricipal.setText("현재 원금은: " + pricipalText);
 		pricipal.setHorizontalAlignment(JLabel.CENTER);
 
-		JLabel allProfitMoney = new JLabel(); // 수익
+		// 현재 수익
+		JLabel allProfitMoney = new JLabel();
 		String allProfitMoneyText = "" + umhStockFrame.get(0).getMy_Stock_Money()
 				+ umhStockFrame.get(1).getMy_Stock_Money();
-		allProfitMoney.setText("평가손익: " + allProfitMoneyText + "원");
+		allProfitMoney.setText("현재 수익: " + allProfitMoneyText + "원");
 		allProfitMoney.setHorizontalAlignment(JLabel.CENTER);
 
-		JLabel profitRate = new JLabel(); // 수익률
+		// 현재 수익률
+		JLabel profitRate = new JLabel();
 		double stockMoneyRate = 0;
 		if (umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count() != 0) {
 			stockMoneyRate = (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money())
 					/ (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
 							+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
 		}
-		profitRate.setText("수익률: " + stockMoneyRate + "%");
+		profitRate.setText("현재 수익률: " + stockMoneyRate + "%");
 		profitRate.setHorizontalAlignment(JLabel.CENTER);
 
-		JLabel allProperty = new JLabel(); // 주식 + 현금 = 총 재산
+		// 현재 보유 금액
+		JLabel allProperty = new JLabel();
 		String allPropertyText = "" + umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
 				+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count();
-		allProperty.setText("총 평가: " + allPropertyText + "원");
+		allProperty.setText("현재 보유 금액: " + allPropertyText + "원");
 		allProperty.setHorizontalAlignment(JLabel.CENTER);
 
 		pnl1.add(pricipal);
