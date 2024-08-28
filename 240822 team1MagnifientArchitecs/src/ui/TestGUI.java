@@ -6,8 +6,9 @@ public class TestGUI extends JFrame {
 	public TestGUI() {
 //		CompanyStockBoardPnl pnl = new CompanyStockBoardPnl();
 //		ClickMyInfoBtnPnl pnl = new ClickMyInfoBtnPnl();
-		SeeMyTradingHistoryPnl pnl = new SeeMyTradingHistoryPnl();
+//		SeeMyTradingHistoryPnl pnl = new SeeMyTradingHistoryPnl();
 //		NewsPnl pnl = new NewsPnl();
+		GraphAndCompanyInfoPnl pnl = new GraphAndCompanyInfoPnl();
 		
 		add(pnl);
 		

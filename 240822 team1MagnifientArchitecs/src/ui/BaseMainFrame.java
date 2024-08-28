@@ -98,11 +98,6 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 
-		// 회사 정보버튼 누르면 나오는 패널 쪽으로 옮겨야 한다.
-//		String selectedCompanyName = "A 회사";
-//		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
-//		CompanyInfoPnl pnlCompanyInfo = new CompanyInfoPnl(companyInfo);
-		
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
 		CompanyStockBoardPnl companyStockBoardPnl = new CompanyStockBoardPnl();
 		
@@ -115,6 +110,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
 		
+		// 그래프랑 회사 정보 패널
+		GraphAndCompanyInfoPnl graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl();
+		
 		// 매수 패널
 		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
 		
@@ -126,8 +124,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlCenter.add(clickMyInfoBtnPnl, "Second");
 		pnlCenter.add(seeMyTradingHistoryPnl, "Third");
 		pnlCenter.add(newsPnl, "Forth");
-		pnlCenter.add(buyPriceGUI, "Fifth");
-		pnlCenter.add(sellPriceGUI, "sixth");
+		pnlCenter.add(graphAndCompanyInfoPnl, "Fifth");
+		pnlCenter.add(buyPriceGUI, "Sixth");
+		pnlCenter.add(sellPriceGUI, "Seventh");
 	}
 
 	@Override
@@ -141,31 +140,6 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		} else if (command.equals("다음")) {
 			cardLayout.next(pnlCenter);
 		}
-	}
-
-	private static CompanyInfo selectCompany(String companyName) {
-		IResultMapper<CompanyInfo> mapper = new CompanyInfoMapper();
-
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-
-		try {
-			String sql = "SELECT * FROM CompanyInfo WHERE companyName = ?; ";
-			conn = DBUtil.getConnection("go_db");
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, companyName);
-			rs = stmt.executeQuery();
-			if (rs.next()) {
-				return mapper.resultMapping(rs);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBUtil.closeAll(rs, stmt, conn);
-		}
-		return null;
 	}
 
 	public static void main(String[] args) {
