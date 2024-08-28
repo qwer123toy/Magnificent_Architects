@@ -25,8 +25,8 @@ public class CompanyFrame {
 //				findCompanyBackdata.add(acbd);
 //			}
 //		}
+		AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 		while (true) {
-			AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 			List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 			System.out.println("\n=======================");
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());

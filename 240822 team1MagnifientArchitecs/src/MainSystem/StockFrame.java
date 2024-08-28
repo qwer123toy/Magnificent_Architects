@@ -5,48 +5,56 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
+import DAO.UserInfoDAO;
+import DAO.UserMoneyHistoryDAO;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
 public class StockFrame {
-	public StockFrame(UserInfo userInfo, int SaveData, List<UserMoneyHistory> userMoneyHistory,
-			List<AllCompanyBackdata> allCompanyBackdataList) {
+	public StockFrame(UserInfo userInfo) {
 		
 		
-		
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
+		AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+		UserMoneyHistoryDAO usermoneyHistoryDAO = new UserMoneyHistoryDAO();
+		AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 		System.out.println("로그인 되었습니다.");
 		while (true) {
-			AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
-			List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+			
+			UserInfo userInfoStockFrame =  userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+			List<UserMoneyHistory> umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+			List<AllCompanyBackdata> allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+			List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
 			System.out.println("\n====================");
-			System.out.printf("%d일차 진행 중\n", userInfo.getUser_Date());
-			System.out.printf("반갑습니다. %s 회원님\n", userInfo.getUser_ID());
+			System.out.printf("%d일차 진행 중\n", userInfoStockFrame.getUser_Date());
+			System.out.printf("반갑습니다. %s 회원님\n", userInfoStockFrame.getUser_ID());
 //			System.out.printf("현재 잔고는 %d원입니다.\n", userInfo.getUser_Money());
 
 			System.out.printf("현재 원금은 %d원입니다.\n",
-					userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
-							+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count()
+					umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
+							+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count()
 			// + userMoneyHistory.get(2).getBuyPrice() * userMoneyHistory.get(2)).getStock_Count()
 			);
 
 			System.out.printf("현재 수익은 %d원입니다.\n",
-					userMoneyHistory.get(0).getMy_Stock_Money() + userMoneyHistory.get(1).getMy_Stock_Money());
+					umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money());
 
 			double stockMoneyRate = 0;
-			if (userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count() != 0) {
-				stockMoneyRate = (userMoneyHistory.get(0).getMy_Stock_Money() + userMoneyHistory.get(1).getMy_Stock_Money())
-						/ (userMoneyHistory.get(0).getBuyPrice() * userMoneyHistory.get(0).getStock_Count()
-								+ userMoneyHistory.get(1).getBuyPrice() * userMoneyHistory.get(1).getStock_Count());
+			if (umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count() != 0) {
+				stockMoneyRate = (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money())
+						/ (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
+								+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
 			}
 
 			System.out.printf("현재 수익률은 %f%%입니다.\n", stockMoneyRate);
 
 			System.out.printf("현재 보유 금액은 %d원입니다\n",
-					userMoneyHistory.get(0).getMy_Stock_Money() * userMoneyHistory.get(0).getStock_Count()
-							+ userMoneyHistory.get(1).getMy_Stock_Money() * userMoneyHistory.get(1).getStock_Count());
+					umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
+							+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count());
 
 			List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 			List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
@@ -78,11 +86,11 @@ public class StockFrame {
 				switch (choose) {
 				case 1:
 					CompanyFrame companyFrameA = new CompanyFrame(userInfo, allCompanyBackdataList,
-							findACompanyBackdata, userMoneyHistory, "A 회사", 0);
+							findACompanyBackdata, umhStockFrame, "A 회사", 0);
 					break;
 				case 2:
 					CompanyFrame companyFrameB = new CompanyFrame(userInfo,  allCompanyBackdataList,
-							findBCompanyBackdata, userMoneyHistory, "B 회사", 1);
+							findBCompanyBackdata, umhStockFrame, "B 회사", 1);
 					break;
 				case 3:
 					System.out.println("내 정보 보기를 선택하셨습니다.");
@@ -146,18 +154,18 @@ public class StockFrame {
 	
 	
 
-	// 회사 백데이터에서 특정 회사의 백데이터만 불러오기
-	private List<AllCompanyBackdata> findCompanyBackData(UserInfo userInfo, List<AllCompanyBackdata> allCompanyBackdataList,
-			String companyName) {
-		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
-
-		for (AllCompanyBackdata acbd : allCompanyBackdataList) {
-			if (acbd.getSimulation_ID().equals(userInfo.getUser_ID())
-					&& acbd.getSimulation_ID_SaveData() == userInfo.getUser_SaveData()
-					&& acbd.getCompanyName().equals(companyName)) {
-				findACompanyBackdata.add(acbd);
-			}
-		}
-		return findACompanyBackdata;
-	}
+//	// 회사 백데이터에서 특정 회사의 백데이터만 불러오기
+//	private List<AllCompanyBackdata> findCompanyBackData(UserInfo userInfo, List<AllCompanyBackdata> allCompanyBackdataList,
+//			String companyName) {
+//		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
+//
+//		for (AllCompanyBackdata acbd : allCompanyBackdataList) {
+//			if (acbd.getSimulation_ID().equals(userInfo.getUser_ID())
+//					&& acbd.getSimulation_ID_SaveData() == userInfo.getUser_SaveData()
+//					&& acbd.getCompanyName().equals(companyName)) {
+//				findACompanyBackdata.add(acbd);
+//			}
+//		}
+//		return findACompanyBackdata;
+//	}
 }

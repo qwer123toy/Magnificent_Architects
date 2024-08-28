@@ -42,7 +42,6 @@ public class MainProgram {
 		//		try {
 //			Connection conn = DBUtil.getConnection("go_db");
 //		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 	}
@@ -200,7 +199,7 @@ public class MainProgram {
 //					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 1);
 					List<AllCompanyBackdata> acbdList = allCompanyBackdataDAO.findAllByID(id, 1);
 
-					StockFrame stockFrame1 = new StockFrame(loginUserInfoList.get(0), 1, umhList, acbdList);
+					StockFrame stockFrame1 = new StockFrame(loginUserInfoList.get(0));
 					userFindCount = -1;
 					return;
 				} else if (chooseData == 2 && chkSaveData2 == 0) {
@@ -210,7 +209,7 @@ public class MainProgram {
 					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 2);
 					List<AllCompanyBackdata> acbdList = allCompanyBackdataDAO.findAllByID(id, 2);
 
-					StockFrame stockFrame2 = new StockFrame(loginUserInfoList.get(0), 2, umhList, acbdList);
+					StockFrame stockFrame2 = new StockFrame(loginUserInfoList.get(1));
 					userFindCount = -1;
 					return;
 				}
@@ -219,7 +218,7 @@ public class MainProgram {
 					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 2);
 					List<AllCompanyBackdata> acbdList = allCompanyBackdataDAO.findAllByID(id, 2);
 
-					StockFrame stockFrame2 = new StockFrame(loginUserInfoList.get(0), 2, umhList, acbdList);
+					StockFrame stockFrame2 = new StockFrame(loginUserInfoList.get(1));
 					userFindCount = -1;
 					return;
 				}
@@ -231,7 +230,7 @@ public class MainProgram {
 					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 3);
 					List<AllCompanyBackdata> acbdList = allCompanyBackdataDAO.findAllByID(id, 3);
 
-					StockFrame stockFrame3 = new StockFrame(loginUserInfoList.get(0), 3, umhList, acbdList);
+					StockFrame stockFrame3 = new StockFrame(loginUserInfoList.get(2));
 					userFindCount = -1;
 					return;
 				}
@@ -240,7 +239,7 @@ public class MainProgram {
 					List<AllCompany> acList = allCompanyDAO.findAllByID(id, 3);
 					List<AllCompanyBackdata> acbdList = allCompanyBackdataDAO.findAllByID(id, 3);
 
-					StockFrame stockFrame3 = new StockFrame(loginUserInfoList.get(0), 3, umhList, acbdList);
+					StockFrame stockFrame3 = new StockFrame(loginUserInfoList.get(2));
 					userFindCount = -1;
 					return;
 				}
