@@ -139,6 +139,35 @@ public class AllCompanyDAO {
 
 	}
 	
+	public void updatePriceAndDate(String companyName, int companyStockPrice, String simulation_ID, 
+			int simulation_ID_SaveData) throws SQLException {
+		String sql = "UPDATE allcompany SET companyStockPrice = companyStockPrice + ?, date = date+1 \r\n" + 
+				"	where (simulation_ID =?) and (simulation_ID_SaveData=?) and (companyName = ?);";
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, companyStockPrice);
+			stmt.setString(2, simulation_ID);
+			stmt.setInt(3, simulation_ID_SaveData);
+			stmt.setString(4, companyName);
+
+			stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+
+	}
+	
 	// allcopany 테이블의 row 숫자 반환
 	public int getRowCount(String userId, int saveData) {
 		String sql = "SELECT count(*) FROM AllCompany WHERE "

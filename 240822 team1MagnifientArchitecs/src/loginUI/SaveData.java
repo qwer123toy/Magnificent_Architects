@@ -98,6 +98,7 @@ public class SaveData extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				BaseMainFrame baseMainFrame = new BaseMainFrame(userinfoList.get(0));
 				baseMainFrame.setVisible(true);
+				dispose();
 			}
 		});
 	}

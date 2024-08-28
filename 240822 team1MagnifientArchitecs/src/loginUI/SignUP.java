@@ -45,8 +45,8 @@ public class SignUP extends JDialog {
 
 	private void insertInfoByID(String userName, int saveData) {
 		try {
-			userMoneyHistoryDAO.insert(userName, saveData, "A 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "B 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "A 회사", 0, 100, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "B 회사", 0, 150, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "C 회사", 0, 0, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "D 회사", 0, 0, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "E 회사", 0, 0, 0, 0, 0, 0, 1);

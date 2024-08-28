@@ -204,4 +204,31 @@ public class UserInfoDAO {
 
 	}
 	
+	public void updateDate(String user_ID, 
+			int user_SaveData) throws SQLException {
+		String sql = "UPDATE userInfo SET user_Date = user_Date+1 where (user_ID =?) and (user_SaveData=?);";
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user_ID);
+			stmt.setInt(2, user_SaveData);
+			
+
+			stmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+
+	}
+	
 }

@@ -143,5 +143,36 @@ public class UserMoneyHistoryDAO {
 		}
 
 	}
+	
+	
+	
+	public void updatePriceAndDate(int changeStockPrice, String user_ID, int user_saveData, String user_Stock,
+			int stock_Price_Now) throws SQLException {
+		String sql = "update usermoneyhistory set stock_Price_Now = stock_Price_Now + (?), user_Date = user_Date + 1\r\n" + 
+				"			where user_id = ? and userSaveData = ? and user_Stock = ?;";
+
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, changeStockPrice);
+			stmt.setString(2, user_ID);
+			stmt.setInt(3, user_saveData);
+			stmt.setString(4, user_Stock);
+			
+			stmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+
+	}
 
 }

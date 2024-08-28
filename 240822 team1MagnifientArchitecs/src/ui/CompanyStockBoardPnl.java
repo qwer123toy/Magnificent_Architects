@@ -27,7 +27,7 @@ public class CompanyStockBoardPnl extends JPanel {
 
 	public CompanyStockBoardPnl(UserInfo userInfo) {
 		this.userInfo = userInfo;
-
+		
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -59,7 +59,7 @@ public class CompanyStockBoardPnl extends JPanel {
 		add(pnl2);
 
 		// A B C D 회사 정보 표시 패널
-		setAllComapnyInfoPnl();
+//		setAllComapnyInfoPnl();
 
 	}
 
