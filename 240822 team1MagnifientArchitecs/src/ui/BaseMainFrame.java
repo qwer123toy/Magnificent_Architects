@@ -7,26 +7,36 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import DAO.UserInfoDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
+import tables.AllCompany;
+import tables.AllCompanyBackdata;
 import tables.UserInfo;
+import tables.UserMoneyHistory;
 
 public class BaseMainFrame extends JFrame implements ActionListener {
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
 	private UserInfo userInfo;
-	
+	private List<UserMoneyHistory> userMoneyHistoryList;
+	private AllCompany allCompany;
+	private AllCompanyBackdata allCompanyBackdata;
+
+	private static ListAndDAO listAndDAO = new ListAndDAO();
 
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
-		
+
 		// 가장 큰 패널
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
@@ -92,6 +102,68 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlNorth.add(btnNorth3);
 		pnlNorth.add(btnNorth4);
 		pnlNorth.setBackground(Color.BLACK);
+
+		btnNorth4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+//				-- update userInfo의 user_Date
+//				-- usermoneyhistory의 user_Date, stock_Price_Now
+//				-- allcompany의 companyStockPrice, date
+//				-- allcompanybackdata 다 넣어줘야됨
+//				-- insert (companyName, companyStockPrice, companyStockCount, 
+//				simulation_ID, simulation_ID_SaveData, date)
+
+				int chageDay = userInfo.getUser_Date() + 1;
+
+				userInfo.setUser_Date(chageDay);
+				
+				userMoneyHistoryList = listAndDAO.usermoneyHistoryDAO.findByID(userInfo.getUser_ID(),
+						userInfo.getUser_SaveData());
+				try {
+//					int changeAComMoney = listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+//							.getCompanyStockPrice() + 10;
+//					int changeBComMoney = listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+//							.getCompanyStockPrice() - 8;
+					int changeAComMoney = 10;
+					int changeBComMoney = -8;
+					
+					listAndDAO.userInfoDAO.updateDate(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+					
+					listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeAComMoney, userInfo.getUser_ID(),
+							userInfo.getUser_SaveData(), "A 회사", userMoneyHistoryList.get(0).getStock_Price_now());
+					
+					listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeBComMoney, userInfo.getUser_ID(),
+							userInfo.getUser_SaveData(), "B 회사", userMoneyHistoryList.get(1).getStock_Price_now());
+
+					listAndDAO.allCompanyDAO.updatePriceAndDate("A 회사", changeAComMoney, userInfo.getUser_ID(),
+							userInfo.getUser_SaveData());
+					
+					listAndDAO.allCompanyDAO.updatePriceAndDate("B 회사", changeBComMoney, userInfo.getUser_ID(),
+							userInfo.getUser_SaveData());
+
+					listAndDAO.allCompanyBackdataDAO.insert("A 회사",
+							listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+									.getCompanyStockPrice(),
+							listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+									.getCompanyStockCount(),
+							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
+
+					listAndDAO.allCompanyBackdataDAO.insert("B 회사",
+							listAndDAO.allCompanyDAO.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+									.getCompanyStockPrice(),
+							listAndDAO.allCompanyDAO.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+									.getCompanyStockCount(),
+							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
+					JOptionPane.showMessageDialog(BaseMainFrame.this, "오늘 장이 마감되었습니다.");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
 	}
 
 	private void setPnlCenter() {
@@ -146,11 +218,11 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		UserInfoDAO userInfoDAO = new UserInfoDAO();
-		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
-		
-		new BaseMainFrame(id).setVisible(true);
-		
+//		UserInfoDAO userInfoDAO = new UserInfoDAO();
+//		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
+
+//		new BaseMainFrame(id).setVisible(true);
+
 	}
 
 }
