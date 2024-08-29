@@ -25,16 +25,19 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 
 		// 내 투자, 원금, 총 수익, 총 수익률
 		createNorthPnl();
+		//TODO 추가 수정 필요
 		updateNorthPnal();
 
 		// 회사 이름, 100주, 53456원, +3456원(6.91%)
 		createCenterPnl();
+		//TODO 추가 수정 필요
 		updateCenterPnl();
 
 		// 뒤로가기 버튼
 		createSouthPnl();
 	}
 
+	//TODO 추가 수정 필요
 	public void updateCenterPnl() {
 		tradeHistoryPnl1.update();
 		tradeHistoryPnl2.update();

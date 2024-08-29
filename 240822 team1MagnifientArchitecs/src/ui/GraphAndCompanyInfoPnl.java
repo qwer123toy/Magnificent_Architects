@@ -49,6 +49,7 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		pnlNorth.add(companyStockpnl);
 
 		// 차트보기, 회사 정보 패널
+		// TODO 화면 전환 구현해야함
 		JPanel chartAndbtnpnl = new JPanel();
 
 		JButton graphbtn = new JButton("차트 보기");
@@ -83,7 +84,9 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		// south 패널 매수 버튼, 매도 버튼
 		JPanel pnlSouth = new JPanel();
 		JButton buybtn = new JButton("매수");
+		buybtn.addActionListener(this);
 		JButton sellbtn = new JButton("매도");
+		sellbtn.addActionListener(this);
 		
 		pnlSouth.add(buybtn);
 		pnlSouth.add(sellbtn);
@@ -122,7 +125,16 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		
 		if (command.equals("차트 보기")) {
 			cardLayout.show(pnlCenter, "graphpnl");
-		} else if (command.equals("회사 정보")) {
+		} 
+		else if (command.equals("회사 정보")) {
+			cardLayout.show(pnlCenter, "companyInfopnl");
+		}
+		// TODO 수정 필요
+		else if (command.equals("매수")) {
+			cardLayout.show(pnlCenter, "companyInfopnl");
+		}
+		// TODO 수정 필요
+		else if (command.equals("매도")) {
 			cardLayout.show(pnlCenter, "companyInfopnl");
 		}
 	}

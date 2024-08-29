@@ -27,6 +27,8 @@ public class ClickMyInfoBtnPnl extends JPanel {
 	private JLabel profitMoneylbl;
 	private JLabel profitRatelbl;
 	private JLabel myInvestMoneylbl;
+	private CompanyInfoPnl companyInfoPnl1;
+	private CompanyInfoPnl companyInfoPnl2;
 
 	public ClickMyInfoBtnPnl(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -40,7 +42,7 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 		// 회사 이름, 100주, 53456원, +3456원(6.91%)
 		createCenterPnl();
-		// TODO 작성 필요
+		// TODO CompanyInfoPnl 클래스에서 update 작성해야 한다.
 		updateCenterPnl();
 
 		// 나의 거래 내역 보기 버튼
@@ -54,7 +56,8 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 	// TODO 작성 필요
 	public void updateCenterPnl() {
-
+		companyInfoPnl1.update(userInfo);
+		companyInfoPnl2.update(userInfo);
 	}
 
 	private void createCenterPnl() {
@@ -62,9 +65,9 @@ public class ClickMyInfoBtnPnl extends JPanel {
 		add(pnlCenter, "Center");
 		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-		CompanyInfoPnl companyInfoPnl1 = new CompanyInfoPnl(userInfo);
+		companyInfoPnl1 = new CompanyInfoPnl(userInfo);
 		pnlCenter.add(companyInfoPnl1);
-		CompanyInfoPnl companyInfoPnl2 = new CompanyInfoPnl(userInfo);
+		companyInfoPnl2 = new CompanyInfoPnl(userInfo);
 		pnlCenter.add(companyInfoPnl2);
 
 	}
