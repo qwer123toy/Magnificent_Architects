@@ -45,12 +45,15 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		contentPane.setLayout(new BorderLayout());
 
 		// 북쪽 패널
+		// 메인화면, 이전, 다음, 장 마감 버튼
 		setPnlNorth();
 
 		// 센터에 설정할 pnl들
+		// 모든 필요한 패널이 다 담겨있다.
 		setPnlCenter();
 
 		// 남쪽 패널
+		// 내 정보, 오늘의 뉴스, 종료 버튼
 		setPnlSouth();
 
 		// 가장 큰 패널(contentPane) 설정

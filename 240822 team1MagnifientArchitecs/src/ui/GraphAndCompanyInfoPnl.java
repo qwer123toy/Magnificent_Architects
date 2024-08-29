@@ -70,7 +70,7 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		JPanel graphpnl = new JPanel();
 		JLabel templbl = new JLabel("주식 그래프 차트 들어올 예정");
 		graphpnl.add(templbl);
-		pnlCenter.add(graphpnl, "First");
+		pnlCenter.add(graphpnl, "graphpnl");
 
 		// 회사정보 패널
 		String selectedCompanyName = "A 회사";
@@ -78,7 +78,7 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		CompanyInfoPnlforgraph companyInfopnl = new CompanyInfoPnlforgraph(companyInfo);
 		companyInfopnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		companyInfopnl.setBackground(Color.WHITE);
-		pnlCenter.add(companyInfopnl, "Second");
+		pnlCenter.add(companyInfopnl, "companyInfopnl");
 		
 		// south 패널 매수 버튼, 매도 버튼
 		JPanel pnlSouth = new JPanel();
@@ -121,9 +121,9 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		String command = e.getActionCommand();
 		
 		if (command.equals("차트 보기")) {
-			cardLayout.show(pnlCenter, "First");
+			cardLayout.show(pnlCenter, "graphpnl");
 		} else if (command.equals("회사 정보")) {
-			cardLayout.show(pnlCenter, "Second");
+			cardLayout.show(pnlCenter, "companyInfopnl");
 		}
 	}
 }
