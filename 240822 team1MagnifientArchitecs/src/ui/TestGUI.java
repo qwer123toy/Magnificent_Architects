@@ -2,16 +2,24 @@ package ui;
 
 import javax.swing.JFrame;
 
+import DAO.UserInfoDAO;
+import otherPnl.CompanyStockPnl;
+import tables.UserInfo;
+
 public class TestGUI extends JFrame {
 
 	public TestGUI() {
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
+		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
 //		CompanyStockBoardPnl pnl = new CompanyStockBoardPnl();
 //		ClickMyInfoBtnPnl pnl = new ClickMyInfoBtnPnl();
 //		SeeMyTradingHistoryPnl pnl = new SeeMyTradingHistoryPnl();
 //		NewsPnl pnl = new NewsPnl();
-		GraphAndCompanyInfoPnl pnl = new GraphAndCompanyInfoPnl();
+//		GraphAndCompanyInfoPnl pnl = new GraphAndCompanyInfoPnl();
 		
-		add(pnl);
+//		CompanyStockPnl pnl = new CompanyStockPnl(id);
+		
+//		add(pnl);
 		
 		
 		setSize(500, 500);

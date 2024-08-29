@@ -36,23 +36,22 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private CompanyStockBoardPnl companyStockBoardPnl;
 	private ClickMyInfoBtnPnl clickMyInfoBtnPnl;
 	private SeeMyTradingHistoryPnl seeMyTradingHistoryPnl;
+	private JPanel contentPane;
 
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
 
-		// 가장 큰 패널
-		JPanel contentPane = new JPanel();
+		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 
 		// 북쪽 패널
-		setPnlNorth(contentPane);
+		setPnlNorth();
 
 		// 센터에 설정할 pnl들
 		setPnlCenter();
-		contentPane.add(pnlCenter, "Center");
 
 		// 남쪽 패널
-		setPnlSouth(contentPane);
+		setPnlSouth();
 
 		// 가장 큰 패널(contentPane) 설정
 		setSize(500, 650);
@@ -60,7 +59,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	private void setPnlSouth(JPanel contentPane) {
+	private void setPnlSouth() {
 		JPanel pnlSouth = new JPanel();
 		pnlSouth.setPreferredSize(new Dimension(500, 100));
 		contentPane.add(pnlSouth, "South");
@@ -83,7 +82,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlSouth.add(btnSouth3);
 	}
 
-	private void setPnlNorth(JPanel contentPane) {
+	private void setPnlNorth() {
 		JPanel pnlNorth = new JPanel();
 		contentPane.add(pnlNorth, "North");
 		pnlNorth.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -162,13 +161,14 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 					e1.printStackTrace();
 				}
 				companyStockBoardPnl.updatebaseMainPnl();
-				
+				companyStockBoardPnl.updateAllComapanyInfoPnl();
 			}
 		});
 	}
 
 	private void setPnlCenter() {
 		pnlCenter = new JPanel();
+		contentPane.add(pnlCenter, "Center");
 		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
 
 		cardLayout = new CardLayout();

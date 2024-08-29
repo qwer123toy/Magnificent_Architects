@@ -15,6 +15,7 @@ import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
+import otherPnl.CompanyStockPnl;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
@@ -35,11 +36,11 @@ public class CompanyStockBoardPnl extends JPanel {
 	private JLabel profitRate;
 	private JLabel allProperty;
 	private int size;
-	
+	private CompanyStockPnl[] comapanyInfoPnls;
 
 	public CompanyStockBoardPnl(UserInfo userInfo) {
 		this.userInfo = userInfo;
-		
+
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -52,8 +53,8 @@ public class CompanyStockBoardPnl extends JPanel {
 		columnNamePnl();
 
 		// A B C D 회사 정보 표시 패널
-//		setAllComapanyInfoPnl();
-//		updateAllComapanyInfoPnl();
+		setAllComapanyInfoPnl();
+		updateAllComapanyInfoPnl();
 
 	}
 
@@ -83,74 +84,19 @@ public class CompanyStockBoardPnl extends JPanel {
 
 	private void setAllComapanyInfoPnl() {
 		size = allCompanyDAO.getRowCount(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		JPanel pnl = new JPanel();
-		pnl.setLayout(new GridLayout(1, 4));
 
-		pnl.setBackground(Color.WHITE);
-		pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		pnl.setPreferredSize(new Dimension(480, 60));
-		
-
-		JLabel companyNameLbl = new JLabel();
-		companyNameLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel priceNowLbl = new JLabel();
-		priceNowLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel comparePrevDayLbl = new JLabel();
-		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel stockCountLbl = new JLabel();
-		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);
-		
-		pnl.add(companyNameLbl);
-		pnl.add(priceNowLbl);
-		pnl.add(comparePrevDayLbl);
-		pnl.add(stockCountLbl);
-		
-		add(pnl);
-		
-		
-		JPanel[] companyInfoArray = new JPanel[size];
-		for (int i = 0; i < companyInfoArray.length; i++) {
-			JPanel companyInfoPnl = companyInfoData(userInfo, allCompanyList, null, i);
-			
-			add(companyInfoPnl);
+		comapanyInfoPnls = new CompanyStockPnl[size];
+		for (int i = 0; i < comapanyInfoPnls.length; i++) {
+			comapanyInfoPnls[i] = new CompanyStockPnl(userInfo, i);
+			add(comapanyInfoPnls[i]);
 		}
+
 	}
-	
+
 	public void updateAllComapanyInfoPnl() {
-		UserInfo userInfoStockFrame =  userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		List<UserMoneyHistory> umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
-		List<AllCompanyBackdata> allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
-		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
-
-		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
-//		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
-		
-		companyNameLbl.setText(companyName);
-		priceNowLbl.setText("" + priceNow);
-		comparePrevDayLbl.setText(comparePrevDay + "원");
-		stockCountLbl.setText("" + stockCount);
-	}
-	
-
-	private JPanel companyInfoData(UserInfo userInfo, List<AllCompany> allCompanyList,
-			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
-
-		String companyName = allCompanyList.get(companyIndex).getCompanyName();
-		int priceNow = allCompanyList.get(companyIndex).getCompanyStockPrice();
-		int stockCount = allCompanyList.get(companyIndex).getCompanyStockCount();
-		int comparePrevDay = 0;
-
-//		if (allCompanyList.get(userInfo.getUser_Date() - 1).getDate() == 1) {
-//			comparePrevDay = 0;
-//		} else {
-//			comparePrevDay = findCompanyBackdata.get(userInfo.getUser_Date() - 1).getCompanyStockPrice()
-//					- findCompanyBackdata.get(userInfo.getUser_Date() - 2).getCompanyStockPrice();
-//		}
-		JPanel pnl = returnCompnayInfoPnl(companyName, priceNow, comparePrevDay, stockCount);
-		return pnl;
+		for (int i = 0; i < comapanyInfoPnls.length; i++) {
+			comapanyInfoPnls[i].updateTextAll(userInfo);
+		}
 	}
 
 	public void updatebaseMainPnl() {
@@ -158,21 +104,21 @@ public class CompanyStockBoardPnl extends JPanel {
 		userInfoStockFrame = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
-		allCompanyBackdataList = allCompanyBackdataDAO
-				.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+		allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfoStockFrame.getUser_ID(),
+				userInfoStockFrame.getUser_SaveData());
 		allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
-		
+
 		// 현재 원금 업데이트
 		String pricipalText = "" + umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
 				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count();
 		pricipal.setText("현재 원금: " + pricipalText);
-		
+
 		// 현재 수익 업데이트
 		String allProfitMoneyText = "" + umhStockFrame.get(0).getMy_Stock_Money()
 				+ umhStockFrame.get(1).getMy_Stock_Money();
 		allProfitMoney.setText("현재 수익: " + allProfitMoneyText + "원");
-		
+
 		// 현재 수익률 업데이트
 		double stockMoneyRate = 0;
 		if (umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count() != 0) {
@@ -181,14 +127,13 @@ public class CompanyStockBoardPnl extends JPanel {
 							+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
 		}
 		profitRate.setText("현재 수익률: " + stockMoneyRate + "%");
-		
+
 		// 현재 보유 금액 업데이트
 		String allPropertyText = "" + umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
 				+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count();
 		allProperty.setText("현재 보유 금액: " + allPropertyText + "원");
 	}
 
-	
 	private void setbaseMainPnl() {
 		userInfoDAO = new UserInfoDAO();
 		allCompanyDAO = new AllCompanyDAO();
@@ -210,7 +155,7 @@ public class CompanyStockBoardPnl extends JPanel {
 		profitRate.setHorizontalAlignment(JLabel.CENTER);
 
 		allProperty = new JLabel();
-		
+
 		allProperty.setHorizontalAlignment(JLabel.CENTER);
 
 		baseMainPnl.add(pricipal);
