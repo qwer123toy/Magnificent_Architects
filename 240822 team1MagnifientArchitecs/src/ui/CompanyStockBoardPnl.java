@@ -35,6 +35,7 @@ public class CompanyStockBoardPnl extends JPanel {
 	private JLabel profitRate;
 	private JLabel allProperty;
 	private int size;
+	
 
 	public CompanyStockBoardPnl(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -51,8 +52,8 @@ public class CompanyStockBoardPnl extends JPanel {
 		columnNamePnl();
 
 		// A B C D 회사 정보 표시 패널
-		setAllComapanyInfoPnl();
-		updateAllComapanyInfoPnl();
+//		setAllComapanyInfoPnl();
+//		updateAllComapanyInfoPnl();
 
 	}
 
@@ -81,19 +82,56 @@ public class CompanyStockBoardPnl extends JPanel {
 	}
 
 	private void setAllComapanyInfoPnl() {
-		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
-//		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
-		
 		size = allCompanyDAO.getRowCount(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		JPanel pnl = new JPanel();
+		pnl.setLayout(new GridLayout(1, 4));
+
+		pnl.setBackground(Color.WHITE);
+		pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		pnl.setPreferredSize(new Dimension(480, 60));
+		
+
+		JLabel companyNameLbl = new JLabel();
+		companyNameLbl.setHorizontalAlignment(JLabel.CENTER);
+
+		JLabel priceNowLbl = new JLabel();
+		priceNowLbl.setHorizontalAlignment(JLabel.CENTER);
+
+		JLabel comparePrevDayLbl = new JLabel();
+		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
+
+		JLabel stockCountLbl = new JLabel();
+		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);
+		
+		pnl.add(companyNameLbl);
+		pnl.add(priceNowLbl);
+		pnl.add(comparePrevDayLbl);
+		pnl.add(stockCountLbl);
+		
+		add(pnl);
+		
+		
 		JPanel[] companyInfoArray = new JPanel[size];
 		for (int i = 0; i < companyInfoArray.length; i++) {
-			JPanel companyInfoPnl = companyInfoData(userInfo, allCompanyList, findACompanyBackdata, i);
+			JPanel companyInfoPnl = companyInfoData(userInfo, allCompanyList, null, i);
+			
 			add(companyInfoPnl);
 		}
 	}
 	
 	public void updateAllComapanyInfoPnl() {
+		UserInfo userInfoStockFrame =  userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		List<UserMoneyHistory> umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+		List<AllCompanyBackdata> allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+
+		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
+//		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
 		
+		companyNameLbl.setText(companyName);
+		priceNowLbl.setText("" + priceNow);
+		comparePrevDayLbl.setText(comparePrevDay + "원");
+		stockCountLbl.setText("" + stockCount);
 	}
 	
 
