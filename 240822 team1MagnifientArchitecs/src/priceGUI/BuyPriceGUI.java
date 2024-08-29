@@ -75,7 +75,8 @@ public class BuyPriceGUI extends JPanel {
 		lblBuyData.setBounds(46, 54, 116, 15);
 		pnlInformation.add(lblBuyData);
 
-		String btnName[] = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "지우기", "00", "0", "<-", "입력" };
+		String btnName[] = { "1", "2", "3", "+10", "4", "5", "6", "-10", "7", "8", "9",
+							"지우기", "00", "0", "<-", "입력" };
 		JButton btnNum[] = new JButton[btnName.length];
 
 		JPanel pnlBtn = new JPanel();
@@ -125,21 +126,18 @@ public class BuyPriceGUI extends JPanel {
 							Integer result = currentNumber + 10; // 10 증가
 							tfBuyPrice.setText(String.valueOf(result)); // 결과 표시
 						}
-
+						
 					} else if (command.equals("-10")) {
 						String currentText = tfBuyPrice.getText();
-						// 현재 텍스트가 비어있거나 숫자가 아닌 경우 처리
 						if (currentText.isEmpty()) {
-							return; // 아무것도 하지 않음
+							return;
 						}
 						Integer currentNumber = Integer.parseInt(currentText);
-
-						// currentNumber가 10 이하일 경우 아무것도 표시하지 않음
 						if (currentNumber > 10) {
-							Integer result = currentNumber - 10; // 10 감소
-							tfBuyPrice.setText(String.valueOf(result)); // 결과 표시
+							Integer result = currentNumber - 10;
+							tfBuyPrice.setText(String.valueOf(result));
 						} else {
-							tfBuyPrice.setText(""); // 10 이하일 경우 빈 문자열로 설정
+							tfBuyPrice.setText("");
 						}
 					}
 				}

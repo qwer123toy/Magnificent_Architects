@@ -72,7 +72,8 @@ public class SellPriceGUI extends JPanel {
 		lblSellData.setBounds(46, 54, 116, 15);
 		pnlInformation.add(lblSellData);
 
-		String btnName[] = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "지우기", "00", "0", "<-", "입력" };
+		String btnName[] = { "1", "2", "3", "+10", "4", "5", "6", "-10", "7", "8", "9",
+							"지우기", "00", "0", "<-", "입력" };
 		JButton btnNum[] = new JButton[btnName.length];
 
 		JPanel pnlBtn = new JPanel();
@@ -122,7 +123,7 @@ public class SellPriceGUI extends JPanel {
 							Integer result = currentNumber + 10; // 10 증가
 							tfSellPrice.setText(String.valueOf(result)); // 결과 표시
 						}
-
+						
 					} else if (command.equals("-10")) {
 						String currentText = tfSellPrice.getText();
 						if (currentText.isEmpty()) {
@@ -131,14 +132,14 @@ public class SellPriceGUI extends JPanel {
 						Integer currentNumber = Integer.parseInt(currentText);
 						if (currentNumber > 10) {
 							Integer result = currentNumber - 10;
-							tfSellPrice.setText(String.valueOf(result)); // 결과 표시
+							tfSellPrice.setText(String.valueOf(result));
 						} else {
-							tfSellPrice.setText(""); // 10 이하일 경우 빈 문자열
+							tfSellPrice.setText("");
 						}
 					}
 				}
 			});
-
+			
 			pnlNumber.add(btnNum[i]);
 		}
 
