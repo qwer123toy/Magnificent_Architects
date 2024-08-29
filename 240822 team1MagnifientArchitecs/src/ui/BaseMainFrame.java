@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import DAO.UserInfoDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
 import tables.AllCompany;
@@ -71,14 +72,12 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlSouthLayout.setHgap(30);
 		pnlSouth.setLayout(pnlSouthLayout);
 
-		JButton btnSouth1 = new JButton();
-		JButton btnSouth2 = new JButton();
-		JButton btnSouth3 = new JButton();
-		btnSouth1.setText("내 정보");
+		JButton btnSouth1 = new JButton("내 정보");
+		JButton btnSouth2 = new JButton("오늘의 뉴스");
+		JButton btnSouth3 = new JButton("종료");
+		btnSouth3.addActionListener(this);
 //		btnSouth1.setFont(new Font("Dialog.bold", Font.BOLD, 20));
-
-		btnSouth2.setText("오늘의 뉴스");
-		btnSouth3.setText("종료");
+		
 		pnlSouth.add(btnSouth1);
 		pnlSouth.add(btnSouth2);
 		pnlSouth.add(btnSouth3);
@@ -199,7 +198,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		// 매도 패널
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
-//		pnlCenter.add(pnlCompanyInfo, "First");
+		// TODO 뒤에 이름 패널이름으로 바꾸자
 		pnlCenter.add(companyStockBoardPnl, "First");
 		pnlCenter.add(clickMyInfoBtnPnl, "Second");
 		pnlCenter.add(seeMyTradingHistoryPnl, "Third");
@@ -213,20 +212,22 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO 공통으로 사용할 액션 리스너 설정 중
 		String command = e.getActionCommand();
-//		System.out.println(command);
+		System.out.println(command);
 
 		if (command.equals("이전")) {
 			cardLayout.previous(pnlCenter);
 		} else if (command.equals("다음")) {
 			cardLayout.next(pnlCenter);
+		} else if (command.equals("종료") ) {
+			this.dispose();
 		}
 	}
 
 	public static void main(String[] args) {
-//		UserInfoDAO userInfoDAO = new UserInfoDAO();
-//		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
+		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
 
-//		new BaseMainFrame(id).setVisible(true);
+		new BaseMainFrame(id).setVisible(true);
 
 	}
 
