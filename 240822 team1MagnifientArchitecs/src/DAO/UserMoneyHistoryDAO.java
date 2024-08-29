@@ -111,7 +111,7 @@ public class UserMoneyHistoryDAO {
 			int my_Stock_Money, int my_Profit_Money, double my_Profit_Rate, int stock_Count, int user_Date) throws SQLException {
 		String sql = "UPDATE UserMoneyHistory SET buyPrice = ? , stock_Price_Now = ?,\r\n"
 				+ "	my_Stock_Money = ?, my_Profit_Money =?, my_Profit_Rate=?,\r\n"
-				+ "	stock_Count= stock_Count + ?, user_Date = ?\r\n"
+				+ "	stock_Count= ?, user_Date = ?\r\n"
 				+ "	where (user_ID = ?) and (userSaveData = ?) and (user_Stock= ?);";
 
 		Connection conn = null;

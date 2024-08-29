@@ -345,7 +345,7 @@ public class StockChangeHistoryDAO {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		double stockCountAll = 0;
+		double stockMoneyRate = 0;
 		try {
 			conn = DBUtil.getConnection("go_db");
 			stmt = conn.prepareStatement(sql);
@@ -361,9 +361,10 @@ public class StockChangeHistoryDAO {
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				stockCountAll = rs.getInt(1);
+	            stockMoneyRate = rs.getDouble(1);  // 소수점 값 가져오기
+
 			}
-			return stockCountAll;
+			return stockMoneyRate;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

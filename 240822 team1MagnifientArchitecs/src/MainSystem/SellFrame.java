@@ -104,6 +104,8 @@ public class SellFrame {
 							userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
 					// 회원 별 주식 보유 상황 업데이트
+					System.out.println(umh.getStock_Count());
+					System.out.println(sellStock);
 					userMoneyHistoryDAO.update(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName, buyPrice,
 							sellStockPrice, realMoney, profitMoney, profitRate, umh.getStock_Count() - sellStock,
 							userInfo.getUser_Date());
