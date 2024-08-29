@@ -66,15 +66,11 @@ public class CompanyFrame {
 			switch (choose) {
 			case 1:
 				System.out.println("매수하기를 선택하셨습니다.");
-				BuyFrame buyFrame = new BuyFrame(userInfo, findCompanyBackdata, companyName,
-									allCompanyBackdataList
-									,userMoneyHistory,companyIndex);
+				BuyFrame buyFrame = new BuyFrame(userInfo, companyName,companyIndex);
 				break;
 			case 2:
 				System.out.println("매도하기를 선택하셨습니다.");
-				SellFrame sellFrame = new SellFrame(userInfo, findCompanyBackdata, companyName,
-						allCompanyList,allCompanyBackdataList
-						,userMoneyHistory, companyIndex);
+				SellFrame sellFrame = new SellFrame(userInfo, companyName,companyIndex);
 				break;
 			case 3:
 				System.out.println("뒤로가기를 선택하셨습니다.");
