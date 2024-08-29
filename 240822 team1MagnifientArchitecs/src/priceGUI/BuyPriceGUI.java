@@ -4,7 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -82,10 +83,54 @@ public class BuyPriceGUI extends JPanel {
 		pnlBtn.add(pnlNumber, BorderLayout.CENTER);
 		pnlNumber.setLayout(new GridLayout(0, 4, 5, 5));
 
+		// 배열로 설정하여 내부 클래스에서 변경 가능
+		int[] firstNumber = {0};
+		String[] operator = {null};
 		for (int i = 0; i < btnName.length; i++) {
 			btnNum[i] = new JButton(btnName[i]);
 			btnNum[i].setBackground(SystemColor.window);
 			btnNum[i].setFocusable(false);
+			// 계산기 작동
+			btnNum[i].addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String command = e.getActionCommand();
+					if (command.matches("[0-9]")) { // 0-9 숫자 입력
+						tfBuyPrice.setText(tfBuyPrice.getText() + command);
+
+					} else if (command.equals("00")) {
+						tfBuyPrice.setText(tfBuyPrice.getText() + "00");
+
+					} else if (command.equals("지우기")) {
+						tfBuyPrice.setText("");
+						firstNumber[0] = 0; // 초기화
+						operator[0] = null; // 초기화
+
+					} else if (command.equals("<-")) {
+						String currentText = tfBuyPrice.getText();
+						if (currentText.length() > 0) {
+							tfBuyPrice.setText(currentText.substring(0, currentText.length() - 1));
+						}
+
+					} else if (command.equals("+") || command.equals("-")) {
+						firstNumber[0] = Integer.parseInt(tfBuyPrice.getText());
+						operator[0] = command;
+						tfBuyPrice.setText(""); // 입력 필드 초기화
+
+					} else if (command.equals("입력")) {
+						Integer secondNumber = Integer.parseInt(tfBuyPrice.getText());
+						Integer result = 0;
+						if (operator[0] != null) { // operator가 null이 아닐 때만 계산
+							if (operator[0].equals("+")) {
+								result = firstNumber[0] + secondNumber;
+							} else if (operator[0].equals("-")) {
+								result = firstNumber[0] - secondNumber;
+							}
+							tfBuyPrice.setText(String.valueOf(result)); // 결과 표시
+						}
+					}
+				}
+			});
 			pnlNumber.add(btnNum[i]);
 		}
 
