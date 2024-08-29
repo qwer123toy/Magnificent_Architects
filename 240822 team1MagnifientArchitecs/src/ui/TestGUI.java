@@ -3,8 +3,6 @@ package ui;
 import javax.swing.JFrame;
 
 import DAO.UserInfoDAO;
-import otherPnl.CompanyInfoPnl;
-import otherPnl.CompanyStockPnl;
 import tables.UserInfo;
 
 public class TestGUI extends JFrame {
