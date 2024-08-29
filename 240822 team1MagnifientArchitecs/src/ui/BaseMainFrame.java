@@ -160,10 +160,15 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				companyStockBoardPnl.updatebaseMainPnl();
-				companyStockBoardPnl.updateAllComapanyInfoPnl();
+				update();
 			}
 		});
+	}
+	
+	private void update() {
+		// 제일 처음 화면 업데이트
+		companyStockBoardPnl.updatebaseMainPnl();
+		companyStockBoardPnl.updateAllComapanyInfoPnl();
 	}
 
 	private void setPnlCenter() {

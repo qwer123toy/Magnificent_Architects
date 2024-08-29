@@ -8,9 +8,9 @@ import javax.swing.JPanel;
 
 import tables.CompanyInfo;
 
-public class CompanyInfoPnl extends JPanel {
+public class CompanyInfoPnlforgraph extends JPanel {
 
-	public CompanyInfoPnl(CompanyInfo info) {
+	public CompanyInfoPnlforgraph(CompanyInfo info) {
 //		setBackground(Color.GREEN);
 
 		setLayout(new GridLayout(5, 1));

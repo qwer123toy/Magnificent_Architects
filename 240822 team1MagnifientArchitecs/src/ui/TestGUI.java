@@ -3,6 +3,7 @@ package ui;
 import javax.swing.JFrame;
 
 import DAO.UserInfoDAO;
+import otherPnl.CompanyInfoPnl;
 import otherPnl.CompanyStockPnl;
 import tables.UserInfo;
 
@@ -10,16 +11,17 @@ public class TestGUI extends JFrame {
 
 	public TestGUI() {
 		UserInfoDAO userInfoDAO = new UserInfoDAO();
-		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
+		UserInfo userInfo = userInfoDAO .findByIDAndData("asd", 1);
 //		CompanyStockBoardPnl pnl = new CompanyStockBoardPnl();
-//		ClickMyInfoBtnPnl pnl = new ClickMyInfoBtnPnl();
+//		ClickMyInfoBtnPnl pnl = new ClickMyInfoBtnPnl(userInfo);
 //		SeeMyTradingHistoryPnl pnl = new SeeMyTradingHistoryPnl();
 //		NewsPnl pnl = new NewsPnl();
 //		GraphAndCompanyInfoPnl pnl = new GraphAndCompanyInfoPnl();
 		
 //		CompanyStockPnl pnl = new CompanyStockPnl(id);
+		CompanyInfoPnl pnl = new CompanyInfoPnl(userInfo);
 		
-//		add(pnl);
+		add(pnl);
 		
 		
 		setSize(500, 500);

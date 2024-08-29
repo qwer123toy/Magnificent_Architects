@@ -75,7 +75,7 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		// 회사정보 패널
 		String selectedCompanyName = "A 회사";
 		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
-		CompanyInfoPnl companyInfopnl = new CompanyInfoPnl(companyInfo);
+		CompanyInfoPnlforgraph companyInfopnl = new CompanyInfoPnlforgraph(companyInfo);
 		companyInfopnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		companyInfopnl.setBackground(Color.WHITE);
 		pnlCenter.add(companyInfopnl, "Second");
