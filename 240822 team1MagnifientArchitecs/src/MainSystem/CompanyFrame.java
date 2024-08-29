@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
+import DAO.UserInfoDAO;
+import DAO.UserMoneyHistoryDAO;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
 public class CompanyFrame {
-	public CompanyFrame(UserInfo userInfo, List<AllCompanyBackdata> allCompanyBackdataList,
-			List<AllCompanyBackdata> findCompanyBackdata,
-			List<UserMoneyHistory> userMoneyHistory,
+	public CompanyFrame(UserInfo ParentUserInfo,
 			String companyName, int companyIndex) {
 		
 //		List<AllCompanyBackdata> findCompanyBackdata = new ArrayList<>();
@@ -25,9 +26,18 @@ public class CompanyFrame {
 //				findCompanyBackdata.add(acbd);
 //			}
 //		}
+		
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
 		AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+		UserMoneyHistoryDAO usermoneyHistoryDAO = new UserMoneyHistoryDAO();
+		AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();		
+
 		while (true) {
+			UserInfo userInfo =  userInfoDAO.findByIDAndData(ParentUserInfo.getUser_ID(), ParentUserInfo.getUser_SaveData());
+			List<UserMoneyHistory> userMoneyHistory = usermoneyHistoryDAO.findByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+			List<AllCompanyBackdata> allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 			List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+			List<AllCompanyBackdata> findCompanyBackdata = allCompanyBackdataDAO.findCompanyAllByID(companyName, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 			System.out.println("\n=======================");
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStockPrice());
