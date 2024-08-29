@@ -72,7 +72,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlSouth.setLayout(pnlSouthLayout);
 
 		JButton btnSouth1 = new JButton("내 정보");
+		btnSouth1.addActionListener(this);
 		JButton btnSouth2 = new JButton("오늘의 뉴스");
+		btnSouth2.addActionListener(this);
 		JButton btnSouth3 = new JButton("종료");
 		btnSouth3.addActionListener(this);
 //		btnSouth1.setFont(new Font("Dialog.bold", Font.BOLD, 20));
@@ -89,6 +91,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 		JButton btnNorth1 = new JButton();
 		btnNorth1.setText("메인화면");
+		btnNorth1.addActionListener(this);
 		JButton btnNorth2 = new JButton();
 		btnNorth2.setText("이전");
 		btnNorth2.addActionListener(this);
@@ -204,13 +207,13 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
 		// TODO 뒤에 이름 패널이름으로 바꾸자
-		pnlCenter.add(companyStockBoardPnl, "First");
-		pnlCenter.add(clickMyInfoBtnPnl, "Second");
-		pnlCenter.add(seeMyTradingHistoryPnl, "Third");
-		pnlCenter.add(newsPnl, "Forth");
-		pnlCenter.add(graphAndCompanyInfoPnl, "Fifth");
-		pnlCenter.add(buyPriceGUI, "Sixth");
-		pnlCenter.add(sellPriceGUI, "Seventh");
+		pnlCenter.add(companyStockBoardPnl, "companyStockBoardPnl");
+		pnlCenter.add(clickMyInfoBtnPnl, "clickMyInfoBtnPnl");
+		pnlCenter.add(seeMyTradingHistoryPnl, "seeMyTradingHistoryPnl");
+		pnlCenter.add(newsPnl, "newsPnl");
+		pnlCenter.add(graphAndCompanyInfoPnl, "graphAndCompanyInfoPnl");
+		pnlCenter.add(buyPriceGUI, "buyPriceGUI");
+		pnlCenter.add(sellPriceGUI, "sellPriceGUI");
 	}
 
 	@Override
@@ -220,10 +223,21 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 		if (command.equals("이전")) {
 			cardLayout.previous(pnlCenter);
-		} else if (command.equals("다음")) {
+		} 
+		else if (command.equals("다음")) {
 			cardLayout.next(pnlCenter);
-		} else if (command.equals("종료") ) {
+		} 
+		else if (command.equals("종료") ) {
 			this.dispose();
+		} 
+		else if (command.equals("메인화면") ) {
+			cardLayout.show(pnlCenter, "companyStockBoardPnl");
+		}
+		else if (command.equals("내 정보") ) {
+			cardLayout.show(pnlCenter, "clickMyInfoBtnPnl");
+		}
+		else if (command.equals("오늘의 뉴스") ) {
+			cardLayout.show(pnlCenter, "newsPnl");
 		}
 	}
 

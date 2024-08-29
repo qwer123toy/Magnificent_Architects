@@ -10,19 +10,34 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import otherPnl.TradeHistoryPnl;
+import tables.UserInfo;
+
 public class SeeMyTradingHistoryPnl extends JPanel {
+	private TradeHistoryPnl tradeHistoryPnl1;
+	private TradeHistoryPnl tradeHistoryPnl2;
+	private JLabel leftMoneylbl;
+	private JLabel myInvestMoneylbl;
+
 	public SeeMyTradingHistoryPnl() {
 		setLayout(new BorderLayout());
 		setSize(500, 500);
 
 		// 내 투자, 원금, 총 수익, 총 수익률
 		createNorthPnl();
+		updateNorthPnal();
 
 		// 회사 이름, 100주, 53456원, +3456원(6.91%)
 		createCenterPnl();
+		updateCenterPnl();
 
 		// 뒤로가기 버튼
 		createSouthPnl();
+	}
+
+	public void updateCenterPnl() {
+		tradeHistoryPnl1.update();
+		tradeHistoryPnl2.update();
 	}
 
 	private void createCenterPnl() {
@@ -30,38 +45,16 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 		add(pnlCenter, "Center");
 		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-		JPanel tradeHistoryPnl1 = makeTradeHistoryPnl(1, "A회사", "매수", 100, 3);
+		tradeHistoryPnl1 = new TradeHistoryPnl();
 		pnlCenter.add(tradeHistoryPnl1);
-		JPanel tradeHistoryPnl2 = makeTradeHistoryPnl(2, "B회사", "매수", 150, 12);
+		tradeHistoryPnl2 = new TradeHistoryPnl();
 		pnlCenter.add(tradeHistoryPnl2);
-		JPanel tradeHistoryPnl3 = makeTradeHistoryPnl(3, "B회사", "매도", 160, 12);
-		pnlCenter.add(tradeHistoryPnl3);
 
 	}
 
-	private JPanel makeTradeHistoryPnl(int day, String companyName, String buyOrSell, int money, int count) {
-		JPanel pnl = new JPanel();
-		pnl.setLayout(new GridLayout(1, 5));
-		pnl.setPreferredSize(new Dimension(400, 20));
-
-		JLabel daylbl = makeLbl("");
-		daylbl.setText(day + "");
-		JLabel companyNamelbl = makeLbl("");
-		companyNamelbl.setText(companyName);
-		JLabel buyOrSelllbl = makeLbl("");
-		buyOrSelllbl.setText(buyOrSell);
-		JLabel moneylbl = makeLbl("");
-		moneylbl.setText(money + "");
-		JLabel countlbl = makeLbl("");
-		countlbl.setText(count + "");
-
-		pnl.add(daylbl);
-		pnl.add(companyNamelbl);
-		pnl.add(buyOrSelllbl);
-		pnl.add(moneylbl);
-		pnl.add(countlbl);
-
-		return pnl;
+	public void updateAll(UserInfo userinfo) {
+		updateNorthPnal();
+		updateCenterPnl();
 	}
 
 	private void createSouthPnl() {
@@ -75,9 +68,16 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 		pnlSouth.add(pnlEast, "East");
 
 		JButton prevBtn = new JButton("뒤로가기");
+		// TODO 이거 어떻게 구현하지?
 		prevBtn.setPreferredSize(new Dimension(100, 35));
 		pnlEast.add(prevBtn);
 
+	}
+
+	// TODO 미구현 상태
+	private void updateNorthPnal() {
+		myInvestMoneylbl.setText("123,456원 (23.46%)");
+		leftMoneylbl.setText("30000원");
 	}
 
 	private void createNorthPnl() {
@@ -87,12 +87,12 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 		pnlNorth.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
 		JLabel myInvestMoneyNamelbl = makeLbl("내 투자");
-		JLabel myInvestMoneylbl = makeLbl("");
-		myInvestMoneylbl.setText("123,456원 (23.46%)");
+		myInvestMoneylbl = makeLbl("");
+		
 
 		JLabel leftMoneyNamelbl = makeLbl("잔고");
-		JLabel leftMoneylbl = makeLbl("");
-		leftMoneylbl.setText("30000원");
+		leftMoneylbl = makeLbl("");
+		
 
 		pnlNorth.add(myInvestMoneyNamelbl);
 		pnlNorth.add(leftMoneyNamelbl);

@@ -36,7 +36,6 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 		// 내 투자, 원금, 총 수익, 총 수익률
 		createNorthPnl();
-		// TODO db랑 왜 연결 안됬는지 체크
 		updateNorthPnl();
 
 		// 회사 이름, 100주, 53456원, +3456원(6.91%)
