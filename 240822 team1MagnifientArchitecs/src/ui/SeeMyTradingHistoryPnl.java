@@ -1,9 +1,12 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,8 +21,17 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 	private TradeHistoryPnl tradeHistoryPnl2;
 	private JLabel leftMoneylbl;
 	private JLabel myInvestMoneylbl;
+	
+	private UserInfo userInfo;
+	private CardLayout cardLayout;
+	private JPanel pnlCenter;
 
-	public SeeMyTradingHistoryPnl() {
+	public SeeMyTradingHistoryPnl(UserInfo userInfo, CardLayout cardLayout, JPanel pnlCenter) {
+		this.userInfo = userInfo;
+		this.cardLayout = cardLayout;
+		this.pnlCenter = pnlCenter;
+		
+		
 		setLayout(new BorderLayout());
 		setSize(500, 500);
 
@@ -71,8 +83,15 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 		pnlSouth.add(pnlEast, "East");
 
 		JButton prevBtn = new JButton("뒤로가기");
-		// TODO 이거 어떻게 구현하지?
 		prevBtn.setPreferredSize(new Dimension(100, 35));
+		prevBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(pnlCenter, "clickMyInfoBtnPnl");
+			}
+		});
+		
 		pnlEast.add(prevBtn);
 
 	}

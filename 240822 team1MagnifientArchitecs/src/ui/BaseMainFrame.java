@@ -192,10 +192,10 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo);
 
 		// 하단의 내 정보를 누르면 나오는 패널
-		clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo);
+		clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo, cardLayout, pnlCenter);
 
 		// 주식 거래 상황을 보여주는 패널
-		seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl();
+		seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl(userInfo, cardLayout, pnlCenter);
 
 		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
@@ -245,10 +245,10 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		UserInfoDAO userInfoDAO = new UserInfoDAO();
-		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
-
-		new BaseMainFrame(id).setVisible(true);
+//		UserInfoDAO userInfoDAO = new UserInfoDAO();
+//		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
+//
+//		new BaseMainFrame(id).setVisible(true);
 
 	}
 

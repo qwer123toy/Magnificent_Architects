@@ -1,9 +1,12 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -29,9 +32,13 @@ public class ClickMyInfoBtnPnl extends JPanel {
 	private JLabel myInvestMoneylbl;
 	private CompanyInfoPnl companyInfoPnl1;
 	private CompanyInfoPnl companyInfoPnl2;
+	private CardLayout cardLayout;
+	private JPanel pnlCenter;
 
-	public ClickMyInfoBtnPnl(UserInfo userInfo) {
+	public ClickMyInfoBtnPnl(UserInfo userInfo, CardLayout cardLayout, JPanel pnlCenter) {
 		this.userInfo = userInfo;
+		this.cardLayout = cardLayout;
+		this.pnlCenter = pnlCenter;
 
 		setLayout(new BorderLayout());
 		setSize(500, 500);
@@ -79,6 +86,14 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 		JButton seeMyTradingHistory = new JButton("나의 거래 내역 보기");
 		pnlSouth.add(seeMyTradingHistory);
+		
+		seeMyTradingHistory.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(pnlCenter, "seeMyTradingHistoryPnl");
+			}
+		});
 	}
 
 	private void updateNorthPnl() {
