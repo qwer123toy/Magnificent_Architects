@@ -48,6 +48,13 @@ class MainGUI extends JFrame {
 		JButton btnLogin = btnSetting("로그인", 130);
 		JButton btnRank = btnSetting("랭킹조회", 200);
 		JButton btnEnd = btnSetting("종료", 270);
+		
+		btnEnd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 
 		// 로그인 버튼
 		btnLogin.addActionListener(new ActionListener() {

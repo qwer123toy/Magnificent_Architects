@@ -212,7 +212,6 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO 공통으로 사용할 액션 리스너 설정 중
 		String command = e.getActionCommand();
-		System.out.println(command);
 
 		if (command.equals("이전")) {
 			cardLayout.previous(pnlCenter);
