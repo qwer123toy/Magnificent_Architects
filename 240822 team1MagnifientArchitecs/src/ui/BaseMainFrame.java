@@ -16,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import DAO.UserInfoDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
 import tables.AllCompany;
@@ -249,7 +248,5 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 //		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
 //
 //		new BaseMainFrame(id).setVisible(true);
-
 	}
-
 }

@@ -100,7 +100,6 @@ public class CompanyStockBoardPnl extends JPanel {
 	}
 
 	public void updatebaseMainPnl() {
-		// TODO Auto-generated method stub
 		userInfoStockFrame = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
@@ -155,7 +154,6 @@ public class CompanyStockBoardPnl extends JPanel {
 		profitRate.setHorizontalAlignment(JLabel.CENTER);
 
 		allProperty = new JLabel();
-
 		allProperty.setHorizontalAlignment(JLabel.CENTER);
 
 		baseMainPnl.add(pricipal);

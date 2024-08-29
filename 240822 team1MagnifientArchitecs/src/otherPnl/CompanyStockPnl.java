@@ -62,7 +62,6 @@ public class CompanyStockPnl extends JPanel {
 
 		comparePrevDayLbl = new JLabel();
 		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
-		comparePrevDayLbl.setText("미완성, 추가 필요");
 
 		stockCountLbl = new JLabel();
 		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);
@@ -83,9 +82,13 @@ public class CompanyStockPnl extends JPanel {
 		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
 		
+		// 회사 이름 버튼
 		companyNameBtn.setText(allCompanyList.get(companyIndex).getCompanyName());
+		// 현재가
 		priceNowLbl.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
+		// 전일대비
 		comparePrevDayLbl.setText("미완성, 추가 필요");
+		// 잔여수량
 		stockCountLbl.setText(allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
 	}
 	
