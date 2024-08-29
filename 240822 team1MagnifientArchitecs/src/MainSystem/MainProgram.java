@@ -97,20 +97,20 @@ public class MainProgram {
 
 			insertInfoByID(userName, 1);
 
-			userMoneyHistoryListList.add(new ArrayList<UserMoneyHistory>());
-
-			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 0, 1));
-			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 0, 1));
-
-			allCompanyBackdataList.add(new AllCompanyBackdata("A 회사", 100, 200, userName, 1, 1));
-			allCompanyBackdataList.add(new AllCompanyBackdata("B 회사", 150, 300, userName, 1, 1));
-
-			allCompanyList.add(new AllCompany("A 회사", 100, 200, userName, 1, 1, companyInfoList.get(0)));
-			allCompanyList.add(new AllCompany("B 회사", 150, 300, userName, 1, 1, companyInfoList.get(1)));
+//			userMoneyHistoryListList.add(new ArrayList<UserMoneyHistory>());
+//
+//			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "A 회사", 0, 0, 0, 0, 0, 0, 1));
+//			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "B 회사", 0, 0, 0, 0, 0, 0, 1));
+//			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "C 회사", 0, 0, 0, 0, 0, 0, 1));
+//			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "D 회사", 0, 0, 0, 0, 0, 0, 1));
+//			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "E 회사", 0, 0, 0, 0, 0, 0, 1));
+//			userMoneyHistoryListList.get(userCount).add(new UserMoneyHistory(userName, 1, "F 회사", 0, 0, 0, 0, 0, 0, 1));
+//
+//			allCompanyBackdataList.add(new AllCompanyBackdata("A 회사", 100, 200, userName, 1, 1));
+//			allCompanyBackdataList.add(new AllCompanyBackdata("B 회사", 150, 300, userName, 1, 1));
+//
+//			allCompanyList.add(new AllCompany("A 회사", 100, 200, userName, 1, 1, companyInfoList.get(0)));
+//			allCompanyList.add(new AllCompany("B 회사", 150, 300, userName, 1, 1, companyInfoList.get(1)));
 			userCount++;
 
 		}
