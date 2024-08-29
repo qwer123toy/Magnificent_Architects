@@ -201,7 +201,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		NewsPnl newsPnl = new NewsPnl();
 
 		// 그래프랑 회사 정보 패널
-		GraphAndCompanyInfoPnl graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl();
+		GraphAndCompanyInfoPnl graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(cardLayout, pnlCenter);
 
 		// 매수 패널
 		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();

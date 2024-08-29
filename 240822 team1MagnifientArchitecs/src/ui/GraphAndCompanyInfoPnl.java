@@ -22,34 +22,74 @@ import mapper.CompanyInfoMapper;
 import tables.CompanyInfo;
 
 public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
+	private CardLayout GandIcardLayout;
+	private JPanel GandIpnlCenter;
+
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
+	private JPanel comInfoSummary;
+	private JLabel companyNamelbl;
+	private JLabel stockPriceNowlbl;
+	private JLabel comparePrevDaylbl;
+	private CompanyInfoPnlforgraph companyInfopnl;
 
-	public GraphAndCompanyInfoPnl() {
+	public GraphAndCompanyInfoPnl(CardLayout cardLayout, JPanel pnlCenter) {
+		this.cardLayout = cardLayout;
+		this.pnlCenter = pnlCenter;
+		
 		setLayout(new BorderLayout());
 
-		JPanel pnlNorth = new JPanel();
-		pnlNorth.setLayout(new GridLayout(2, 1));
-		add(pnlNorth, "North");
-
 		// 회사 이름, 회사 현재 주가, 전일대비 가격, 전일대비 상승률
-		JPanel companyStockpnl = new JPanel();
+		setComInfoSummary();
+		updateComInfoSummary();
 
-		JLabel companyNamelbl = new JLabel();
-		companyNamelbl.setText("A 회사");
-		JLabel stockPriceNowlbl = new JLabel();
-		stockPriceNowlbl.setText("100원");
-		JLabel comparePrevDaylbl = new JLabel();
-		comparePrevDaylbl.setText("전일대비 0원 (0%)");
+		// 차트보기, 회사 정보 버튼
+		// update 필요 없음
+		setGandIpnlCenter();
 
-		companyStockpnl.add(companyNamelbl);
-		companyStockpnl.add(stockPriceNowlbl);
-		companyStockpnl.add(comparePrevDaylbl);
+		// TODO 그래프 패널
+		setgraphPnl();
 
-		pnlNorth.add(companyStockpnl);
+		// 회사정보 패널
+		setCompanyInfoPnl("A 회사");
+		updateCompanyInfoPnl("A 회사");
+		
+	}
+	
+	private void updateCompanyInfoPnl(String companyName) {
+		CompanyInfo OutInfo = selectCompany(companyName);
+		companyInfopnl.update(OutInfo);
+		
+	}
 
-		// 차트보기, 회사 정보 패널
-		// TODO 화면 전환 구현해야함
+	private void setCompanyInfoPnl(String companyName) {
+		CompanyInfo companyInfo = selectCompany(companyName);
+		companyInfopnl = new CompanyInfoPnlforgraph(companyInfo);
+		companyInfopnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		companyInfopnl.setBackground(Color.WHITE);
+		GandIpnlCenter.add(companyInfopnl, "companyInfopnl");
+		
+		// south 패널 매수 버튼, 매도 버튼
+		JPanel CompanyInfoPnl = new JPanel();
+		JButton buybtn = new JButton("매수");
+		buybtn.addActionListener(this);
+		JButton sellbtn = new JButton("매도");
+		sellbtn.addActionListener(this);
+		
+		CompanyInfoPnl.add(buybtn);
+		CompanyInfoPnl.add(sellbtn);
+		
+		add(CompanyInfoPnl, "South");
+	}
+
+	private void setgraphPnl() {
+		JPanel graphpnl = new JPanel();
+		JLabel templbl = new JLabel("주식 그래프 차트 들어올 예정");
+		graphpnl.add(templbl);
+		GandIpnlCenter.add(graphpnl, "graphpnl");
+	}
+
+	private void setGandIpnlCenter() {
 		JPanel chartAndbtnpnl = new JPanel();
 
 		JButton graphbtn = new JButton("차트 보기");
@@ -60,38 +100,37 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		chartAndbtnpnl.add(graphbtn);
 		chartAndbtnpnl.add(companyInfobtn);
 
-		pnlNorth.add(chartAndbtnpnl);
+		comInfoSummary.add(chartAndbtnpnl);
 
-		pnlCenter = new JPanel();
-		cardLayout = new CardLayout();
-		pnlCenter.setLayout(cardLayout);
-		add(pnlCenter, "Center");
+		GandIpnlCenter = new JPanel();
+		GandIcardLayout = new CardLayout();
+		GandIpnlCenter.setLayout(GandIcardLayout);
+		add(GandIpnlCenter, "Center");
+	}
+	
+	// TODO db와 연결 안됨
+	private void updateComInfoSummary() {
+		companyNamelbl.setText("A 회사");
+		stockPriceNowlbl.setText("100원");
+		comparePrevDaylbl.setText("전일대비 0원 (0%)");
+	}
 
-		// 그래프 패널
-		JPanel graphpnl = new JPanel();
-		JLabel templbl = new JLabel("주식 그래프 차트 들어올 예정");
-		graphpnl.add(templbl);
-		pnlCenter.add(graphpnl, "graphpnl");
+	private void setComInfoSummary() {
+		comInfoSummary = new JPanel();
+		comInfoSummary.setLayout(new GridLayout(2, 1));
+		add(comInfoSummary, "North");
+		
+		JPanel companyStockpnl = new JPanel();
 
-		// 회사정보 패널
-		String selectedCompanyName = "A 회사";
-		CompanyInfo companyInfo = selectCompany(selectedCompanyName);
-		CompanyInfoPnlforgraph companyInfopnl = new CompanyInfoPnlforgraph(companyInfo);
-		companyInfopnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		companyInfopnl.setBackground(Color.WHITE);
-		pnlCenter.add(companyInfopnl, "companyInfopnl");
+		companyNamelbl = new JLabel();
+		stockPriceNowlbl = new JLabel();
+		comparePrevDaylbl = new JLabel();
 		
-		// south 패널 매수 버튼, 매도 버튼
-		JPanel pnlSouth = new JPanel();
-		JButton buybtn = new JButton("매수");
-		buybtn.addActionListener(this);
-		JButton sellbtn = new JButton("매도");
-		sellbtn.addActionListener(this);
-		
-		pnlSouth.add(buybtn);
-		pnlSouth.add(sellbtn);
-		
-		add(pnlSouth, "South");
+		companyStockpnl.add(companyNamelbl);
+		companyStockpnl.add(stockPriceNowlbl);
+		companyStockpnl.add(comparePrevDaylbl);
+
+		comInfoSummary.add(companyStockpnl);
 	}
 
 	private static CompanyInfo selectCompany(String companyName) {
@@ -124,18 +163,16 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		String command = e.getActionCommand();
 		
 		if (command.equals("차트 보기")) {
-			cardLayout.show(pnlCenter, "graphpnl");
+			GandIcardLayout.show(GandIpnlCenter, "graphpnl");
 		} 
 		else if (command.equals("회사 정보")) {
-			cardLayout.show(pnlCenter, "companyInfopnl");
+			GandIcardLayout.show(GandIpnlCenter, "companyInfopnl");
 		}
-		// TODO 수정 필요
 		else if (command.equals("매수")) {
-			cardLayout.show(pnlCenter, "companyInfopnl");
+			cardLayout.show(pnlCenter, "buyPriceGUI");
 		}
-		// TODO 수정 필요
 		else if (command.equals("매도")) {
-			cardLayout.show(pnlCenter, "companyInfopnl");
+			cardLayout.show(pnlCenter, "sellPriceGUI");
 		}
 	}
 }
