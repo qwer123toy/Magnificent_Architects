@@ -162,7 +162,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				companyStockBoardPnl.updatePnl1();
+				companyStockBoardPnl.updatebaseMainPnl();
 				
 			}
 		});

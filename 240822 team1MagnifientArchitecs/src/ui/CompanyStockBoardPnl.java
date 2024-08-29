@@ -44,11 +44,11 @@ public class CompanyStockBoardPnl extends JPanel {
 		setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
 		// 현재 원금, 현재 수익, 현재 수익률, 현재 보유 금액
-		setPnl1();
-		updatePnl1();
+		setbaseMainPnl();
+		updatebaseMainPnl();
 
 		// 회사명, 현재가, 전일대비, 잔여수량 패널
-		setPnl2Name();
+		columnNamePnl();
 
 		// A B C D 회사 정보 표시 패널
 		setAllComapanyInfoPnl();
@@ -56,7 +56,7 @@ public class CompanyStockBoardPnl extends JPanel {
 
 	}
 
-	private void setPnl2Name() {
+	private void columnNamePnl() {
 		JPanel pnl2 = new JPanel();
 		pnl2.setLayout(new GridLayout(1, 4));
 
@@ -83,7 +83,7 @@ public class CompanyStockBoardPnl extends JPanel {
 	private void setAllComapanyInfoPnl() {
 		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 //		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
-
+		
 		size = allCompanyDAO.getRowCount(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		JPanel[] companyInfoArray = new JPanel[size];
 		for (int i = 0; i < companyInfoArray.length; i++) {
@@ -115,7 +115,7 @@ public class CompanyStockBoardPnl extends JPanel {
 		return pnl;
 	}
 
-	public void updatePnl1() {
+	public void updatebaseMainPnl() {
 		// TODO Auto-generated method stub
 		userInfoStockFrame = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
@@ -150,16 +150,17 @@ public class CompanyStockBoardPnl extends JPanel {
 		allProperty.setText("현재 보유 금액: " + allPropertyText + "원");
 	}
 
-	private void setPnl1() {
+	
+	private void setbaseMainPnl() {
 		userInfoDAO = new UserInfoDAO();
 		allCompanyDAO = new AllCompanyDAO();
 		usermoneyHistoryDAO = new UserMoneyHistoryDAO();
 		allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 
-		JPanel pnl1 = new JPanel();
-		pnl1.setLayout(new GridLayout(2, 2));
-		pnl1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		pnl1.setPreferredSize(new Dimension(480, 100));
+		JPanel baseMainPnl = new JPanel();
+		baseMainPnl.setLayout(new GridLayout(2, 2));
+		baseMainPnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		baseMainPnl.setPreferredSize(new Dimension(480, 100));
 
 		pricipal = new JLabel();
 		pricipal.setHorizontalAlignment(JLabel.CENTER);
@@ -174,11 +175,11 @@ public class CompanyStockBoardPnl extends JPanel {
 		
 		allProperty.setHorizontalAlignment(JLabel.CENTER);
 
-		pnl1.add(pricipal);
-		pnl1.add(allProfitMoney);
-		pnl1.add(profitRate);
-		pnl1.add(allProperty);
-		add(pnl1);
+		baseMainPnl.add(pricipal);
+		baseMainPnl.add(allProfitMoney);
+		baseMainPnl.add(profitRate);
+		baseMainPnl.add(allProperty);
+		add(baseMainPnl);
 	}
 
 	private JPanel returnCompnayInfoPnl(String companyName, int priceNow, int comparePrevDay, int stockCount) {

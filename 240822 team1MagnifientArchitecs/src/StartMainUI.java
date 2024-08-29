@@ -1,4 +1,4 @@
-package loginUI;
+
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -14,6 +14,8 @@ import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
+import loginUI.Login;
+import loginUI.SignUP;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.CompanyInfo;
@@ -92,7 +94,7 @@ class MainGUI extends JFrame {
 
 }
 
-public class Main {
+public class StartMainUI {
 	public static void main(String[] args) {
 		MainGUI init = new MainGUI();
 		init.setVisible(true);
