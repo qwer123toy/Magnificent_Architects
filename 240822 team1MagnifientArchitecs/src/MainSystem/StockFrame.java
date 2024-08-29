@@ -85,12 +85,10 @@ public class StockFrame {
 				int choose = sc.nextInt();
 				switch (choose) {
 				case 1:
-					CompanyFrame companyFrameA = new CompanyFrame(userInfo, allCompanyBackdataList,
-							findACompanyBackdata, umhStockFrame, "A 회사", 0);
+					CompanyFrame companyFrameA = new CompanyFrame(userInfo, "A 회사", 0);
 					break;
 				case 2:
-					CompanyFrame companyFrameB = new CompanyFrame(userInfo,  allCompanyBackdataList,
-							findBCompanyBackdata, umhStockFrame, "B 회사", 1);
+					CompanyFrame companyFrameB = new CompanyFrame(userInfo,"B 회사", 1);
 					break;
 				case 3:
 					System.out.println("내 정보 보기를 선택하셨습니다.");

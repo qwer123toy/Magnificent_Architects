@@ -6,9 +6,11 @@ import java.util.Scanner;
 
 import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
+import DAO.StockChangeHistoryDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
 import tables.AllCompanyBackdata;
+import tables.StockChangeHistory;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 import tables.AllCompany;
@@ -18,15 +20,20 @@ public class BuyFrame {
 	private AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 	private UserInfoDAO UserInfoDAO = new UserInfoDAO();
 	private UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
+	private StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
 
-	public BuyFrame(UserInfo userInfo, List<AllCompanyBackdata> findCompanyBackdata, String companyName,
-			List<AllCompanyBackdata> allCompanyBackdataList,
-			List<UserMoneyHistory> userMoneyHistory, int companyIndex) {
-		
+	public BuyFrame(UserInfo parentUserInfo, String companyName, int companyIndex) {
+
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
 		AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+		UserMoneyHistoryDAO usermoneyHistoryDAO = new UserMoneyHistoryDAO();
+		AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
+		StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
+		
+		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		UserInfoDAO UserInfoDAO = new UserInfoDAO();
-		UserInfo realUserInfo = UserInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		
+		
 		
 		// 수량*주가 만큼의 돈이 있어야됨 조건문 추가
 
@@ -38,7 +45,7 @@ public class BuyFrame {
 		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
 		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStockPrice());
 		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
-		
+
 //		if (findCompanyBackdata.get(userInfo.getUser_Date() - 1).getDate() == 1) {
 //			System.out.printf("전일 대비  0원  \n");
 //		} else {
@@ -67,7 +74,6 @@ public class BuyFrame {
 				UserMoneyHistory umh = userMoneyHistoryDAO.findByCompany(companyName, userInfo.getUser_ID(),
 						userInfo.getUser_SaveData());
 
-				
 				// ((기존매입가*보유주식수량)+(방금산매입가+구매주식수량))/(총 주식 수량)
 				double my_Stock_MoneyDBL = ((umh.getBuyPrice() * umh.getStock_Count()) + (buyStockPrice * buyStockCount))
 						/ (umh.getStock_Count() + buyStockCount);
@@ -84,13 +90,16 @@ public class BuyFrame {
 
 				userMoneyHistoryDAO.update(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName, buyStockPrice,
 						buyStockPrice, my_Stock_Money, my_Profit_Money, my_Profit_Rate, buyStock, userInfo.getUser_Date());
-				
-				int user_Money = realUserInfo.getUser_Money() - (buyStockPrice * buyStock);
-				
-				UserInfoDAO.update(user_Money,userInfo.getUser_ID(), userInfo.getUser_SaveData());
-				
+
+				int user_Money = userInfo.getUser_Money() - (buyStockPrice * buyStock);
+
+				UserInfoDAO.update(user_Money, userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
 				allCompanyBackdataDAO.insert(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
 						userInfo.getUser_SaveData(), userInfo.getUser_Date());
+				
+				stockChangeHistoryDAO.insertBuy(userInfo.getUser_ID(),
+						userInfo.getUser_SaveData(), companyName, buyStockPrice, buyStockCount, userInfo.getUser_Date());
 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

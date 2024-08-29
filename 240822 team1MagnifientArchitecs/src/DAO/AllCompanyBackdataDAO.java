@@ -44,6 +44,35 @@ public class AllCompanyBackdataDAO {
 	}
 	
 	
+	// ID와 saveData를 통해 AllCompanyBackdata의 모든 값을 찾기
+		public List<AllCompanyBackdata> findCompanyAllByID(String companyName, String userID, int saveData) {
+			String sql = "SELECT * FROM AllCompanyBackdata WHERE companyName =? and simulation_ID = ? and simulation_ID_SaveData = ?";
+			Connection conn = null;
+			PreparedStatement stmt = null;
+			ResultSet rs = null;
+			List<AllCompanyBackdata> allCompanyBackdataList = new ArrayList<>();
+			try {
+				conn = DBUtil.getConnection("go_db");
+				stmt = conn.prepareStatement(sql);
+				stmt.setString(1, companyName);
+				stmt.setString(2, userID);
+				stmt.setInt(3, saveData);
+				rs = stmt.executeQuery();
+
+				while (rs.next()) {
+					AllCompanyBackdata allCompanyBackdata = allCompanyBackdataMapper.resultMapping(rs);
+					allCompanyBackdataList.add(allCompanyBackdata);
+				}
+				return allCompanyBackdataList;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBUtil.closeAll(rs, stmt, conn);
+			}
+			return null;
+		}
+	
+	
 	//allcompanybackdata에 데이터 삽입하기
 	public void insert(String companyName, int companyStockPrice,
 			int companyStockCount, String simulation_ID, 
