@@ -6,12 +6,16 @@ import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import tables.UserInfo;
+
 public class BuyPriceGUI extends JPanel {
+	UserInfo userInfo = new UserInfo();
 
 	public BuyPriceGUI() {
 		setLayout(new BorderLayout(0, 0));
@@ -58,7 +62,7 @@ public class BuyPriceGUI extends JPanel {
 		pnlInformation.add(pnlMyMoney);
 		pnlMyMoney.setLayout(new BorderLayout(0, 0));
 
-		JLabel lblMoney = new JLabel("현재 보유 금액: 100000원");
+		JLabel lblMoney = new JLabel("현재 보유 금액: " + userInfo.getUser_Money());
 		lblMoney.setBackground(SystemColor.window);
 		pnlMyMoney.add(lblMoney, BorderLayout.CENTER);
 
@@ -71,7 +75,8 @@ public class BuyPriceGUI extends JPanel {
 		lblBuyData.setBounds(46, 54, 116, 15);
 		pnlInformation.add(lblBuyData);
 
-		String btnName[] = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "지우기", "00", "0", "<-", "입력" };
+		String btnName[] = { "1", "2", "3", "+10", "4", "5", "6", "-10", "7", "8", "9",
+							"지우기", "00", "0", "<-", "입력" };
 		JButton btnNum[] = new JButton[btnName.length];
 
 		JPanel pnlBtn = new JPanel();
@@ -87,7 +92,7 @@ public class BuyPriceGUI extends JPanel {
 		String[] operator = { null };
 		for (int i = 0; i < btnName.length; i++) {
 			btnNum[i] = new JButton(btnName[i]);
-			btnNum[i].setBackground(SystemColor.window);
+			btnNum[i].setBackground(SystemColor.activeCaption);
 			btnNum[i].setFocusable(false);
 			btnNum[i].addActionListener(new ActionListener() {
 				@Override
@@ -110,21 +115,34 @@ public class BuyPriceGUI extends JPanel {
 							tfBuyPrice.setText(currentText.substring(0, currentText.length() - 1));
 						}
 
-					} else if (command.equals("+")) {
-						Integer currentNumber = Integer.parseInt(tfBuyPrice.getText());
-						Integer result = currentNumber + 10; // 10 증가
-						tfBuyPrice.setText(String.valueOf(result)); // 결과 표시
+					} else if (command.equals("+10")) {
+//						 tfBuyPrice가 0일 경우 + 클릭 시 10으로 설정
+						String s = tfBuyPrice.getText() + "1000";
 
-					} else if (command.equals("-")) {
-						Integer currentNumber = Integer.parseInt(tfBuyPrice.getText());
-						Integer result = currentNumber - 10; // 10 감소
-						tfBuyPrice.setText(String.valueOf(result)); // 결과 표시
-
-					} else if (command.equals("입력")) {
-						System.out.println("입력 숫자: " + tfBuyPrice.getText());
+						if (Integer.parseInt(s) == 1000) {
+							tfBuyPrice.setText("10");
+						} else {
+							Integer currentNumber = Integer.parseInt(tfBuyPrice.getText());
+							Integer result = currentNumber + 10; // 10 증가
+							tfBuyPrice.setText(String.valueOf(result)); // 결과 표시
+						}
+						
+					} else if (command.equals("-10")) {
+						String currentText = tfBuyPrice.getText();
+						if (currentText.isEmpty()) {
+							return;
+						}
+						Integer currentNumber = Integer.parseInt(currentText);
+						if (currentNumber > 10) {
+							Integer result = currentNumber - 10;
+							tfBuyPrice.setText(String.valueOf(result));
+						} else {
+							tfBuyPrice.setText("");
+						}
 					}
 				}
 			});
+
 			pnlNumber.add(btnNum[i]);
 		}
 
@@ -133,11 +151,11 @@ public class BuyPriceGUI extends JPanel {
 		pnlBtn.add(pnlBtnSet, BorderLayout.SOUTH);
 
 		JButton btnBuy = new JButton("매수");
-		btnBuy.setBackground(SystemColor.window);
+		btnBuy.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBuy);
 
 		JButton btnBack = new JButton("뒤로가기");
-		btnBack.setBackground(SystemColor.window);
+		btnBack.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBack);
 	}
 }

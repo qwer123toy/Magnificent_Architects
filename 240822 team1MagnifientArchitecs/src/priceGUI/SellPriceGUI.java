@@ -72,7 +72,8 @@ public class SellPriceGUI extends JPanel {
 		lblSellData.setBounds(46, 54, 116, 15);
 		pnlInformation.add(lblSellData);
 
-		String btnName[] = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "지우기", "00", "0", "<-", "입력" };
+		String btnName[] = { "1", "2", "3", "+10", "4", "5", "6", "-10", "7", "8", "9",
+							"지우기", "00", "0", "<-", "입력" };
 		JButton btnNum[] = new JButton[btnName.length];
 
 		JPanel pnlBtn = new JPanel();
@@ -88,7 +89,7 @@ public class SellPriceGUI extends JPanel {
 		String[] operator = { null };
 		for (int i = 0; i < btnName.length; i++) {
 			btnNum[i] = new JButton(btnName[i]);
-			btnNum[i].setBackground(SystemColor.window);
+			btnNum[i].setBackground(SystemColor.activeCaption);
 			btnNum[i].setFocusable(false);
 			btnNum[i].addActionListener(new ActionListener() {
 				@Override
@@ -111,21 +112,34 @@ public class SellPriceGUI extends JPanel {
 							tfSellPrice.setText(currentText.substring(0, currentText.length() - 1));
 						}
 
-					} else if (command.equals("+")) {
-						Integer currentNumber = Integer.parseInt(tfSellPrice.getText());
-						Integer result = currentNumber + 10; // 10 증가
-						tfSellPrice.setText(String.valueOf(result)); // 결과 표시
+					} else if (command.equals("+10")) {
+//						 tfBuyPrice가 0일 경우 + 클릭 시 10으로 설정
+						String s = tfSellPrice.getText() + "1000";
 
-					} else if (command.equals("-")) {
-						Integer currentNumber = Integer.parseInt(tfSellPrice.getText());
-						Integer result = currentNumber - 10; // 10 감소
-						tfSellPrice.setText(String.valueOf(result)); // 결과 표시
-
-					} else if (command.equals("입력")) {
-						System.out.println("입력 숫자: " + tfSellPrice.getText());
+						if (Integer.parseInt(s) == 1000) {
+							tfSellPrice.setText("10");
+						} else {
+							Integer currentNumber = Integer.parseInt(tfSellPrice.getText());
+							Integer result = currentNumber + 10; // 10 증가
+							tfSellPrice.setText(String.valueOf(result)); // 결과 표시
+						}
+						
+					} else if (command.equals("-10")) {
+						String currentText = tfSellPrice.getText();
+						if (currentText.isEmpty()) {
+							return;
+						}
+						Integer currentNumber = Integer.parseInt(currentText);
+						if (currentNumber > 10) {
+							Integer result = currentNumber - 10;
+							tfSellPrice.setText(String.valueOf(result));
+						} else {
+							tfSellPrice.setText("");
+						}
 					}
 				}
 			});
+			
 			pnlNumber.add(btnNum[i]);
 		}
 
@@ -134,11 +148,11 @@ public class SellPriceGUI extends JPanel {
 		pnlBtn.add(pnlBtnSet, BorderLayout.SOUTH);
 
 		JButton btnSell = new JButton("매도");
-		btnSell.setBackground(SystemColor.window);
+		btnSell.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnSell);
 
 		JButton btnBack = new JButton("뒤로가기");
-		btnBack.setBackground(SystemColor.window);
+		btnBack.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBack);
 	}
 }
