@@ -220,66 +220,91 @@ public class BuyPriceGUI extends JPanel {
 		JButton btnBuy = new JButton("매수");
 		btnBuy.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBuy);
-
-		if (buyStock < 0) {
-			return;
-		} else {
-			int buyStockCount = 0;// 판 수량이 적용된 회사의 주식 수량
-			int buyStockPrice = 0;
-
-			buyStockCount = allCompany.getCompanyStockCount() - buyStock;
-			buyStockPrice = allCompany.getCompanyStockPrice();
-
-			try {
-				allCompanyDAO.update(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
-						userInfo.getUser_SaveData(), userInfo.getUser_Date());
-				UserMoneyHistory umh = userMoneyHistoryDAO.findByCompany(companyName, userInfo.getUser_ID(),
-						userInfo.getUser_SaveData());
-
-				if (today == 1) {
-
+		
+		btnBuy.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				String buyStockString = tfBuyPrice.getText();
+				int buyStock = 0;
+				if (!buyStockString.isEmpty()) {
+					buyStock = Integer.parseInt(buyStockString);
+				}
+				if (buyStock < 0) {
+					return;
 				} else {
+					int buyStockCount = 0;// 판 수량이 적용된 회사의 주식 수량
+					int buyStockPrice = 0;
 
-					// 매입가
-					int buyPrice = stockChangeHistoryDAO.findStockMoneyAvgBycompName(companyName, userInfo.getUser_ID(),
-							userInfo.getUser_SaveData());
+					buyStockCount = allCompany.getCompanyStockCount() - buyStock;
+					buyStockPrice = allCompany.getCompanyStockPrice();
+					int buyPrice = 0;
 
 					// 평가금액
-					int realMoney = stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(companyName,
-							userInfo.getUser_ID(), userInfo.getUser_SaveData());
+					int realMoney = 0;
 
 					// 평가손익
-					int profitMoney = stockChangeHistoryDAO.findPlusStockMoneyNowBycompName(companyName,
-							userInfo.getUser_ID(), userInfo.getUser_SaveData());
+					int profitMoney = 0;
 
 					// 수익률
-					double profitRate = stockChangeHistoryDAO.findFinalStockMoneyRateNowBycompName(companyName,
-							userInfo.getUser_ID(), userInfo.getUser_SaveData());
+					double profitRate = 0;
+					
+					
+					try {
+						allCompanyDAO.update(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
+								userInfo.getUser_SaveData(), userInfo.getUser_Date());
+						UserMoneyHistory umh = userMoneyHistoryDAO.findByCompany(companyName, userInfo.getUser_ID(),
+								userInfo.getUser_SaveData());
 
-					// 회원 별 주식 보유 상황 업데이트
-					userMoneyHistoryDAO.update(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName,
-							buyPrice, buyStockPrice, realMoney, profitMoney, profitRate,
-							umh.getStock_Count() + buyStock, userInfo.getUser_Date());
+						if (userInfo.getUser_Date() ==1) {
 
-					int user_Money = userInfo.getUser_Money() - (buyStockPrice * buyStock);
+						} else {
 
-					// 유저가 가진 돈에 판 돈을 더해줌
-					// 업데이트
-					userInfoDAO.update(user_Money, userInfo.getUser_ID(), userInfo.getUser_SaveData());
+							// 매입가
+							 buyPrice = stockChangeHistoryDAO.findStockMoneyAvgBycompName(companyName, userInfo.getUser_ID(),
+									userInfo.getUser_SaveData());
 
-					// 회사 별 주식 보유 내용 저장
-					allCompanyBackdataDAO.insert(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
-							userInfo.getUser_SaveData(), userInfo.getUser_Date());
+							// 평가금액
+							 realMoney = stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(companyName,
+									userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
-					// 전체 거래 내역 저장
-					stockChangeHistoryDAO.insertBuy(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName,
-							buyStockPrice, buyStock, userInfo.getUser_Date());
+							// 평가손익
+							profitMoney = stockChangeHistoryDAO.findPlusStockMoneyNowBycompName(companyName,
+									userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
+							// 수익률
+							profitRate = stockChangeHistoryDAO.findFinalStockMoneyRateNowBycompName(companyName,
+									userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
+						}
+						// 회원 별 주식 보유 상황 업데이트
+						userMoneyHistoryDAO.update(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName,
+								buyPrice, buyStockPrice, realMoney, profitMoney, profitRate,
+								umh.getStock_Count() + buyStock, userInfo.getUser_Date());
+
+						int user_Money = userInfo.getUser_Money() - (buyStockPrice * buyStock);
+
+						// 유저가 가진 돈에 판 돈을 더해줌
+						// 업데이트
+						userInfoDAO.update(user_Money, userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
+						// 회사 별 주식 보유 내용 저장
+						allCompanyBackdataDAO.insert(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
+								userInfo.getUser_SaveData(), userInfo.getUser_Date());
+
+						// 전체 거래 내역 저장
+						stockChangeHistoryDAO.insertBuy(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName,
+								buyStockPrice, buyStock, userInfo.getUser_Date());
+
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
 			}
-		}
+		});
+		
 
 		JButton btnBack = new JButton("뒤로가기");
 		btnBack.setBackground(SystemColor.activeCaption);

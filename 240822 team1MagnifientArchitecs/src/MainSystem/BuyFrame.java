@@ -31,7 +31,9 @@ public class BuyFrame {
 
 		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		
 		int today = 0;
+		
 		AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
 		// 수량*주가 만큼의 돈이 있어야됨 조건문 추가
@@ -66,11 +68,11 @@ public class BuyFrame {
 		System.out.print("입력 : ");
 		Scanner sc = new Scanner(System.in);
 
-		int buyStock = sc.nextInt();// 판 수량
+		int buyStock = sc.nextInt();// 산 수량
 		if (buyStock < 0) {
 			return;
 		} else {
-			int buyStockCount = 0;// 판 수량이 적용된 회사의 주식 수량
+			int buyStockCount = 0;// 산 수량이 적용된 회사의 주식 수량
 			int buyStockPrice = 0;
 
 			buyStockCount = allCompany.getCompanyStockCount() - buyStock;
@@ -101,6 +103,7 @@ public class BuyFrame {
 					// 수익률
 					double profitRate = stockChangeHistoryDAO.findFinalStockMoneyRateNowBycompName(companyName,
 							userInfo.getUser_ID(), userInfo.getUser_SaveData());
+					
 					System.out.println("회사 : " + companyName);
 					System.out.println("유저 : " + userInfo.getUser_ID());
 					System.out.println("데이터 : " + userInfo.getUser_SaveData());
