@@ -37,18 +37,29 @@ public class SaveData extends JDialog {
 	AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 	List<UserInfo> userinfoList;
 	
-	private void insertInfoByID(String userName, int saveData) {
+	private void insertInfoByID(UserInfo userInfo, int saveData) {
 		try {
-			userMoneyHistoryDAO.insert(userName, saveData, "A 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "B 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "C 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "D 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "E 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "F 회사", 0, 0, 0, 0, 0, 0, 1);
-			allCompanyDAO.insert("A 회사", 100, 200, userName, saveData, 1);
-			allCompanyDAO.insert("B 회사", 150, 300, userName, saveData, 1);
-			allCompanyBackdataDAO.insert("A 회사", 100, 200, userName, saveData, 1);
-			allCompanyBackdataDAO.insert("B 회사", 150, 300, userName, saveData, 1);
+			userInfoDAO.insert(userInfo.getUser_ID(), userInfo.getUser_PW(), saveData);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "A 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "B 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "C 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "D 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "E 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "F 회사", 0, 0, 0, 0, 0, 0, 1);
+			
+			allCompanyDAO.insert("A 회사", 100, 200, userInfo.getUser_ID(), saveData, 1);
+			allCompanyDAO.insert("B 회사", 150, 300, userInfo.getUser_ID(), saveData, 1);
+			allCompanyDAO.insert("C 회사", 400, 1000, userInfo.getUser_ID(), saveData, 1);
+			allCompanyDAO.insert("D 회사", 70, 300, userInfo.getUser_ID(), saveData, 1);
+			allCompanyDAO.insert("E 회사", 2500, 5000, userInfo.getUser_ID(), saveData, 1);
+			allCompanyDAO.insert("F 회사", 8200, 500, userInfo.getUser_ID(), saveData, 1);
+			
+			allCompanyBackdataDAO.insert("A 회사", 100, 200, userInfo.getUser_ID(), saveData, 1);
+			allCompanyBackdataDAO.insert("B 회사", 150, 300, userInfo.getUser_ID(), saveData, 1);
+			allCompanyBackdataDAO.insert("C 회사", 400, 1000, userInfo.getUser_ID(), saveData, 1);
+			allCompanyBackdataDAO.insert("D 회사", 70, 300, userInfo.getUser_ID(), saveData, 1);
+			allCompanyBackdataDAO.insert("E 회사", 2500, 5000, userInfo.getUser_ID(), saveData, 1);
+			allCompanyBackdataDAO.insert("F 회사", 8200, 500, userInfo.getUser_ID(), saveData, 1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -72,28 +83,30 @@ public class SaveData extends JDialog {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String example = "3일차, 현재 보유금액 23400원";
 
 		// 첫 번째 패널, 버튼
 		JButton btnSave1 = btnSetting("저장 데이터 1", userinfoList.get(0).getUser_Money() +"원, " +
 				userinfoList.get(0).getUser_Date() + "일차", 10);
+		
 		// 두 번째 패널, 버튼
 		JButton btnSave2 = btnSetting("저장 데이터2", userinfoList.size()>=2 ? 
 				userinfoList.get(1).getUser_Money() +"원, " +
 				userinfoList.get(1).getUser_Date() + "일차"
 				:"없음" , 118);
+		
 		// 세 번째 패널, 버튼
 		JButton btnSave3 = btnSetting("저장 데이터3", userinfoList.size()>=3 ? 
 				userinfoList.get(2).getUser_Money() +"원, " +
 				userinfoList.get(2).getUser_Date() + "일차"
 				:"없음" , 228);
+
 		// 뒤로가기 버튼
 		JButton btnBack = new JButton("뒤로가기");
 		// (x좌표, y좌표, 가로길이, 세로길이)
 		btnBack.setBounds(135, 355, 165, 45);
 		add(btnBack);
 
-		// 버튼1을 누르면 버튼2에 텍스트가 삽입
+		// 버튼1 누르면 실행됨
 		btnSave1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BaseMainFrame baseMainFrame = new BaseMainFrame(userinfoList.get(0));
@@ -101,6 +114,46 @@ public class SaveData extends JDialog {
 				dispose();
 			}
 		});
+		
+		btnSave2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String chkSaveData = btnSave2.getText();
+				if(chkSaveData.equals("없음")) {
+					insertInfoByID(userinfoList.get(0), 2);
+					try {
+						userinfoList = userInfoDAO.checkExistIDAndPW(userInfo.getUser_ID(), userInfo.getUser_PW());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+				BaseMainFrame baseMainFrame = new BaseMainFrame(userinfoList.get(1));
+				baseMainFrame.setVisible(true);
+				dispose();
+			}
+		});
+		
+		btnSave3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String chkSaveData = btnSave3.getText();
+				if(chkSaveData.equals("없음")) {
+					insertInfoByID(userinfoList.get(0), 3);
+					try {
+						userinfoList = userInfoDAO.checkExistIDAndPW(userInfo.getUser_ID(), userInfo.getUser_PW());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+				BaseMainFrame baseMainFrame = new BaseMainFrame(userinfoList.get(2));
+				baseMainFrame.setVisible(true);
+				dispose();
+			}
+		});
+		
+		
 	}
 
 	// 버튼 셋팅 메서드
