@@ -24,10 +24,9 @@ import tables.UserMoneyHistory;
 public class CompanyStockBoardPnl extends JPanel {
 	private UserInfo userInfo;
 	private List<AllCompany> allCompanyList;
-	private AllCompanyDAO allCompanyDAO;
-	private UserInfoDAO userInfoDAO;
-	private UserMoneyHistoryDAO usermoneyHistoryDAO;
-	private AllCompanyBackdataDAO allCompanyBackdataDAO;
+	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
+	private UserInfoDAO userInfoDAO = new UserInfoDAO();
+	private AllCompanyBackdataDAO allCompanyBackdataDAO= new AllCompanyBackdataDAO();
 	private UserInfo userInfoStockFrame;
 	private List<UserMoneyHistory> umhStockFrame;
 	private List<AllCompanyBackdata> allCompanyBackdataList;
@@ -37,8 +36,8 @@ public class CompanyStockBoardPnl extends JPanel {
 	private JLabel allProperty;
 	private int size;
 	private CompanyStockPnl[] comapanyInfoPnls;
-	private StockChangeHistoryDAO stockChangeHistoryDAO;
-	private UserMoneyHistoryDAO userMoneyHistoryDAO;
+	private StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
+	private UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
 
 	public CompanyStockBoardPnl(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -103,21 +102,51 @@ public class CompanyStockBoardPnl extends JPanel {
 
 	public void updatebaseMainPnl() {
 		userInfoStockFrame = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-		umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
+		umhStockFrame = userMoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
 		allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
 		allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
 
+		UserInfo userInfoUpdate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		List<UserMoneyHistory> userMoneyHistoryList = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(),
+				userInfoUpdate.getUser_SaveData());
+		
+		int buyPriceAll = 0;// 원금
+		int plusMoney = 0;// 수익
+		int realMoney = 0; // 평가금액
+		double stockMoneyRate = 0; // 총수익률
+		
+		//전체 원금, 수익금,평가금액,수익률 계산
+		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
+			buyPriceAll += stockChangeHistoryDAO.findStockMoneyAllBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
+					userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
+			plusMoney += stockChangeHistoryDAO.findPlusStockMoneyNowBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
+					userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
+			realMoney += stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
+					userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
+			
+		}
+		
+		if(buyPriceAll>0) {
+			stockMoneyRate = (double)plusMoney/(double)buyPriceAll*100.0;// 총수익률
+			stockMoneyRate = (Math.round(stockMoneyRate*100)/100.0);// 소수점 둘째자리까지 계산
+		}
+		
+//		userMoneyHistory = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
+		
+		
+		
+		
 		// 현재 원금 업데이트
-		String principalText = "" + (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
-				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
-		pricipal.setText("현재 원금: " + principalText + "");
+//		String principalText = "" + (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
+//				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
+		pricipal.setText("현재 원금: " + buyPriceAll + "");
 
 		// 현재 수익 업데이트
-		String allProfitMoneyText = "" + (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money());
-		allProfitMoney.setText("현재 수익: " + allProfitMoneyText + "원");
+//		String allProfitMoneyText = "" + (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money());
+		allProfitMoney.setText("현재 수익: " + plusMoney + "원");
 
 		// 현재 수익률
 		
@@ -144,21 +173,20 @@ public class CompanyStockBoardPnl extends JPanel {
 //			realMoney += stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
 //					userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
 //		}
-//		if(buyPriceAll>0)
-//			stockMoneyRate = (double)plusMoney/(double)buyPriceAll*100.0;// 총수익률
-//		profitRate.setText("현재 수익률: " + stockMoneyRate + "%");
+		if(buyPriceAll>0) {
+			stockMoneyRate = (double)plusMoney/(double)buyPriceAll*100.0;// 총수익률
+			stockMoneyRate = (Math.round(stockMoneyRate*100)/100.0);// 소수점 둘째자리까지 계산
+		}
+		profitRate.setText("현재 수익률: " + stockMoneyRate + "%");
 
 		// 현재 보유 금액 업데이트
-		String allPropertyText = "" + (umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
-				+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count());
-		allProperty.setText("현재 보유 금액: " + allPropertyText + "원");
+		
+		
+		allProperty.setText("평가 금액: " + realMoney + "원");
 	}
 
 	private void setbaseMainPnl() {
-		userInfoDAO = new UserInfoDAO();
-		allCompanyDAO = new AllCompanyDAO();
-		usermoneyHistoryDAO = new UserMoneyHistoryDAO();
-		allCompanyBackdataDAO = new AllCompanyBackdataDAO();
+		
 
 		JPanel baseMainPnl = new JPanel();
 		baseMainPnl.setLayout(new GridLayout(2, 2));

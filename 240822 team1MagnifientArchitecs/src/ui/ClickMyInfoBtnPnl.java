@@ -147,7 +147,7 @@ public class ClickMyInfoBtnPnl extends JPanel {
 			stockMoneyRate = (Math.round(stockMoneyRate*100)/100.0);// 소수점 둘째자리까지 계산
 		}
 		
-		userMoneyHistory = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
+//		userMoneyHistory = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
 
 		principallbl.setText(userInfoUpdate.getUser_Money() + "원");
 
