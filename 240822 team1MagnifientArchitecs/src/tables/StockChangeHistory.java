@@ -12,7 +12,6 @@ public class StockChangeHistory {
 	
 	private String user_ID;
 	private int user_SaveData;
-	private int user_Money;
 	private String companyName;
 	private int sellStockPrice;
 	private int sellStockCount;
@@ -20,12 +19,11 @@ public class StockChangeHistory {
 	private int buyStockCount;
 	private int date;
 
-	public StockChangeHistory(String user_ID, int user_SaveData, int user_Money, String companyName, int sellStockPrice,
+	public StockChangeHistory(String user_ID, int user_SaveData, String companyName, int sellStockPrice,
 			int sellStockCount, int buyStockPrice, int buyStockCount, int date) {
 		super();
 		this.user_ID = user_ID;
 		this.user_SaveData = user_SaveData;
-		this.user_Money = user_Money;
 		this.companyName = companyName;
 		this.sellStockPrice = sellStockPrice;
 		this.sellStockCount = sellStockCount;
@@ -50,13 +48,7 @@ public class StockChangeHistory {
 		this.user_SaveData = user_SaveData;
 	}
 
-	public int getUser_Money() {
-		return user_Money;
-	}
-
-	public void setUser_Money(int user_Money) {
-		this.user_Money = user_Money;
-	}
+	
 
 	public String getCompanyName() {
 		return companyName;
@@ -109,31 +101,8 @@ public class StockChangeHistory {
 	@Override
 	public int hashCode() {
 		return Objects.hash(buyStockCount, buyStockPrice, companyName, date, sellStockCount, sellStockPrice, user_ID,
-				user_Money, user_SaveData);
+				 user_SaveData);
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof StockChangeHistory)) {
-			return false;
-		}
-		StockChangeHistory other = (StockChangeHistory) obj;
-		return buyStockCount == other.buyStockCount && buyStockPrice == other.buyStockPrice
-				&& Objects.equals(companyName, other.companyName) && date == other.date
-				&& sellStockCount == other.sellStockCount && sellStockPrice == other.sellStockPrice
-				&& Objects.equals(user_ID, other.user_ID) && user_Money == other.user_Money
-				&& user_SaveData == other.user_SaveData;
-	}
-
-	@Override
-	public String toString() {
-		return "StockChangeHistory [user_ID=" + user_ID + ", user_SaveData=" + user_SaveData + ", user_Money="
-				+ user_Money + ", companyName=" + companyName + ", sellStockPrice=" + sellStockPrice
-				+ ", sellStockCount=" + sellStockCount + ", buyStockPrice=" + buyStockPrice + ", buyStockCount="
-				+ buyStockCount + ", date=" + date + "]";
-	}
 
 }

@@ -2,9 +2,16 @@ package otherPnl;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import DAO.StockChangeHistoryDAO;
+import DAO.UserInfoDAO;
+import DAO.UserMoneyHistoryDAO;
+import tables.StockChangeHistory;
+import tables.UserInfo;
 
 public class TradeHistoryPnl extends JPanel {
 	private JLabel daylbl;
@@ -12,8 +19,13 @@ public class TradeHistoryPnl extends JPanel {
 	private JLabel buyOrSelllbl;
 	private JLabel moneylbl;
 	private JLabel countlbl;
+	private UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
+	private UserInfoDAO userInfoDAO = new UserInfoDAO();
+	private StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
+	
+	public TradeHistoryPnl(UserInfo userInfo, int count) {
+		UserInfo userInfoCreate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
-	public TradeHistoryPnl() {
 		setLayout(new GridLayout(1, 5));
 		setPreferredSize(new Dimension(400, 20));
 
@@ -23,7 +35,7 @@ public class TradeHistoryPnl extends JPanel {
 		moneylbl = makeLbl("");
 		countlbl = makeLbl("");
 		
-		update();
+		update(userInfoCreate, count);
 		
 		add(daylbl);
 		add(companyNamelbl);
@@ -33,18 +45,33 @@ public class TradeHistoryPnl extends JPanel {
 
 	}
 	
-	public void update() {
-//		daylbl.setText(day + "");
-//		companyNamelbl.setText(companyName);
-//		buyOrSelllbl.setText(buyOrSell);
-//		moneylbl.setText(money + "");
-//		countlbl.setText(count + "");
+	public void update(UserInfo userInfo, int count) {
+		UserInfo userInfoUpdate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		List<StockChangeHistory> stockChangeHistoryList = stockChangeHistoryDAO.findByID(userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
+		String companyName = stockChangeHistoryList.get(count).getCompanyName();
 		
-		daylbl.setText("일차 미구현" + "");
-		companyNamelbl.setText("회사 이름 미구현");
-		buyOrSelllbl.setText("매수 매도 미구현");
-		moneylbl.setText("금액 미구현" + "");
-		countlbl.setText("수량 미구현" + "");
+		
+		daylbl.setText(stockChangeHistoryList.get(count).getDate() + "일차" + "");
+		companyNamelbl.setText(companyName);
+		
+		String chkBuyOrSell = "매수";
+		int stockPrice = 0;
+		int stockCount=0;
+		if(stockChangeHistoryList.get(count).getBuyStockCount() ==0) {
+			chkBuyOrSell = "매도";
+			stockPrice = stockChangeHistoryList.get(count).getSellStockPrice();
+			stockCount = stockChangeHistoryList.get(count).getSellStockCount();
+			
+		}
+		else {
+			stockPrice = stockChangeHistoryList.get(count).getBuyStockPrice();
+			stockCount = stockChangeHistoryList.get(count).getBuyStockCount();
+			
+		}
+		buyOrSelllbl.setText(chkBuyOrSell);
+		moneylbl.setText(stockPrice+ "원");
+		countlbl.setText(stockCount+ "주");
+		
 		
 	}
 

@@ -27,7 +27,6 @@ public class StockChangeHistoryMapper implements IResultMapper<StockChangeHistor
 		try {
 			String user_ID = rs.getString("user_ID");
 			int user_SaveData = rs.getInt("user_SaveData");
-			int user_Money = rs.getInt("user_Money");
 			String companyName = rs.getString("CompanyName");
 			int sellStockPrice = rs.getInt("sellStockPrice");
 			int sellStockCount = rs.getInt("sellStockCount");
@@ -35,7 +34,7 @@ public class StockChangeHistoryMapper implements IResultMapper<StockChangeHistor
 			int buyStockCount = rs.getInt("buyStockCount");
 			int date = rs.getInt("date");
 
-			return new StockChangeHistory(user_ID, user_SaveData, user_Money, companyName, sellStockPrice,
+			return new StockChangeHistory(user_ID, user_SaveData, companyName, sellStockPrice,
 					sellStockCount, buyStockPrice, buyStockCount, date);
 		} catch (SQLException e) {
 			e.printStackTrace();

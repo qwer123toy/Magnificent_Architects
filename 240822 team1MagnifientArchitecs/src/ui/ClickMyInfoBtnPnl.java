@@ -25,7 +25,7 @@ import tables.UserMoneyHistory;
 
 public class ClickMyInfoBtnPnl extends JPanel {
 	UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
-	UserInfoDAO UserInfoDAO = new UserInfoDAO();
+	UserInfoDAO userInfoDAO = new UserInfoDAO();
 	StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
 	UserInfo userInfo;
 	private List<UserMoneyHistory> userMoneyHistory;
@@ -68,35 +68,38 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 	// TODO 작성 필요
 	public void updateCenterPnl(UserInfo userInfo) {
-		UserInfo userInfoUpdate = UserInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		UserInfo userInfoUpdate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		List<UserMoneyHistory> userMoneyHistoryList = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(),
 				userInfoUpdate.getUser_SaveData());
-		
-		for(int i=0; i<userMoneyHistoryList.size(); i++) {
-			
-			companyInfoPnlList.get(i).update(userInfo,i);
+
+		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
+			if (userMoneyHistoryList.get(i).getStock_Count() > 0) {
+			companyInfoPnlList.get(i).update(userInfo, i);
+			}
 		}
-		
+
 //		companyInfoPnl1.update(userInfo,0);
 //		companyInfoPnl2.update(userInfo,1);
 	}
 
 	private void createCenterPnl(UserInfo userInfo) {
-		UserInfo userInfoUpdate = UserInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		UserInfo userInfoUpdate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		List<UserMoneyHistory> userMoneyHistoryList = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(),
 				userInfoUpdate.getUser_SaveData());
-		
+
 		JPanel pnlCenter = new JPanel();
 		add(pnlCenter, "Center");
 		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		
-		for(int i=0; i<userMoneyHistoryList.size(); i++) {
-			CompanyInfoPnl companyInfoPnl = new CompanyInfoPnl(userInfo, i);
-			pnlCenter.add(companyInfoPnl);
-			companyInfoPnlList.add(companyInfoPnl);
-			
+
+		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
+			if (userMoneyHistoryList.get(i).getStock_Count() > 0) {
+				CompanyInfoPnl companyInfoPnl = new CompanyInfoPnl(userInfo, i);
+				pnlCenter.add(companyInfoPnl);
+				companyInfoPnlList.add(companyInfoPnl);
+			}
+
 		}
-		
+
 //		companyInfoPnl1 = new CompanyInfoPnl(userInfo);
 //		pnlCenter.add(companyInfoPnl1);
 //		companyInfoPnl2 = new CompanyInfoPnl(userInfo);
@@ -111,9 +114,9 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 		JButton seeMyTradingHistory = new JButton("나의 거래 내역 보기");
 		pnlSouth.add(seeMyTradingHistory);
-		
+
 		seeMyTradingHistory.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cardLayout.show(pnlCenter, "seeMyTradingHistoryPnl");
@@ -122,16 +125,16 @@ public class ClickMyInfoBtnPnl extends JPanel {
 	}
 
 	private void updateNorthPnl() {
-		UserInfo userInfoUpdate = UserInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		UserInfo userInfoUpdate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		List<UserMoneyHistory> userMoneyHistoryList = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(),
 				userInfoUpdate.getUser_SaveData());
-		
+
 		int buyPriceAll = 0;// 원금
 		int plusMoney = 0;// 수익
 		int realMoney = 0; // 평가금액
 		double stockMoneyRate = 0; // 총수익률
-		
-		//전체 원금, 수익금,평가금액,수익률 계산
+
+		// 전체 원금, 수익금,평가금액,수익률 계산
 		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
 			buyPriceAll += stockChangeHistoryDAO.findStockMoneyAllBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
 					userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
@@ -139,14 +142,14 @@ public class ClickMyInfoBtnPnl extends JPanel {
 					userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
 			realMoney += stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
 					userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
-			
+
 		}
-		
-		if(buyPriceAll>0) {
-			stockMoneyRate = (double)plusMoney/(double)buyPriceAll*100.0;// 총수익률
-			stockMoneyRate = (Math.round(stockMoneyRate*100)/100.0);// 소수점 둘째자리까지 계산
+
+		if (buyPriceAll > 0) {
+			stockMoneyRate = (double) plusMoney / (double) buyPriceAll * 100.0;// 총수익률
+			stockMoneyRate = (Math.round(stockMoneyRate * 100) / 100.0);// 소수점 둘째자리까지 계산
 		}
-		
+
 //		userMoneyHistory = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
 
 		principallbl.setText(userInfoUpdate.getUser_Money() + "원");
@@ -155,7 +158,6 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 		profitMoneylbl.setText(plusMoney + "원");
 
-	
 		profitRatelbl.setText(stockMoneyRate + "%");
 
 		myInvestMoneylbl.setText(realMoney + "원");
