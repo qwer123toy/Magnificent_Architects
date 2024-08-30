@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 
 import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
+import DAO.StockChangeHistoryDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
 import otherPnl.CompanyStockPnl;
@@ -37,6 +37,8 @@ public class CompanyStockBoardPnl extends JPanel {
 	private JLabel allProperty;
 	private int size;
 	private CompanyStockPnl[] comapanyInfoPnls;
+	private StockChangeHistoryDAO stockChangeHistoryDAO;
+	private UserMoneyHistoryDAO userMoneyHistoryDAO;
 
 	public CompanyStockBoardPnl(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -49,7 +51,7 @@ public class CompanyStockBoardPnl extends JPanel {
 		setbaseMainPnl();
 		updatebaseMainPnl();
 
-		// 회사명, 현재가, 전일대비, 잔여수량 패널
+		// 회사명, 현재가, 전일대비, 잔여수량 이름을 설정
 		columnNamePnl();
 
 		// A B C D 회사 정보 표시 패널
@@ -109,27 +111,46 @@ public class CompanyStockBoardPnl extends JPanel {
 				userInfoStockFrame.getUser_SaveData());
 
 		// 현재 원금 업데이트
-		String pricipalText = "" + umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
-				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count();
-		pricipal.setText("현재 원금: " + pricipalText);
+		String principalText = "" + (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
+				+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
+		pricipal.setText("현재 원금: " + principalText + "");
 
 		// 현재 수익 업데이트
-		String allProfitMoneyText = "" + umhStockFrame.get(0).getMy_Stock_Money()
-				+ umhStockFrame.get(1).getMy_Stock_Money();
+		String allProfitMoneyText = "" + (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money());
 		allProfitMoney.setText("현재 수익: " + allProfitMoneyText + "원");
 
-		// 현재 수익률 업데이트
-		double stockMoneyRate = 0;
-		if (umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count() != 0) {
-			stockMoneyRate = (umhStockFrame.get(0).getMy_Stock_Money() + umhStockFrame.get(1).getMy_Stock_Money())
-					/ (umhStockFrame.get(0).getBuyPrice() * umhStockFrame.get(0).getStock_Count()
-							+ umhStockFrame.get(1).getBuyPrice() * umhStockFrame.get(1).getStock_Count());
-		}
-		profitRate.setText("현재 수익률: " + stockMoneyRate + "%");
+		// 현재 수익률
+		
+//		int buyPriceAll = 0;// 원금
+//		int plusMoney = 0;// 수익
+//		int realMoney = 0; // 평가금액
+//		double stockMoneyRate = 0; // 총수익률
+//		
+//		List<UserMoneyHistory> userMoneyHistoryList = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
+//				userInfoStockFrame.getUser_SaveData());
+//		System.out.println(userMoneyHistoryList.toString());
+////		List<UserMoneyHistory> userMoneyHistoryList = userMoneyHistoryDAO.findByID(userInfo.getUser_ID(),
+////				userInfo.getUser_SaveData());
+//		System.out.println(userMoneyHistoryList.get(0).getUser_Stock());
+//		System.out.println(userInfoStockFrame.getUser_ID());
+//		System.out.println(userInfoStockFrame.getUser_SaveData());
+//		System.out.println(userMoneyHistoryList.size());
+//		System.out.println(stockChangeHistoryDAO.findStockMoneyAllBycompName((userMoneyHistoryList.get(4).getUser_Stock()), (userInfoStockFrame.getUser_ID()), (userInfoStockFrame.getUser_SaveData())));
+//		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
+//			buyPriceAll += stockChangeHistoryDAO.findStockMoneyAllBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
+//					userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+//			plusMoney += stockChangeHistoryDAO.findPlusStockMoneyNowBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
+//					userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+//			realMoney += stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(userMoneyHistoryList.get(i).getUser_Stock(),
+//					userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
+//		}
+//		if(buyPriceAll>0)
+//			stockMoneyRate = (double)plusMoney/(double)buyPriceAll*100.0;// 총수익률
+//		profitRate.setText("현재 수익률: " + stockMoneyRate + "%");
 
 		// 현재 보유 금액 업데이트
-		String allPropertyText = "" + umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
-				+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count();
+		String allPropertyText = "" + (umhStockFrame.get(0).getMy_Stock_Money() * umhStockFrame.get(0).getStock_Count()
+				+ umhStockFrame.get(1).getMy_Stock_Money() * umhStockFrame.get(1).getStock_Count());
 		allProperty.setText("현재 보유 금액: " + allPropertyText + "원");
 	}
 

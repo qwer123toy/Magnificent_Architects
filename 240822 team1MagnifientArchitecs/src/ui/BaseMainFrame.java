@@ -13,9 +13,11 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import DAO.UserInfoDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
 import tables.AllCompany;
@@ -36,6 +38,8 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private ClickMyInfoBtnPnl clickMyInfoBtnPnl;
 	private SeeMyTradingHistoryPnl seeMyTradingHistoryPnl;
 	private JPanel contentPane;
+	private UserInfoDAO userInfoDAO;
+	private JLabel daylbl;
 
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -97,6 +101,13 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		JButton btnNorth2 = new JButton();
 		btnNorth2.setText("이전");
 		btnNorth2.addActionListener(this);
+		
+		// 제일 위 가운데 일차 표시
+		daylbl = new JLabel();
+		daylbl.setForeground(Color.WHITE);
+		updateDay();
+		
+		
 		JButton btnNorth3 = new JButton();
 		btnNorth3.setText("다음");
 		btnNorth3.addActionListener(this);
@@ -104,6 +115,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		btnNorth4.setText("장 마감");
 		pnlNorth.add(btnNorth1);
 		pnlNorth.add(btnNorth2);
+		pnlNorth.add(daylbl);
 		pnlNorth.add(btnNorth3);
 		pnlNorth.add(btnNorth4);
 		pnlNorth.setBackground(Color.BLACK);
@@ -165,15 +177,20 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				update();
+				updateMainPnl();
 			}
 		});
 	}
+
+	private void updateDay() {
+		daylbl.setText(userInfo.getUser_Date() + "일차");
+	}
 	
-	private void update() {
+	private void updateMainPnl() {
 		// 제일 처음 화면 업데이트
 		companyStockBoardPnl.updatebaseMainPnl();
 		companyStockBoardPnl.updateAllComapanyInfoPnl();
+		updateDay();
 	}
 
 	private void setPnlCenter() {
@@ -244,9 +261,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-//		UserInfoDAO userInfoDAO = new UserInfoDAO();
-//		UserInfo id = userInfoDAO .findByIDAndData("asd", 1);
-//
-//		new BaseMainFrame(id).setVisible(true);
+		UserInfoDAO userInfoDAO = new UserInfoDAO();
+		UserInfo id = userInfoDAO .findByIDAndData("asdf", 1);
+
+		new BaseMainFrame(id).setVisible(true);
 	}
 }

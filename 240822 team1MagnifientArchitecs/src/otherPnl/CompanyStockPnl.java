@@ -30,6 +30,7 @@ public class CompanyStockPnl extends JPanel {
 	private JLabel comparePrevDayLbl;
 	private JLabel stockCountLbl;
 	private int companyIndex;
+	private int changeStockPrice;
 	
 	public CompanyStockPnl(UserInfo userInfo, int companyIndex) {
 		this.companyIndex = companyIndex;
@@ -81,23 +82,33 @@ public class CompanyStockPnl extends JPanel {
 		
 		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
 		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
+		String companyName = allCompanyList.get(companyIndex).getCompanyName();
+		AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		
 		// 회사 이름 버튼
 		companyNameBtn.setText(allCompanyList.get(companyIndex).getCompanyName());
+		
 		// 현재가
 		priceNowLbl.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
+		
 		// 전일대비
-		comparePrevDayLbl.setText("미완성, 추가 필요");
+		if (userInfo.getUser_Date() == 1) {
+			System.out.printf("전일 대비  0원  \n");
+		} else {
+			int today = userInfo.getUser_Date();
+			int yesterday = today - 1;
+
+			AllCompanyBackdata acbdYesterday = allCompanyBackdataDAO.findCompanyByDate(companyName, yesterday,
+					userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
+			int todaysStockPrice = allCompany.getCompanyStockPrice();
+			int yesterdayStockPrice = acbdYesterday.getCompanyStockPrice();
+			changeStockPrice = todaysStockPrice - yesterdayStockPrice;
+		}
+		comparePrevDayLbl.setText(changeStockPrice + "원");
+		
 		// 잔여수량
 		stockCountLbl.setText(allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
 	}
 	
-//	private void showCompanyData(UserInfo userInfo, List<AllCompany> allCompanyList,
-//			List<AllCompanyBackdata> findCompanyBackdata, int companyIndex) {
-//		
-//		System.out.printf("회사 이름 : %s\n", allCompanyList.get(companyIndex).getCompanyName());
-//		System.out.printf("현재 주가 : %d원\n", allCompanyList.get(companyIndex).getCompanyStockPrice());
-//		System.out.printf("현재 주가 수량 : %d 주 \n", allCompanyList.get(companyIndex).getCompanyStockCount());
-//
-//	}
 }
