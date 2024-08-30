@@ -143,40 +143,27 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 //							.getCompanyStockPrice() + 10;
 //					int changeBComMoney = listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
 //							.getCompanyStockPrice() - 8;
-					int changeAComMoney = 10;
-					int changeBComMoney = -8;
+					int changeComMoney = (int) (Math.random()*10) - 10;
 
 					listAndDAO.userInfoDAO.updateDate(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-
-					listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeAComMoney, userInfo.getUser_ID(),
-							userInfo.getUser_SaveData(), "A 회사", userMoneyHistoryList.get(0).getStock_Price_now());
-
-					listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeBComMoney, userInfo.getUser_ID(),
-							userInfo.getUser_SaveData(), "B 회사", userMoneyHistoryList.get(1).getStock_Price_now());
-
-					listAndDAO.allCompanyDAO.updatePriceAndDate("A 회사", changeAComMoney, userInfo.getUser_ID(),
-							userInfo.getUser_SaveData());
-
-					listAndDAO.allCompanyDAO.updatePriceAndDate("B 회사", changeBComMoney, userInfo.getUser_ID(),
-							userInfo.getUser_SaveData());
-
-					listAndDAO.allCompanyBackdataDAO.insert("A 회사",
-							listAndDAO.allCompanyDAO
-									.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
-									.getCompanyStockPrice(),
-							listAndDAO.allCompanyDAO
-									.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
-									.getCompanyStockCount(),
-							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
-
-					listAndDAO.allCompanyBackdataDAO.insert("B 회사",
-							listAndDAO.allCompanyDAO
-									.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
-									.getCompanyStockPrice(),
-							listAndDAO.allCompanyDAO
-									.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
-									.getCompanyStockCount(),
-							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
+					
+					for(int i=0; i<userMoneyHistoryList.size(); i++) {
+						listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeComMoney, userInfo.getUser_ID(),
+								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(), userMoneyHistoryList.get(i).getStock_Price_now());
+						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(), changeComMoney, userInfo.getUser_ID(),
+								userInfo.getUser_SaveData());
+						listAndDAO.allCompanyBackdataDAO.insert(userMoneyHistoryList.get(i).getUser_Stock(),
+								listAndDAO.allCompanyDAO
+										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(), userInfo.getUser_ID(), userInfo.getUser_SaveData())
+										.getCompanyStockPrice(),
+								listAndDAO.allCompanyDAO
+										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(), userInfo.getUser_ID(), userInfo.getUser_SaveData())
+										.getCompanyStockCount(),
+								userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
+					}
+					
+					
+					
 					JOptionPane.showMessageDialog(BaseMainFrame.this, "오늘 장이 마감되었습니다.");
 				} catch (SQLException e1) {
 					e1.printStackTrace();

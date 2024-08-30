@@ -45,16 +45,26 @@ public class SignUP extends JDialog {
 
 	private void insertInfoByID(String userName, int saveData) {
 		try {
-			userMoneyHistoryDAO.insert(userName, saveData, "A 회사", 0, 100, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userName, saveData, "B 회사", 0, 150, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "A 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userName, saveData, "B 회사", 0, 0, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "C 회사", 0, 0, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "D 회사", 0, 0, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "E 회사", 0, 0, 0, 0, 0, 0, 1);
 			userMoneyHistoryDAO.insert(userName, saveData, "F 회사", 0, 0, 0, 0, 0, 0, 1);
+			
 			allCompanyDAO.insert("A 회사", 100, 200, userName, saveData, 1);
 			allCompanyDAO.insert("B 회사", 150, 300, userName, saveData, 1);
+			allCompanyDAO.insert("C 회사", 400, 1000, userName, saveData, 1);
+			allCompanyDAO.insert("D 회사", 70, 300, userName, saveData, 1);
+			allCompanyDAO.insert("E 회사", 2500, 5000, userName, saveData, 1);
+			allCompanyDAO.insert("F 회사", 8200, 500, userName, saveData, 1);
+			
 			allCompanyBackdataDAO.insert("A 회사", 100, 200, userName, saveData, 1);
 			allCompanyBackdataDAO.insert("B 회사", 150, 300, userName, saveData, 1);
+			allCompanyBackdataDAO.insert("C 회사", 400, 1000, userName, saveData, 1);
+			allCompanyBackdataDAO.insert("D 회사", 70, 300, userName, saveData, 1);
+			allCompanyBackdataDAO.insert("E 회사", 2500, 5000, userName, saveData, 1);
+			allCompanyBackdataDAO.insert("F 회사", 8200, 500, userName, saveData, 1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
