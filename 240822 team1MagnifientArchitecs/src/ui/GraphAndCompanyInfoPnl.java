@@ -28,8 +28,8 @@ import tables.CompanyInfo;
 import tables.UserInfo;
 
 public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
-	private CardLayout GandIcardLayout;
-	private JPanel GandIpnlCenter;
+	private CardLayout GandIcardLayout = new CardLayout();
+	private JPanel GandIpnlCenter = new JPanel();
 
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
@@ -66,11 +66,34 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		updateCompanyInfoPnl("A 회사");
 
 	}
+	
+	
+//	public JPanel getPnl() {
+//		return GandIpnlCenter;
+//	}
+//	
+//	public CardLayout getCardLayout() {
+//		return GandIcardLayout;
+//	}
+	
+	public CardLayout getGandIcardLayout() {
+		return GandIcardLayout;
+	}
+
+
+	public JPanel getGandIpnlCenter() {
+		return GandIpnlCenter;
+	}
+
+
+	public void updateAll(String companyName, UserInfo userInfo) {
+		updateCompanyInfoPnl(companyName);
+		updateComInfoSummary(companyName, userInfo);
+	}
 
 	public void updateCompanyInfoPnl(String companyName) {
 		CompanyInfo OutInfo = selectCompany(companyName);
 		companyInfopnl.update(OutInfo);
-
 	}
 
 	private void setCompanyInfoPnl(String companyName) {
@@ -113,8 +136,6 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 
 		comInfoSummary.add(chartAndbtnpnl);
 
-		GandIpnlCenter = new JPanel();
-		GandIcardLayout = new CardLayout();
 		GandIpnlCenter.setLayout(GandIcardLayout);
 		add(GandIpnlCenter, "Center");
 	}

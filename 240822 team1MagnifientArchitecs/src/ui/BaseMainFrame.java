@@ -61,7 +61,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		setPnlSouth();
 
 		// 가장 큰 패널(contentPane) 설정
-		setSize(500, 650);
+		setSize(500, 673);
 		add(contentPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
@@ -243,10 +243,10 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		}
 	}
 
-	public static void main(String[] args) {
-		UserInfoDAO userInfoDAO = new UserInfoDAO();
-		UserInfo id = userInfoDAO.findByIDAndData("asdf", 1);
-
-		new BaseMainFrame(id).setVisible(true);
-	}
+//	public static void main(String[] args) {
+//		UserInfoDAO userInfoDAO = new UserInfoDAO();
+//		UserInfo id = userInfoDAO.findByIDAndData("asdf", 1);
+//
+//		new BaseMainFrame(id).setVisible(true);
+//	}
 }

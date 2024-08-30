@@ -1,4 +1,4 @@
-package otherPnl;
+package ui;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -22,7 +22,6 @@ import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
-import ui.GraphAndCompanyInfoPnl;
 
 public class CompanyStockPnl extends JPanel {
 	UserInfoDAO userInfoDAO = new UserInfoDAO();
@@ -113,9 +112,11 @@ public class CompanyStockPnl extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO
-				graphAndCompanyInfoPnl.updateCompanyInfoPnl(companyName);
-				graphAndCompanyInfoPnl.updateComInfoSummary(companyName, userInfo);
+				graphAndCompanyInfoPnl.updateAll(companyName, userInfo);
 				cardLayout.show(pnlCenter, "graphAndCompanyInfoPnl");
+//				CardLayout cl = graphAndCompanyInfoPnl.getGandIcardLayout();
+//				JPanel pnl = graphAndCompanyInfoPnl.getGandIpnlCenter();
+//				cl.show(pnl, "graphpnl");
 			}
 		});
 

@@ -1,4 +1,4 @@
-package otherPnl;
+package ui;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

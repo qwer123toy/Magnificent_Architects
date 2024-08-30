@@ -16,7 +16,6 @@ import DAO.AllCompanyDAO;
 import DAO.StockChangeHistoryDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
-import otherPnl.CompanyStockPnl;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;

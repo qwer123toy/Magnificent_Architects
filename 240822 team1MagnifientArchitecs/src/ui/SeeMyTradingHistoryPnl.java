@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import DAO.StockChangeHistoryDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
-import otherPnl.TradeHistoryPnl;
 import tables.StockChangeHistory;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
