@@ -18,7 +18,7 @@ import tables.AllCompany;
 public class BuyFrame {
 	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 	private AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
-	private UserInfoDAO UserInfoDAO = new UserInfoDAO();
+	private UserInfoDAO userInfoDAO = new UserInfoDAO();
 	private UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
 	private StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
 
@@ -121,7 +121,7 @@ public class BuyFrame {
 
 					// 유저가 가진 돈에 판 돈을 더해줌
 					// 업데이트
-					UserInfoDAO.update(user_Money, userInfo.getUser_ID(), userInfo.getUser_SaveData());
+					userInfoDAO.update(user_Money, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
 					// 회사 별 주식 보유 내용 저장
 					allCompanyBackdataDAO.insert(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
