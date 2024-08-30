@@ -97,7 +97,7 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 
 	public void updateAll(UserInfo userInfo) {
 		updateNorthPnal(userInfo);
-		updateCenterPnl(userInfo);
+//		updateCenterPnl(userInfo);
 	}
 
 	private void createSouthPnl() {

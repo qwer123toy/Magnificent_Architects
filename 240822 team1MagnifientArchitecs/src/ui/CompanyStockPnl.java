@@ -108,6 +108,7 @@ public class CompanyStockPnl extends JPanel {
 
 		// 회사 이름 버튼
 		companyNameBtn.setText(allCompanyList.get(companyIndex).getCompanyName());
+		
 		companyNameBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -181,6 +181,14 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		// 제일 처음 화면 업데이트
 		companyStockBoardPnl.updatebaseMainPnl();
 		companyStockBoardPnl.updateAllComapanyInfoPnl();
+		clickMyInfoBtnPnl.updateAll(userInfo);
+		seeMyTradingHistoryPnl.updateAll(userInfo);
+		graphAndCompanyInfoPnl.updateAll("A 회사", userInfo);
+		graphAndCompanyInfoPnl.updateAll("B 회사", userInfo);
+		graphAndCompanyInfoPnl.updateAll("C 회사", userInfo);
+		graphAndCompanyInfoPnl.updateAll("D 회사", userInfo);
+		graphAndCompanyInfoPnl.updateAll("E 회사", userInfo);
+		graphAndCompanyInfoPnl.updateAll("F 회사", userInfo);
 		updateDay();
 	}
 
@@ -209,7 +217,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		NewsPnl newsPnl = new NewsPnl();
 
 		// 매수 패널
-//		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
+		BuyPriceGUI buyPriceGUI = new BuyPriceGUI(userInfo,"A 회사", 0);
 
 		// 매도 패널
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
@@ -219,7 +227,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlCenter.add(seeMyTradingHistoryPnl, "seeMyTradingHistoryPnl");
 		pnlCenter.add(newsPnl, "newsPnl");
 		pnlCenter.add(graphAndCompanyInfoPnl, "graphAndCompanyInfoPnl");
-//		pnlCenter.add(buyPriceGUI, "buyPriceGUI");
+		pnlCenter.add(buyPriceGUI, "buyPriceGUI");
 		pnlCenter.add(sellPriceGUI, "sellPriceGUI");
 	}
 
