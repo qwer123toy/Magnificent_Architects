@@ -143,11 +143,11 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 //							.getCompanyStockPrice() + 10;
 //					int changeBComMoney = listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
 //							.getCompanyStockPrice() - 8;
-					int changeComMoney = (int) (Math.random()*10) - 10;
 
 					listAndDAO.userInfoDAO.updateDate(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 					
 					for(int i=0; i<userMoneyHistoryList.size(); i++) {
+						int changeComMoney = (int) (Math.random()*20) - 10;
 						listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeComMoney, userInfo.getUser_ID(),
 								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(), userMoneyHistoryList.get(i).getStock_Price_now());
 						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(), changeComMoney, userInfo.getUser_ID(),
