@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -39,9 +40,16 @@ public class CompanyStockBoardPnl extends JPanel {
 	private UserInfoDAO userInfoDAO = new UserInfoDAO();
 	private StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
 	private UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
+	private CardLayout cardLayout;
+	private JPanel pnlCenter;
+	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
 
-	public CompanyStockBoardPnl(UserInfo userInfo) {
+	
+	public CompanyStockBoardPnl(UserInfo userInfo, CardLayout cardLayout, JPanel pnlCenter, GraphAndCompanyInfoPnl graphAndCompanyInfoPnl) {
 		this.userInfo = userInfo;
+		this.cardLayout = cardLayout;
+		this.pnlCenter = pnlCenter;
+		this.graphAndCompanyInfoPnl = graphAndCompanyInfoPnl;
 
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
@@ -89,7 +97,7 @@ public class CompanyStockBoardPnl extends JPanel {
 
 		comapanyInfoPnls = new CompanyStockPnl[size];
 		for (int i = 0; i < comapanyInfoPnls.length; i++) {
-			comapanyInfoPnls[i] = new CompanyStockPnl(userInfo, i);
+			comapanyInfoPnls[i] = new CompanyStockPnl(userInfo, i, cardLayout, pnlCenter, graphAndCompanyInfoPnl);
 			add(comapanyInfoPnls[i]);
 		}
 

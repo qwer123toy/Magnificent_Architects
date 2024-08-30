@@ -40,6 +40,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private UserInfoDAO userInfoDAO;
 	private JLabel daylbl;
+	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
 
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -84,7 +85,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		JButton btnSouth3 = new JButton("종료");
 		btnSouth3.addActionListener(this);
 //		btnSouth1.setFont(new Font("Dialog.bold", Font.BOLD, 20));
-		
+
 		pnlSouth.add(btnSouth1);
 		pnlSouth.add(btnSouth2);
 		pnlSouth.add(btnSouth3);
@@ -101,13 +102,12 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		JButton btnNorth2 = new JButton();
 		btnNorth2.setText("이전");
 		btnNorth2.addActionListener(this);
-		
+
 		// 제일 위 가운데 일차 표시
 		daylbl = new JLabel();
 		daylbl.setForeground(Color.WHITE);
 		updateDay();
-		
-		
+
 		JButton btnNorth3 = new JButton();
 		btnNorth3.setText("다음");
 		btnNorth3.addActionListener(this);
@@ -135,7 +135,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 				int chageDay = userInfo.getUser_Date() + 1;
 
 				userInfo.setUser_Date(chageDay);
-				
+
 				userMoneyHistoryList = listAndDAO.usermoneyHistoryDAO.findByID(userInfo.getUser_ID(),
 						userInfo.getUser_SaveData());
 				try {
@@ -145,32 +145,36 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 //							.getCompanyStockPrice() - 8;
 					int changeAComMoney = 10;
 					int changeBComMoney = -8;
-					
+
 					listAndDAO.userInfoDAO.updateDate(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-					
+
 					listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeAComMoney, userInfo.getUser_ID(),
 							userInfo.getUser_SaveData(), "A 회사", userMoneyHistoryList.get(0).getStock_Price_now());
-					
+
 					listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeBComMoney, userInfo.getUser_ID(),
 							userInfo.getUser_SaveData(), "B 회사", userMoneyHistoryList.get(1).getStock_Price_now());
 
 					listAndDAO.allCompanyDAO.updatePriceAndDate("A 회사", changeAComMoney, userInfo.getUser_ID(),
 							userInfo.getUser_SaveData());
-					
+
 					listAndDAO.allCompanyDAO.updatePriceAndDate("B 회사", changeBComMoney, userInfo.getUser_ID(),
 							userInfo.getUser_SaveData());
 
 					listAndDAO.allCompanyBackdataDAO.insert("A 회사",
-							listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+							listAndDAO.allCompanyDAO
+									.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
 									.getCompanyStockPrice(),
-							listAndDAO.allCompanyDAO.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+							listAndDAO.allCompanyDAO
+									.findCompByID("A 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
 									.getCompanyStockCount(),
 							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
 
 					listAndDAO.allCompanyBackdataDAO.insert("B 회사",
-							listAndDAO.allCompanyDAO.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+							listAndDAO.allCompanyDAO
+									.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
 									.getCompanyStockPrice(),
-							listAndDAO.allCompanyDAO.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
+							listAndDAO.allCompanyDAO
+									.findCompByID("B 회사", userInfo.getUser_ID(), userInfo.getUser_SaveData())
 									.getCompanyStockCount(),
 							userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
 					JOptionPane.showMessageDialog(BaseMainFrame.this, "오늘 장이 마감되었습니다.");
@@ -185,7 +189,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private void updateDay() {
 		daylbl.setText(userInfo.getUser_Date() + "일차");
 	}
-	
+
 	private void updateMainPnl() {
 		// 제일 처음 화면 업데이트
 		companyStockBoardPnl.updatebaseMainPnl();
@@ -203,9 +207,12 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 		// TODO companyStockBoardPnl, clickMyInfoBtnPnl, seeMyTradingHistoryPnl
 		// 3가지 업데이트 만들어야 한다.
-		
+
+		// 그래프랑 회사 정보 패널
+//		graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(userInfo, cardLayout, pnlCenter);
+
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
-		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo);
+		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl);
 
 		// 하단의 내 정보를 누르면 나오는 패널
 		clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo, cardLayout, pnlCenter);
@@ -216,11 +223,8 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
 
-		// 그래프랑 회사 정보 패널
-		GraphAndCompanyInfoPnl graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(cardLayout, pnlCenter);
-
 		// 매수 패널
-		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
+//		BuyPriceGUI buyPriceGUI = new BuyPriceGUI();
 
 		// 매도 패널
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
@@ -231,7 +235,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		pnlCenter.add(seeMyTradingHistoryPnl, "seeMyTradingHistoryPnl");
 		pnlCenter.add(newsPnl, "newsPnl");
 		pnlCenter.add(graphAndCompanyInfoPnl, "graphAndCompanyInfoPnl");
-		pnlCenter.add(buyPriceGUI, "buyPriceGUI");
+//		pnlCenter.add(buyPriceGUI, "buyPriceGUI");
 		pnlCenter.add(sellPriceGUI, "sellPriceGUI");
 	}
 
@@ -242,27 +246,22 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 		if (command.equals("이전")) {
 			cardLayout.previous(pnlCenter);
-		} 
-		else if (command.equals("다음")) {
+		} else if (command.equals("다음")) {
 			cardLayout.next(pnlCenter);
-		} 
-		else if (command.equals("종료") ) {
+		} else if (command.equals("종료")) {
 			this.dispose();
-		} 
-		else if (command.equals("메인화면") ) {
+		} else if (command.equals("메인화면")) {
 			cardLayout.show(pnlCenter, "companyStockBoardPnl");
-		}
-		else if (command.equals("내 정보") ) {
+		} else if (command.equals("내 정보")) {
 			cardLayout.show(pnlCenter, "clickMyInfoBtnPnl");
-		}
-		else if (command.equals("오늘의 뉴스") ) {
+		} else if (command.equals("오늘의 뉴스")) {
 			cardLayout.show(pnlCenter, "newsPnl");
 		}
 	}
 
 	public static void main(String[] args) {
 		UserInfoDAO userInfoDAO = new UserInfoDAO();
-		UserInfo id = userInfoDAO .findByIDAndData("asdf", 1);
+		UserInfo id = userInfoDAO.findByIDAndData("asdf", 1);
 
 		new BaseMainFrame(id).setVisible(true);
 	}

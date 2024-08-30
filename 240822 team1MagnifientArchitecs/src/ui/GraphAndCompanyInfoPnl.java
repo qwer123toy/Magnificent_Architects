@@ -20,6 +20,7 @@ import dbUtil.DBUtil;
 import dbUtil.IResultMapper;
 import mapper.CompanyInfoMapper;
 import tables.CompanyInfo;
+import tables.UserInfo;
 
 public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 	private CardLayout GandIcardLayout;
@@ -32,8 +33,10 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 	private JLabel stockPriceNowlbl;
 	private JLabel comparePrevDaylbl;
 	private CompanyInfoPnlforgraph companyInfopnl;
+	private UserInfo userInfo;
 
-	public GraphAndCompanyInfoPnl(CardLayout cardLayout, JPanel pnlCenter) {
+	public GraphAndCompanyInfoPnl(UserInfo userInfo, CardLayout cardLayout, JPanel pnlCenter) {
+		this.userInfo = userInfo;
 		this.cardLayout = cardLayout;
 		this.pnlCenter = pnlCenter;
 		
@@ -56,7 +59,7 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		
 	}
 	
-	private void updateCompanyInfoPnl(String companyName) {
+	public void updateCompanyInfoPnl(String companyName) {
 		CompanyInfo OutInfo = selectCompany(companyName);
 		companyInfopnl.update(OutInfo);
 		
@@ -109,7 +112,7 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 	}
 	
 	// TODO db와 연결 안됨
-	private void updateComInfoSummary() {
+	private void updateComInfoSummary(UserInfo userInfo) {
 		companyNamelbl.setText("A 회사");
 		stockPriceNowlbl.setText("100원");
 		comparePrevDaylbl.setText("전일대비 0원 (0%)");

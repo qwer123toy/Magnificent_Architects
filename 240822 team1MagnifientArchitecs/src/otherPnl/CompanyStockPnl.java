@@ -1,8 +1,11 @@
 package otherPnl;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
+import ui.GraphAndCompanyInfoPnl;
 
 public class CompanyStockPnl extends JPanel {
 	UserInfoDAO userInfoDAO = new UserInfoDAO();
@@ -31,9 +35,17 @@ public class CompanyStockPnl extends JPanel {
 	private JLabel stockCountLbl;
 	private int companyIndex;
 	private int changeStockPrice;
+	private CardLayout cardLayout;
+	private JPanel pnlCenter;
+	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
 	
-	public CompanyStockPnl(UserInfo userInfo, int companyIndex) {
+	
+	public CompanyStockPnl(UserInfo userInfo, int companyIndex, CardLayout cardLayout, JPanel pnlCenter, GraphAndCompanyInfoPnl graphAndCompanyInfoPnl) {
 		this.companyIndex = companyIndex;
+		this.cardLayout = cardLayout;
+		this.pnlCenter = pnlCenter;
+		this.graphAndCompanyInfoPnl = graphAndCompanyInfoPnl;
+		
 		UserInfo userInfoStockFrame =  userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		List<UserMoneyHistory> umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
 		List<AllCompanyBackdata> allCompanyBackdataList = allCompanyBackdataDAO.findAllByID(userInfoStockFrame.getUser_ID(), userInfoStockFrame.getUser_SaveData());
@@ -51,19 +63,23 @@ public class CompanyStockPnl extends JPanel {
 		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		setPreferredSize(new Dimension(480, 60));
 		
+		// 회사 이름 버튼
 		companyNameBtn = new JButton();
 		companyNameBtn.setHorizontalAlignment(JLabel.CENTER);
 		companyIndex = 0;
 		companyNameBtn.setText(allCompanyList.get(companyIndex).getCompanyName());
 		
 
+		// 현재가
 		priceNowLbl = new JLabel();
 		priceNowLbl.setHorizontalAlignment(JLabel.CENTER);
 		priceNowLbl.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
 
+		// 전일대비
 		comparePrevDayLbl = new JLabel();
 		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
 
+		// 잔여수량
 		stockCountLbl = new JLabel();
 		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);
 		stockCountLbl.setText(allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
@@ -87,6 +103,15 @@ public class CompanyStockPnl extends JPanel {
 		
 		// 회사 이름 버튼
 		companyNameBtn.setText(allCompanyList.get(companyIndex).getCompanyName());
+		companyNameBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+				graphAndCompanyInfoPnl.updateCompanyInfoPnl(companyName);
+				cardLayout.show(pnlCenter, "graphAndCompanyInfoPnl");
+				
+			}
+		});
 		
 		// 현재가
 		priceNowLbl.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
