@@ -208,11 +208,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(userInfo, cardLayout, pnlCenter, 0);
 
 		// 매수 패널
-
 		buyPriceGUI = new BuyPriceGUI(userInfo, "A 회사", 0);
 
 		// 매도 패널
-
 		sellPriceGUI = new SellPriceGUI();
 
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
