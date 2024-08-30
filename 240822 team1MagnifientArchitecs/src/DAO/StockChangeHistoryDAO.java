@@ -16,7 +16,7 @@ public class StockChangeHistoryDAO {
 	public static final IResultMapper<StockChangeHistory> stockChangeHistoryMapper = new StockChangeHistoryMapper();
 
 	public List<StockChangeHistory> findByID(String user_ID, int saveData) {
-		String sql = "SELECT * FROM stockchangehistory WHERE user_ID = ? and userSaveData = ?";
+		String sql = "SELECT * FROM stockchangehistory WHERE user_ID = ? and user_SaveData = ?";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
