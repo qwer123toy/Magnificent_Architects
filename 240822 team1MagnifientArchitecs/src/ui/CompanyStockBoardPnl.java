@@ -16,6 +16,8 @@ import DAO.AllCompanyDAO;
 import DAO.StockChangeHistoryDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
+import priceGUI.BuyPriceGUI;
+import priceGUI.SellPriceGUI;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
@@ -42,13 +44,18 @@ public class CompanyStockBoardPnl extends JPanel {
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
 	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
+	private BuyPriceGUI buyPriceGUI;
+	private SellPriceGUI sellPriceGUI;
 
 	
-	public CompanyStockBoardPnl(UserInfo userInfo, CardLayout cardLayout, JPanel pnlCenter, GraphAndCompanyInfoPnl graphAndCompanyInfoPnl) {
+	public CompanyStockBoardPnl(UserInfo userInfo, CardLayout cardLayout, JPanel pnlCenter, GraphAndCompanyInfoPnl graphAndCompanyInfoPnl,
+			BuyPriceGUI buyPriceGUI, SellPriceGUI sellPriceGUI) {
 		this.userInfo = userInfo;
 		this.cardLayout = cardLayout;
 		this.pnlCenter = pnlCenter;
 		this.graphAndCompanyInfoPnl = graphAndCompanyInfoPnl;
+		this.buyPriceGUI = buyPriceGUI;
+		this.sellPriceGUI = sellPriceGUI;
 
 		// 사이즈랑 레이아웃
 		setSize(500, 500);
@@ -96,7 +103,7 @@ public class CompanyStockBoardPnl extends JPanel {
 
 		comapanyInfoPnls = new CompanyStockPnl[size];
 		for (int i = 0; i < comapanyInfoPnls.length; i++) {
-			comapanyInfoPnls[i] = new CompanyStockPnl(userInfo, i, cardLayout, pnlCenter, graphAndCompanyInfoPnl);
+			comapanyInfoPnls[i] = new CompanyStockPnl(userInfo, i, cardLayout, pnlCenter, graphAndCompanyInfoPnl, buyPriceGUI, sellPriceGUI);
 			add(comapanyInfoPnls[i]);
 		}
 

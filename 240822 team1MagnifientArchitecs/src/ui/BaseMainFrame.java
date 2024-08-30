@@ -41,6 +41,8 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private UserInfoDAO userInfoDAO;
 	private JLabel daylbl;
 	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
+	private BuyPriceGUI buyPriceGUI;
+	private SellPriceGUI sellPriceGUI;
 
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
@@ -145,25 +147,26 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 //							.getCompanyStockPrice() - 8;
 
 					listAndDAO.userInfoDAO.updateDate(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-					
-					for(int i=0; i<userMoneyHistoryList.size(); i++) {
-						int changeComMoney = (int) (Math.random()*20) - 10;
+
+					for (int i = 0; i < userMoneyHistoryList.size(); i++) {
+						int changeComMoney = (int) (Math.random() * 20) - 10;
 						listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeComMoney, userInfo.getUser_ID(),
-								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(), userMoneyHistoryList.get(i).getStock_Price_now());
-						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(), changeComMoney, userInfo.getUser_ID(),
-								userInfo.getUser_SaveData());
+								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(),
+								userMoneyHistoryList.get(i).getStock_Price_now());
+						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(),
+								changeComMoney, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 						listAndDAO.allCompanyBackdataDAO.insert(userMoneyHistoryList.get(i).getUser_Stock(),
 								listAndDAO.allCompanyDAO
-										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(), userInfo.getUser_ID(), userInfo.getUser_SaveData())
+										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(),
+												userInfo.getUser_ID(), userInfo.getUser_SaveData())
 										.getCompanyStockPrice(),
 								listAndDAO.allCompanyDAO
-										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(), userInfo.getUser_ID(), userInfo.getUser_SaveData())
+										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(),
+												userInfo.getUser_ID(), userInfo.getUser_SaveData())
 										.getCompanyStockCount(),
 								userInfo.getUser_ID(), userInfo.getUser_SaveData(), chageDay);
 					}
-					
-					
-					
+
 					JOptionPane.showMessageDialog(BaseMainFrame.this, "오늘 장이 마감되었습니다.");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
@@ -204,8 +207,16 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		// 그래프랑 회사 정보 패널
 		graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(userInfo, cardLayout, pnlCenter, 0);
 
+		// 매수 패널
+
+		buyPriceGUI = new BuyPriceGUI(userInfo, "A 회사", 0);
+
+		// 매도 패널
+
+		sellPriceGUI = new SellPriceGUI();
+
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
-		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl);
+		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl, buyPriceGUI, sellPriceGUI);
 
 		// 하단의 내 정보를 누르면 나오는 패널
 		clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo, cardLayout, pnlCenter);
@@ -215,12 +226,6 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 		// 이번 날짜 뉴스 패널
 		NewsPnl newsPnl = new NewsPnl();
-
-		// 매수 패널
-		BuyPriceGUI buyPriceGUI = new BuyPriceGUI(userInfo,"A 회사", 0);
-
-		// 매도 패널
-		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
 		pnlCenter.add(companyStockBoardPnl, "companyStockBoardPnl");
 		pnlCenter.add(clickMyInfoBtnPnl, "clickMyInfoBtnPnl");

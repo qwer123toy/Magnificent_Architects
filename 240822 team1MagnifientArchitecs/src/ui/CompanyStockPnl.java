@@ -18,6 +18,8 @@ import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
 import DAO.UserInfoDAO;
 import DAO.UserMoneyHistoryDAO;
+import priceGUI.BuyPriceGUI;
+import priceGUI.SellPriceGUI;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
 import tables.UserInfo;
@@ -37,13 +39,17 @@ public class CompanyStockPnl extends JPanel {
 	private CardLayout cardLayout;
 	private JPanel pnlCenter;
 	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
+	private BuyPriceGUI buyPriceGUI;
+	private SellPriceGUI sellPriceGUI;
 
 	public CompanyStockPnl(UserInfo userInfo, int companyIndex, CardLayout cardLayout, JPanel pnlCenter,
-			GraphAndCompanyInfoPnl graphAndCompanyInfoPnl) {
+			GraphAndCompanyInfoPnl graphAndCompanyInfoPnl, BuyPriceGUI buyPriceGUI, SellPriceGUI sellPriceGUI) {
 		this.companyIndex = companyIndex;
 		this.cardLayout = cardLayout;
 		this.pnlCenter = pnlCenter;
 		this.graphAndCompanyInfoPnl = graphAndCompanyInfoPnl;
+		this.buyPriceGUI = buyPriceGUI;
+		this.sellPriceGUI = sellPriceGUI;
 
 		UserInfo userInfoStockFrame = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		List<UserMoneyHistory> umhStockFrame = usermoneyHistoryDAO.findByID(userInfoStockFrame.getUser_ID(),
@@ -115,6 +121,8 @@ public class CompanyStockPnl extends JPanel {
 				// TODO
 				graphAndCompanyInfoPnl.updateAll(companyName, userInfo);
 				cardLayout.show(pnlCenter, "graphAndCompanyInfoPnl");
+				buyPriceGUI.updateComInfo(userInfo, companyName);
+				
 //				CardLayout cl = graphAndCompanyInfoPnl.getGandIcardLayout();
 //				JPanel pnl = graphAndCompanyInfoPnl.getGandIpnlCenter();
 //				cl.show(pnl, "graphpnl");
