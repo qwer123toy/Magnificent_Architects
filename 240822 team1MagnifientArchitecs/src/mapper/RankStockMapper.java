@@ -9,22 +9,20 @@ import java.util.List;
 
 import dbUtil.DBUtil;
 import dbUtil.IResultMapper;
-import tables.Rank;
+import tables.RankStock;
 
-public class RankMapper implements IResultMapper<Rank> {
+public class RankStockMapper implements IResultMapper<RankStock> {
 //	private String rank_ID;
 //	private String rank_Money;
-//	private String rank_Rank;
 
 	@Override
-	public Rank resultMapping(ResultSet rs) {
+	public RankStock resultMapping(ResultSet rs) {
 		try
 		{
 			String rank_ID = rs.getString("rank_ID");
 			String rank_Money = rs.getString("rank_Money");
-			String rank_Rank = rs.getString("rank_Rank");
 			
-			return new Rank(rank_ID, rank_Money, rank_Rank);
+			return new RankStock(rank_ID, rank_Money);
 		}catch(
 		SQLException e)
 		{
@@ -33,13 +31,13 @@ public class RankMapper implements IResultMapper<Rank> {
 		}
 	}
 	
-	public List<Rank> selectAllRow() {
-		String sql = "SELECT * FROM `rank`;";
+	public List<RankStock> selectAllRow() {
+		String sql = "SELECT * FROM `RankStock`;";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		List<Rank> list = new ArrayList<>();
+		List<RankStock> list = new ArrayList<>();
 
 		try {
 			conn = DBUtil.getConnection("go_db");
@@ -47,7 +45,7 @@ public class RankMapper implements IResultMapper<Rank> {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				Rank rank = resultMapping(rs);
+				RankStock rank = resultMapping(rs);
 				list.add(rank);
 			}
 			return list;
