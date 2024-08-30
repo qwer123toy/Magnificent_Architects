@@ -59,7 +59,7 @@ public class CompanyStockBoardPnl extends JPanel {
 		setbaseMainPnl();
 		updatebaseMainPnl();
 
-		// 회사명, 현재가, 전일대비, 잔여수량 이름을 설정
+		// 회사명, 현재가, 전일대비, 잔여수량 라벨 이름을 설정
 		columnNamePnl();
 
 		// A B C D 회사 정보 표시 패널
@@ -161,8 +161,6 @@ public class CompanyStockBoardPnl extends JPanel {
 	}
 
 	private void setbaseMainPnl() {
-		
-
 		JPanel baseMainPnl = new JPanel();
 		baseMainPnl.setLayout(new GridLayout(2, 2));
 		baseMainPnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -187,34 +185,34 @@ public class CompanyStockBoardPnl extends JPanel {
 		add(baseMainPnl);
 	}
 
-	private JPanel returnCompnayInfoPnl(String companyName, int priceNow, int comparePrevDay, int stockCount) {
-		JPanel pnl = new JPanel();
-		pnl.setLayout(new GridLayout(1, 4));
-
-		pnl.setBackground(Color.WHITE);
-		pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		pnl.setPreferredSize(new Dimension(480, 60));
-
-		JLabel companyNameLbl = new JLabel();
-		companyNameLbl.setText(companyName);
-		companyNameLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel priceNowLbl = new JLabel();
-		priceNowLbl.setText("" + priceNow);
-		priceNowLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel comparePrevDayLbl = new JLabel();
-		comparePrevDayLbl.setText(comparePrevDay + "원");
-		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		JLabel stockCountLbl = new JLabel();
-		stockCountLbl.setText("" + stockCount);
-		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);
-
-		pnl.add(companyNameLbl);
-		pnl.add(priceNowLbl);
-		pnl.add(comparePrevDayLbl);
-		pnl.add(stockCountLbl);
-		return pnl;
-	}
+//	private JPanel returnCompnayInfoPnl(String companyName, int priceNow, int comparePrevDay, int stockCount) {
+//		JPanel pnl = new JPanel();
+//		pnl.setLayout(new GridLayout(1, 4));
+//
+//		pnl.setBackground(Color.WHITE);
+//		pnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+//		pnl.setPreferredSize(new Dimension(480, 60));
+//
+//		JLabel companyNameLbl = new JLabel();
+//		companyNameLbl.setText(companyName);
+//		companyNameLbl.setHorizontalAlignment(JLabel.CENTER);
+//
+//		JLabel priceNowLbl = new JLabel();
+//		priceNowLbl.setText("" + priceNow);
+//		priceNowLbl.setHorizontalAlignment(JLabel.CENTER);
+//
+//		JLabel comparePrevDayLbl = new JLabel();
+//		comparePrevDayLbl.setText(comparePrevDay + "원");
+//		comparePrevDayLbl.setHorizontalAlignment(JLabel.CENTER);
+//
+//		JLabel stockCountLbl = new JLabel();
+//		stockCountLbl.setText("" + stockCount);
+//		stockCountLbl.setHorizontalAlignment(JLabel.CENTER);
+//
+//		pnl.add(companyNameLbl);
+//		pnl.add(priceNowLbl);
+//		pnl.add(comparePrevDayLbl);
+//		pnl.add(stockCountLbl);
+//		return pnl;
+//	}
 }

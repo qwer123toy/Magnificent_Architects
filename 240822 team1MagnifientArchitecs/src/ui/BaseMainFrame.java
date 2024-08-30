@@ -205,11 +205,9 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		cardLayout = new CardLayout();
 		pnlCenter.setLayout(cardLayout);
 
-		// TODO companyStockBoardPnl, clickMyInfoBtnPnl, seeMyTradingHistoryPnl
-		// 3가지 업데이트 만들어야 한다.
-
+		// TODO 모든 패널 생성
 		// 그래프랑 회사 정보 패널
-//		graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(userInfo, cardLayout, pnlCenter);
+		graphAndCompanyInfoPnl = new GraphAndCompanyInfoPnl(userInfo, cardLayout, pnlCenter, 0);
 
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
 		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl);
@@ -229,7 +227,6 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		// 매도 패널
 		SellPriceGUI sellPriceGUI = new SellPriceGUI();
 
-		// TODO 뒤에 이름 패널이름으로 바꾸자
 		pnlCenter.add(companyStockBoardPnl, "companyStockBoardPnl");
 		pnlCenter.add(clickMyInfoBtnPnl, "clickMyInfoBtnPnl");
 		pnlCenter.add(seeMyTradingHistoryPnl, "seeMyTradingHistoryPnl");
