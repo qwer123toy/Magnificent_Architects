@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import DAO.AllCompanyBackdataDAO;
 import DAO.AllCompanyDAO;
@@ -40,6 +41,9 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 	private CompanyInfoPnlforgraph companyInfopnl;
 	private UserInfo userInfo;
 	
+	private String companyName;
+	private GraphAndCompanyInfoPnl GraphAndCompanyInfoPnl;
+	
 	private AllCompanyDAO allCompanyDAO = new AllCompanyDAO();
 	private AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 
@@ -47,6 +51,8 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		this.userInfo = userInfo;
 		this.cardLayout = cardLayout;
 		this.pnlCenter = pnlCenter;
+		
+		this.GraphAndCompanyInfoPnl = GraphAndCompanyInfoPnl;
 
 		setLayout(new BorderLayout());
 
@@ -58,8 +64,8 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		// update 필요 없음
 		setGandIpnlCenter();
 
-		// TODO 그래프 패널
-		setgraphPnl();
+		// TODO 그래프 패널 -> 버튼 누르면 frame 뜨는 걸로 변경
+//		setgraphPnl();
 
 		// 회사정보 패널
 		setCompanyInfoPnl("A 회사");
@@ -101,7 +107,10 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		companyInfopnl = new CompanyInfoPnlforgraph(companyInfo);
 		companyInfopnl.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		companyInfopnl.setBackground(Color.WHITE);
-		GandIpnlCenter.add(companyInfopnl, "companyInfopnl");
+		
+		
+		add(companyInfopnl, "Center");
+//		GandIpnlCenter.add(companyInfopnl, "companyInfopnl");
 
 		// south 패널 매수 버튼, 매도 버튼
 		JPanel CompanyInfoPnl = new JPanel();
@@ -116,33 +125,34 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		add(CompanyInfoPnl, "South");
 	}
 
-	private void setgraphPnl() {
-		JPanel graphpnl = new JPanel();
-		JLabel templbl = new JLabel("주식 그래프 차트 들어올 예정");
-		graphpnl.add(templbl);
-		GandIpnlCenter.add(graphpnl, "graphpnl");
-	}
+//	private void setgraphPnl() {
+//		JPanel graphpnl = new JPanel();
+//		JLabel templbl = new JLabel("주식 그래프 차트 들어올 예정");
+//		graphpnl.add(templbl);
+//		GandIpnlCenter.add(graphpnl, "graphpnl");
+//	}
 
 	private void setGandIpnlCenter() {
 		JPanel chartAndbtnpnl = new JPanel();
 
 		JButton graphbtn = new JButton("차트 보기");
 		graphbtn.addActionListener(this);
-		JButton companyInfobtn = new JButton("회사 정보");
-		companyInfobtn.addActionListener(this);
+//		JButton companyInfobtn = new JButton("회사 정보");
+//		companyInfobtn.addActionListener(this);
 
 		chartAndbtnpnl.add(graphbtn);
-		chartAndbtnpnl.add(companyInfobtn);
+//		chartAndbtnpnl.add(companyInfobtn);
 
 		comInfoSummary.add(chartAndbtnpnl);
 
-		GandIpnlCenter.setLayout(GandIcardLayout);
-		add(GandIpnlCenter, "Center");
+//		GandIpnlCenter.setLayout(GandIcardLayout);
+//		add(GandIpnlCenter, "Center");
 	}
 
 	public void updateComInfoSummary(String companyName, UserInfo userInfo) {
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		int companyIndex = selectCompanyIndex(companyName);
+		this.companyName = companyName;
 		
 		String stockPriceNow = allCompanyList.get(companyIndex).getCompanyStockPrice() + "원";
 		
@@ -244,9 +254,17 @@ public class GraphAndCompanyInfoPnl extends JPanel implements ActionListener {
 		String command = e.getActionCommand();
 
 		if (command.equals("차트 보기")) {
-			GandIcardLayout.show(GandIpnlCenter, "graphpnl");
-		} else if (command.equals("회사 정보")) {
-			GandIcardLayout.show(GandIpnlCenter, "companyInfopnl");
+			SwingUtilities.invokeLater(() -> {
+				ChartFrame chartFrame = new ChartFrame(userInfo, companyName);
+				chartFrame.setTitle("Chart");
+				chartFrame.setSize(500, 500);
+				chartFrame.setLocationRelativeTo(this.GraphAndCompanyInfoPnl);
+//				chartFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+				chartFrame.setVisible(true);
+			});
+			
+//		} else if (command.equals("회사 정보")) {
+//			GandIcardLayout.show(GandIpnlCenter, "companyInfopnl");
 		} else if (command.equals("매수")) {
 			cardLayout.show(pnlCenter, "buyPriceGUI");
 		} else if (command.equals("매도")) {

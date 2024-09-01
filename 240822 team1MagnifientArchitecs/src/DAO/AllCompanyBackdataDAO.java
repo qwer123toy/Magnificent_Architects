@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dbUtil.DBUtil;
 import dbUtil.IResultMapper;
@@ -132,6 +134,42 @@ public class AllCompanyBackdataDAO {
 		}
 
 	}
+	
+//	select DISTINCT companyStockprice, date from allcompanybackdata 
+//	where companyName = 'A 회사' order by date;
+	
+//	select DISTINCT companyStockprice, date from allcompanybackdata where companyName = ?
+//			and user_ID = ? and user_SaveDate = ? order by date;
+	
+	public Map<Integer, Integer> findChart(String companyName, String userID, int saveData) {
+		String sql = "select DISTINCT companyStockprice, date from allcompanybackdata where companyName = ?\r\n" + 
+				"	and simulation_ID = ? and simulation_ID_SaveData = ? order by date;";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Map<Integer, Integer> chartMap = new HashMap<>(); 
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, companyName);
+			stmt.setString(2, userID);
+			stmt.setInt(3, saveData);
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int key = rs.getInt("date");
+				int value = rs.getInt("companyStockprice");
+				chartMap.put(key, value);
+			}
+			return chartMap;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return null;
+	}
+
 
 
 }
