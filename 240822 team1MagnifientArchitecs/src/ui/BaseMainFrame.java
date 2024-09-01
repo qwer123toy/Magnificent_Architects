@@ -150,9 +150,11 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 					for (int i = 0; i < userMoneyHistoryList.size(); i++) {
 						int changeComMoney = (int) (Math.random() * 20) - 10;
+						
 						listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeComMoney, userInfo.getUser_ID(),
 								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(),
 								userMoneyHistoryList.get(i).getStock_Price_now());
+						
 						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(),
 								changeComMoney, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 						listAndDAO.allCompanyBackdataDAO.insert(userMoneyHistoryList.get(i).getUser_Stock(),

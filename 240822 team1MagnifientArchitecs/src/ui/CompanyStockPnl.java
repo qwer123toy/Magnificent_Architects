@@ -119,6 +119,7 @@ public class CompanyStockPnl extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO
+				
 				graphAndCompanyInfoPnl.updateAll(companyName, userInfo);
 				buyPriceGUI.updateComInfo(userInfo, companyName);
 				cardLayout.show(pnlCenter, "graphAndCompanyInfoPnl");

@@ -30,13 +30,17 @@ public class BuyPriceGUI extends JPanel {
 	AllCompanyBackdataDAO allCompanyBackdataDAO = new AllCompanyBackdataDAO();
 	StockChangeHistoryDAO stockChangeHistoryDAO = new StockChangeHistoryDAO();
 	UserMoneyHistoryDAO userMoneyHistoryDAO = new UserMoneyHistoryDAO();
+
 	private JLabel lblBuyMax;
 	private JLabel lblCompanyName;
 	private JLabel lblPrice;
 	private JLabel lblBuyData;
+	private String companyName;
+	private int companyIndex;
 
 	public BuyPriceGUI(UserInfo parentUserInfo, String companyName, int companyIndex) {
-
+		this.companyName = companyName;
+		this.companyIndex = companyIndex;
 		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		int today = 0;
@@ -98,16 +102,16 @@ public class BuyPriceGUI extends JPanel {
 		pnlInformation.add(lblBuyPrice2);
 
 		lblBuyMax = new JLabel();
-		
+
 		// TODO
 //		lblBuyMax.setText("최대 매수 가능 수량: " + allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
-		
+
 		lblBuyMax.setFont(new Font("굴림", Font.PLAIN, 11));
 		lblBuyMax.setBounds(130, 162, 155, 15);
 		pnlInformation.add(lblBuyMax);
 
 		lblCompanyName = new JLabel();
-		
+
 		// TODO
 //		lblCompanyName.setText(allCompanyList.get(companyIndex).getCompanyName() + " 회사");
 
@@ -126,18 +130,18 @@ public class BuyPriceGUI extends JPanel {
 		pnlMyMoney.add(lblMoney, BorderLayout.CENTER);
 
 		lblPrice = new JLabel();
-		
+
 		// TODO
 //		lblPrice.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
-		
+
 		lblPrice.setBounds(46, 34, 57, 15);
 		pnlInformation.add(lblPrice);
 
 		lblBuyData = new JLabel();
-		
+
 		// TODO
 //		lblBuyData.setText(changeStockPrice + "원");
-		
+
 		lblBuyData.setFont(new Font("굴림", Font.PLAIN, 11));
 		lblBuyData.setBounds(46, 54, 116, 15);
 		pnlInformation.add(lblBuyData);
@@ -220,13 +224,27 @@ public class BuyPriceGUI extends JPanel {
 		JButton btnBuy = new JButton("매수");
 		btnBuy.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBuy);
-		
+
 		btnBuy.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+				String companyName = lblCompanyName.getText();
+				companyName = companyName.substring(0, 4);
+				System.out.println(companyName);
+//				int companyIndex = 0;
+//				if(companyName.equals("B 회사"))
+//					companyIndex = 1;
+//				else if(companyName.equals("C 회사"))
+//					companyIndex = 2;
+//				else if(companyName.equals("D 회사"))
+//					companyIndex = 3;
+//				else if(companyName.equals("E 회사"))
+//					companyIndex = 4;
+//				else if(companyName.equals("F 회사"))
+//					companyIndex = 5;
+
 				String buyStockString = tfBuyPrice.getText();
 				int buyStock = 0;
 				if (!buyStockString.isEmpty()) {
@@ -237,9 +255,11 @@ public class BuyPriceGUI extends JPanel {
 				} else {
 					int buyStockCount = 0;// 판 수량이 적용된 회사의 주식 수량
 					int buyStockPrice = 0;
-
+					AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 					buyStockCount = allCompany.getCompanyStockCount() - buyStock;
 					buyStockPrice = allCompany.getCompanyStockPrice();
+					System.out.println(buyStockPrice);
+					System.out.println(buyStockCount);
 					int buyPrice = 0;
 
 					// 평가금액
@@ -250,35 +270,31 @@ public class BuyPriceGUI extends JPanel {
 
 					// 수익률
 					double profitRate = 0;
-					
-					
+
 					try {
+						
 						allCompanyDAO.update(companyName, buyStockPrice, buyStockCount, userInfo.getUser_ID(),
 								userInfo.getUser_SaveData(), userInfo.getUser_Date());
+						
 						UserMoneyHistory umh = userMoneyHistoryDAO.findByCompany(companyName, userInfo.getUser_ID(),
 								userInfo.getUser_SaveData());
 
-						if (userInfo.getUser_Date() ==1) {
+						// 매입가
+						buyPrice = stockChangeHistoryDAO.findStockMoneyAvgBycompName(companyName, userInfo.getUser_ID(),
+								userInfo.getUser_SaveData());
 
-						} else {
+						// 평가금액
+						realMoney = stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(companyName,
+								userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
-							// 매입가
-							 buyPrice = stockChangeHistoryDAO.findStockMoneyAvgBycompName(companyName, userInfo.getUser_ID(),
-									userInfo.getUser_SaveData());
+						// 평가손익
+						profitMoney = stockChangeHistoryDAO.findPlusStockMoneyNowBycompName(companyName,
+								userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
-							// 평가금액
-							 realMoney = stockChangeHistoryDAO.findFinalStockMoneyNowBycompName(companyName,
-									userInfo.getUser_ID(), userInfo.getUser_SaveData());
+						// 수익률
+						profitRate = stockChangeHistoryDAO.findFinalStockMoneyRateNowBycompName(companyName,
+								userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
-							// 평가손익
-							profitMoney = stockChangeHistoryDAO.findPlusStockMoneyNowBycompName(companyName,
-									userInfo.getUser_ID(), userInfo.getUser_SaveData());
-
-							// 수익률
-							profitRate = stockChangeHistoryDAO.findFinalStockMoneyRateNowBycompName(companyName,
-									userInfo.getUser_ID(), userInfo.getUser_SaveData());
-
-						}
 						// 회원 별 주식 보유 상황 업데이트
 						userMoneyHistoryDAO.update(userInfo.getUser_ID(), userInfo.getUser_SaveData(), companyName,
 								buyPrice, buyStockPrice, realMoney, profitMoney, profitRate,
@@ -304,7 +320,6 @@ public class BuyPriceGUI extends JPanel {
 				}
 			}
 		});
-		
 
 		JButton btnBack = new JButton("뒤로가기");
 		btnBack.setBackground(SystemColor.activeCaption);
@@ -314,7 +329,7 @@ public class BuyPriceGUI extends JPanel {
 
 	public void updateComInfo(UserInfo parentUserInfo, String companyName) {
 		int companyIndex = selectCompanyIndex(companyName);
-		
+
 		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		int today = 0;
@@ -336,13 +351,12 @@ public class BuyPriceGUI extends JPanel {
 
 		}
 
-		
 		lblBuyMax.setText("최대 매수 가능 수량: " + allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
 		lblCompanyName.setText(allCompanyList.get(companyIndex).getCompanyName() + " 회사");
 		lblPrice.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
 		lblBuyData.setText(changeStockPrice + "원");
 	}
-	
+
 	private int selectCompanyIndex(String companyName) {
 		int companyIndex;
 		if (companyName.equals("A 회사")) {

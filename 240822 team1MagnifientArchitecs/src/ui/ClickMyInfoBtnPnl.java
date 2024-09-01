@@ -71,9 +71,9 @@ public class ClickMyInfoBtnPnl extends JPanel {
 		List<UserMoneyHistory> userMoneyHistoryList = userMoneyHistoryDAO.findByID(userInfoUpdate.getUser_ID(),
 				userInfoUpdate.getUser_SaveData());
 
-		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
+		for (int i = 0; i < companyInfoPnlList.size(); i++) {
 			if (userMoneyHistoryList.get(i).getStock_Count() > 0) {
-			companyInfoPnlList.get(0).update(userInfo, i);
+			companyInfoPnlList.get(i).update(userInfo, i);
 			}
 		}
 
@@ -90,6 +90,7 @@ public class ClickMyInfoBtnPnl extends JPanel {
 		add(pnlCenter, "Center");
 		pnlCenter.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
+		// 유저가 갖고 있는 주식 현황 테이블에서 
 		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
 			if (userMoneyHistoryList.get(i).getStock_Count() > 0) {
 				CompanyInfoPnl companyInfoPnl = new CompanyInfoPnl(userInfo, i);

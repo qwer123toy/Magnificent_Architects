@@ -63,9 +63,9 @@ public class SeeMyTradingHistoryPnl extends JPanel {
 	public void updateCenterPnl(UserInfo userInfo) {
 		UserInfo userInfoUpdate = userInfoDAO.findByIDAndData(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		List<StockChangeHistory> stockChangeHistoryList = stockChangeHistoryDAO.findByID(userInfoUpdate.getUser_ID(), userInfoUpdate.getUser_SaveData());
-
-		for(int i=0; i<stockChangeHistoryList.size(); i++) {
-			
+		System.out.println(stockChangeHistoryList.size());	
+		
+		for(int i=0; i<tradeHistoryPnlList.size(); i++) {
 			tradeHistoryPnlList.get(i).update(userInfoUpdate, i);
 			
 		}

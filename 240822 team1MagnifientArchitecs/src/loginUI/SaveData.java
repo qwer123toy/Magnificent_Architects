@@ -40,12 +40,12 @@ public class SaveData extends JDialog {
 	private void insertInfoByID(UserInfo userInfo, int saveData) {
 		try {
 			userInfoDAO.insert(userInfo.getUser_ID(), userInfo.getUser_PW(), saveData);
-			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "A 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "B 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "C 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "D 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "E 회사", 0, 0, 0, 0, 0, 0, 1);
-			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "F 회사", 0, 0, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "A 회사", 0, 100, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "B 회사", 0, 150, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "C 회사", 0, 400, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "D 회사", 0, 70, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "E 회사", 0, 2500, 0, 0, 0, 0, 1);
+			userMoneyHistoryDAO.insert(userInfo.getUser_ID(), saveData, "F 회사", 0, 8200, 0, 0, 0, 0, 1);
 			
 			allCompanyDAO.insert("A 회사", 100, 200, userInfo.getUser_ID(), saveData, 1);
 			allCompanyDAO.insert("B 회사", 150, 300, userInfo.getUser_ID(), saveData, 1);
