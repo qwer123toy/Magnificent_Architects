@@ -73,7 +73,7 @@ public class ClickMyInfoBtnPnl extends JPanel {
 
 		for (int i = 0; i < userMoneyHistoryList.size(); i++) {
 			if (userMoneyHistoryList.get(i).getStock_Count() > 0) {
-			companyInfoPnlList.get(i).update(userInfo, i);
+			companyInfoPnlList.get(0).update(userInfo, i);
 			}
 		}
 
