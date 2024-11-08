@@ -29,30 +29,30 @@
 ---
 
 ## 기능 설명
-[DAO](/240902 final team1MagnifientArchitecs/src/DAO)
+[DAO](/240902_final_team1MagnifientArchitecs/src/DAO)
  - 데이터베이스에서 테이블들을 다루기 위한 DAO 클래스
  - 회사 정보를 검색, 추가, 수정하거나 뉴스, 유저 정보 등을 다루기 위해 선언
    
-[MainSystem](/240902 final team1MagnifientArchitecs/src/MainSystem)
+[MainSystem](/240902_final_team1MagnifientArchitecs/src/MainSystem)
  - 테스트 가능한 범위의 작은 기능 모듈을 구현
  - 이를 객체지향적으로 역할에 따라 클래스 별로 캡슐화하여 주요 기능들을 테스트
 
-[dbUtil](/240902 final team1MagnifientArchitecs/src/dbUtil)
+[dbUtil](/240902_final_team1MagnifientArchitecs/src/dbUtil)
  - DB 연결을 위해 properties를 만들고 MySQL에 연결하기 위한 메서드 선언
 
-[loginUI](/240902 final team1MagnifientArchitecs/src/loginUI)
+[loginUI](/240902_final_team1MagnifientArchitecs/src/loginUI)
  - 로그인, 회원가입 부분의 GUI를 생성
 
-[mapper](/240902 final team1MagnifientArchitecs/src/priceGUI)
+[mapper](/240902_final_team1MagnifientArchitecs/src/priceGUI)
  - DB의 데이터와 매핑하여 주는 클래스
    
-[tables](/240902 final team1MagnifientArchitecs/src/tables)
+[tables](/240902_final_team1MagnifientArchitecs/src/tables)
  - DB와 동일한 정보를 가질 수 있도록 필드값들을 선언한 클래스
 
-[ui](/240902 final team1MagnifientArchitecs/src/ui)
+[ui](/240902_final_team1MagnifientArchitecs/src/ui)
  - 프로그램이 돌아갈 수 있도록 만들어둔 패널들
 
-[priceGUI](/240902 final team1MagnifientArchitecs/src/priceGUI)
+[priceGUI](/240902_final_team1MagnifientArchitecs/src/priceGUI)
  - 주식 매수, 매도 부분 GUI 패널
 
 ## What is
