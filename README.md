@@ -125,7 +125,7 @@
 
 > **DB 설계**
 >
-> ![image](https://github.com/user-attachments/assets/9f9682cc-ba05-46ec-83e4-f85d2f6e8510)
+> ![image](https://github.com/user-attachments/assets/f3442b8b-753c-4529-aab7-12b91d03871f)
 
 <br>
 
