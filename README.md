@@ -29,11 +29,10 @@
 ---
 
 ## 기능 설명
-[메인 서블릿](src/main/java/main/controller)
+[DAO](src/main/DAO)
  - 초기화면 페이지 및 각 페이지 별 서블릿 연결
- - 애플리케이션 전체 설정 관리
    
-[유저 관리 서블릿](src/main/java/user)
+[MainSystem](src/main/java/user)
  - 유저 관리 페이지
  - 회원가입과 예외처리, 유효성 확인
  - 로그인 및 일반회원, 사업주, 관리자 구분
@@ -135,29 +134,17 @@
 └──EnjoyFood_Project/
   ├─ README.md
   ├─ .gitignore
-  ├─ pom.xml/
   └─ src/
-     ├─ main/
-     ├─ java/
-     │  ├─ main/
-     │  │  └─ controller/
-     │  ├─ cafeteria/
-     │  ├─ config/
-     │  ├─ enjoyfood/
-     │  └─ user/
-     │     ├─ controller/
-     │     ├─ model/
-     │     └─ suggestion/
-     └─ webapp/
-        ├─ META-INF/
-        ├─ popup/
-        ├─ static/
-        │  ├─ css/
-        │  ├─ ico/
-        │  └─ js/
-        └─ WEB-INF/
-           ├─ module/
-           └─ view/
+     ├─ default/
+     ├─ DAO/
+     ├─ loginUI/
+     ├─ MainSystem/
+     ├─ mapper/
+     ├─ otherPnl/
+     ├─ priceGUI/
+     ├─ resource/
+     ├─ tables/
+     └─ ui/
 
 ```
 
