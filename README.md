@@ -24,6 +24,7 @@
   <a href="#repository-structure">Repository Structure</a> <br>
   <a href="#authors">Authors</a>
 </p>
+
 <br>
 
 ---
@@ -55,6 +56,8 @@
 [priceGUI](/240902_final_team1MagnifientArchitecs/src/priceGUI)
  - 주식 매수, 매도 부분 GUI 패널
 
+<br>
+
 ## What is
 
 <h3>1. 개요 및 목적</h3>
@@ -81,6 +84,8 @@
    - 사용자별 데이터 관리 : 사용자마다 독립된 데이터와 다양한 시나리오를 사용
 
   • Git 브랜치를 활용해 역할 분담을 명확히 하고, 병합 시 충돌 문제를 최소화
+
+  <br>
   
 ## Key Features
 
@@ -95,6 +100,7 @@
 | **BuyPriceGUI**        | ● 사용자가 회사의 주식을 매수하고 해당 거래를 데이터베이스에 반영하는 기능을 제공 <br> - 사용자가 주식 매수 수량과 가격을 입력하고, 이를 기반으로 매수 금액을 계산하여 데이터베이스에 반영하는 GUI를 제공 <br> - 사용자 정보와 회사 주식 데이터를 활용하여 매수 후의 금액과 주식 수량을 업데이트                     |
 | **BaseMainFrame**    | ● 주식 거래 시뮬레이션 프로그램의 메인 화면을 구성 <br> - 사용자 정보, 거래 내역, 회사 주식 정보 등을 표시하고, 장 마감, 매수/매도, 내 정보 등의 기능을 지원하는 UI를 제공 <br> - CardLayout을 사용하여 여러 패널을 전환하며, 버튼 클릭에 따른 이벤트 처리 구현                |
 
+<br>
 
 ## Development setup / Database Design
 
@@ -150,6 +156,7 @@
   <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white">
   <img src="https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white">
 
+<br>
 
 ## Authors
 > 프로필 
